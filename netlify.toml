@@ -2,7 +2,7 @@
   # Comando para construir el proyecto Angular en producción
   command = "ng build --configuration production"
   # Directorio donde se generan los archivos estáticos
-  publish = "dist/jome"
+  publish = "dist/jome/browser"
 
 [build.environment]
   # Versión de Node.js recomendada para Angular
