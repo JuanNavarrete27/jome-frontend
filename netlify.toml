@@ -1,41 +1,35 @@
 [build]
-  # Comando para construir el proyecto Angular en producción
   command = "ng build --configuration production"
-  # Directorio donde se generan los archivos estáticos
   publish = "dist/jome/browser"
 
 [build.environment]
-  # Versión de Node.js recomendada para Angular
   NODE_VERSION = "18"
 
-# Redirecciones para SPA (Single Page Application)
 [[redirects]]
-  # Redirigir todas las rutas a index.html para el routing de Angular
   from = "/*"
   to = "/index.html"
   status = 200
 
 # Headers para seguridad y rendimiento
 [[headers]]
-  # Aplicar a todos los archivos
   for = "/*"
   [headers.values]
-    # Seguridad básica
-    X-Frame-Options = "DENY"
+    # ✅ NO usar DENY si querés iframes en tu web
+    # X-Frame-Options = "DENY"
+
+    # ✅ Control moderno: tu web puede embeber estos iframes
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'self' https://donfrancisco.uy https://bentasca.com https://karenbentancor.com http://76.13.166.48 https://www.youtube.com https://www.youtube-nocookie.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline'; connect-src 'self' https:;"
+
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    # Cache para assets estáticos
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  # Aplicar solo a archivos HTML
   for = "*.html"
   [headers.values]
-    # No cachear HTML para siempre obtener la última versión
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Configuración de compresión
 [build.processing]
   skip_processing = false
 
