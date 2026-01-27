@@ -305,7 +305,9 @@
           <!-- IFRAME PREVIEW -->
           <div class="preview-container">
             @if (!iframeError()) {
-              <div class="preview__loading">Cargando preview...</div>
+              @if (previewLoading()) {
+                <div class="preview__loading">Cargando preview...</div>
+              }
               <iframe 
                 [src]="safeUrl()" 
                 class="preview__iframe"
