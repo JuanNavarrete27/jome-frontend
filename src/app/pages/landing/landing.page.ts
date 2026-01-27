@@ -37,6 +37,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showreelOpen = signal(false);
   previewProject = signal<Work | null>(null);
   iframeError = signal(false);
+  previewLoading = signal(false);
   cursorX = signal(0.5);
   cursorY = signal(0.5);
   safeUrl = signal<SafeResourceUrl | null>(null);
@@ -255,6 +256,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   openShowreel(): void {
     this.previewProject.set(null);
     this.iframeError.set(false);
+    this.previewLoading.set(false);
     this.mixedContentError.set(false);
     this.safeUrl.set(null);
     this.showreelOpen.set(true);
@@ -271,12 +273,14 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.iframeError.set(false);
     this.mixedContentError.set(false);
     this.safeUrl.set(null);
+    this.previewLoading.set(project.previewType === 'iframe');
 
     if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
     
     // Manejar mixed content para HTTP
     if (project.domain?.startsWith('http://') && window.location.protocol === 'https:') {
       this.mixedContentError.set(true);
+      this.previewLoading.set(false);
       this.iframeError.set(true);
     } else if (project.domain) {
       // Sanitizar la URL del iframe (NG0904 FIX)
@@ -294,6 +298,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (project.previewType === 'iframe' && !this.mixedContentError()) {
       this.previewTimeoutId = setTimeout(() => {
         if (this.previewProject()?.title === project.title) {
+          this.previewLoading.set(false);
           this.iframeError.set(true);
         }
       }, 12000);
@@ -303,6 +308,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   closeShowreel(): void {
     this.previewProject.set(null);
     this.iframeError.set(false);
+    this.previewLoading.set(false);
     this.mixedContentError.set(false);
     this.safeUrl.set(null);
     this.showreelOpen.set(false);
@@ -313,11 +319,13 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onIframeLoad(): void {
     // El iframe se cargó correctamente
+    this.previewLoading.set(false);
     this.iframeError.set(false);
     if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   onIframeError(): void {
+    this.previewLoading.set(false);
     this.iframeError.set(true);
     if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
