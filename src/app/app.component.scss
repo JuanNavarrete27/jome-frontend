@@ -308,9 +308,25 @@
   color: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  padding: 12px 14px;
+  padding: 12px 16px;
   border-radius: 999px;
   transition: transform 200ms ease, background 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .foot-link {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
 }
 
 .foot-link:hover {

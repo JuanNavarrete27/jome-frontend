@@ -1134,3 +1134,39 @@
     padding: 16px;
   }
 }
+
+/* Mobile Fixes - SOLO ≤768px */
+@media (max-width: 768px) {
+  /* Fix preview container para que ocupe ~70vh */
+  .preview-container {
+    height: clamp(420px, 70vh, 720px);
+    width: 100%;
+    min-height: unset; /* Eliminar el min-height: 400px fijo */
+    max-height: none;
+  }
+  
+  /* 1) Fix previews "enteros" - iframes responsive */
+  .preview__iframe {
+    width: 100%;
+    height: 100%; /* Llenar el contenedor */
+    min-height: unset; /* Eliminar min-height fijo */
+    aspect-ratio: unset; /* Eliminar aspect-ratio para que llene */
+    display: block;
+    border: 0;
+  }
+  
+  .preview__video-iframe {
+    width: 100%;
+    height: 100%; /* Llenar el contenedor */
+    min-height: unset; /* Eliminar min-height fijo */
+    aspect-ratio: unset; /* Eliminar aspect-ratio para que llene */
+    display: block;
+    border: 0;
+  }
+  
+  /* 2) Quitar doble scroll en modal body */
+  .modal__body {
+    overflow: visible;
+    max-height: none;
+  }
+}

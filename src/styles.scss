@@ -60,3 +60,16 @@ body::before {
     scroll-behavior: auto !important;
   }
 }
+
+/* Mobile Horizontal Scroll Lock - SOLO ≤ 768px */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  app-root, .app-main, main, .app {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}

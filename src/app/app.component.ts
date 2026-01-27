@@ -55,6 +55,15 @@ export class AppComponent implements OnInit, OnDestroy {
     const el = document.getElementById(id);
     if (!el) return;
 
+    // Fallback a JavaScript nativo si GSAP no está disponible
+    if (!window.gsap) {
+      window.scrollTo({
+        top: el.offsetTop - 86,
+        behavior: 'smooth'
+      });
+      return;
+    }
+
     if (prefersReducedMotion()) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
