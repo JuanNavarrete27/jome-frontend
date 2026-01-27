@@ -39,10 +39,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   iframeError = signal(false);
   cursorX = signal(0.5);
   cursorY = signal(0.5);
-  safeUrl = signal<SafeResourceUrl>('');
+  safeUrl = signal<SafeResourceUrl | null>(null);
   mixedContentError = signal(false);
-  
-  @ViewChild('modalPanel') modalPanel!: ElementRef<HTMLDivElement>;
+
+  @ViewChild('modalPanel', { static: false }) modalPanel?: ElementRef<HTMLDivElement>;
 
   services: Service[] = [
     {
@@ -138,6 +138,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   mouseMoveThrottled = false;
 
   private heroTl?: gsap.core.Timeline;
+  private previewTimeoutId: any = null;
 
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {}
 
@@ -218,6 +219,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.heroTl?.kill();
+    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   @HostListener('window:mousemove', ['$event'])
@@ -234,19 +236,12 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  openShowreel(): void {
-    this.previewProject.set(null);
-    this.iframeError.set(false);
-    this.mixedContentError.set(false);
-    this.safeUrl.set('');
-    this.showreelOpen.set(true);
-    document.body.style.overflow = 'hidden';
-
+  private animateModalIn(): void {
     // Forzar detección de cambios para asegurar que el modal esté en el DOM
     this.cdr.detectChanges();
 
     // Ejecutar GSAP después de que Angular renderice el modal
-    setTimeout(() => {
+    queueMicrotask(() => {
       if (!prefersReducedMotion() && this.modalPanel?.nativeElement) {
         gsap.fromTo(
           this.modalPanel.nativeElement,
@@ -254,7 +249,18 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
           { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
         );
       }
-    }, 0);
+    });
+  }
+
+  openShowreel(): void {
+    this.previewProject.set(null);
+    this.iframeError.set(false);
+    this.mixedContentError.set(false);
+    this.safeUrl.set(null);
+    this.showreelOpen.set(true);
+    document.body.style.overflow = 'hidden';
+
+    this.animateModalIn();
   }
 
   openPreview(project: Work): void {
@@ -264,14 +270,16 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previewProject.set(project);
     this.iframeError.set(false);
     this.mixedContentError.set(false);
-    this.safeUrl.set('');
+    this.safeUrl.set(null);
+
+    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
     
     // Manejar mixed content para HTTP
     if (project.domain?.startsWith('http://') && window.location.protocol === 'https:') {
       this.mixedContentError.set(true);
       this.iframeError.set(true);
     } else if (project.domain) {
-      // Sanitizar la URL del iframe
+      // Sanitizar la URL del iframe (NG0904 FIX)
       const sanitized = this.sanitizer.bypassSecurityTrustResourceUrl(project.domain);
       this.safeUrl.set(sanitized);
     }
@@ -280,28 +288,15 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showreelOpen.set(true);
     document.body.style.overflow = 'hidden';
     
-    // Forzar detección de cambios para asegurar que el modal esté en el DOM
-    this.cdr.detectChanges();
-    
-    // Ejecutar GSAP después de que Angular renderice el modal
-    setTimeout(() => {
-      if (!prefersReducedMotion() && this.modalPanel?.nativeElement) {
-        gsap.fromTo(
-          this.modalPanel.nativeElement,
-          { y: 22, opacity: 0, filter: 'blur(10px)' },
-          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
-        );
-      }
-    }, 0);
+    this.animateModalIn();
     
     // Timeout para detectar si el iframe no carga (solo para iframes)
     if (project.previewType === 'iframe' && !this.mixedContentError()) {
-      setTimeout(() => {
-        if (this.previewProject()?.title === project.title && !this.iframeError()) {
-          // Si después de 5 segundos no hay señal de carga, mostrar fallback
+      this.previewTimeoutId = setTimeout(() => {
+        if (this.previewProject()?.title === project.title) {
           this.iframeError.set(true);
         }
-      }, 5000);
+      }, 12000);
     }
   }
 
@@ -309,18 +304,22 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previewProject.set(null);
     this.iframeError.set(false);
     this.mixedContentError.set(false);
-    this.safeUrl.set('');
+    this.safeUrl.set(null);
     this.showreelOpen.set(false);
     document.body.style.overflow = '';
+
+    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   onIframeLoad(): void {
     // El iframe se cargó correctamente
     this.iframeError.set(false);
+    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   onIframeError(): void {
     this.iframeError.set(true);
+    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   openInNewTab(url: string): void {
