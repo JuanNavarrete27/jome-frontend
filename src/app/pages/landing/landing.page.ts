@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, signal, ChangeDetectionStrategy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ensureGsap, gsap, prefersReducedMotion } from '../../core/utils/gsap';
 import { RevealOnScrollDirective } from '../../core/directives/reveal-on-scroll.directive';
@@ -38,6 +39,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   iframeError = signal(false);
   cursorX = signal(0.5);
   cursorY = signal(0.5);
+  safeUrl = signal<SafeResourceUrl>('');
+  mixedContentError = signal(false);
+  
+  @ViewChild('modalPanel') modalPanel!: ElementRef<HTMLDivElement>;
 
   services: Service[] = [
     {
@@ -134,7 +139,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private heroTl?: gsap.core.Timeline;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {}
 
   // TrackBy functions for optimized *ngFor
   trackByService(index: number, service: Service): string {
@@ -232,35 +237,65 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   openShowreel(): void {
     this.previewProject.set(null);
     this.iframeError.set(false);
+    this.mixedContentError.set(false);
+    this.safeUrl.set('');
     this.showreelOpen.set(true);
     document.body.style.overflow = 'hidden';
 
-    if (!prefersReducedMotion()) {
-      gsap.fromTo(
-        '.modal__panel',
-        { y: 22, opacity: 0, filter: 'blur(10px)' },
-        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
-      );
-    }
+    // Forzar detección de cambios para asegurar que el modal esté en el DOM
+    this.cdr.detectChanges();
+
+    // Ejecutar GSAP después de que Angular renderice el modal
+    setTimeout(() => {
+      if (!prefersReducedMotion() && this.modalPanel?.nativeElement) {
+        gsap.fromTo(
+          this.modalPanel.nativeElement,
+          { y: 22, opacity: 0, filter: 'blur(10px)' },
+          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
+        );
+      }
+    }, 0);
   }
 
   openPreview(project: Work): void {
     console.log('openPreview called with:', project);
+    
+    // Resetear estados
     this.previewProject.set(project);
     this.iframeError.set(false);
+    this.mixedContentError.set(false);
+    this.safeUrl.set('');
+    
+    // Manejar mixed content para HTTP
+    if (project.domain?.startsWith('http://') && window.location.protocol === 'https:') {
+      this.mixedContentError.set(true);
+      this.iframeError.set(true);
+    } else if (project.domain) {
+      // Sanitizar la URL del iframe
+      const sanitized = this.sanitizer.bypassSecurityTrustResourceUrl(project.domain);
+      this.safeUrl.set(sanitized);
+    }
+    
+    // Abrir modal
     this.showreelOpen.set(true);
     document.body.style.overflow = 'hidden';
-
-    if (!prefersReducedMotion()) {
-      gsap.fromTo(
-        '.modal__panel',
-        { y: 22, opacity: 0, filter: 'blur(10px)' },
-        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
-      );
-    }
-
-    // Timeout para detectar si el iframe no carga
-    if (project.previewType === 'iframe') {
+    
+    // Forzar detección de cambios para asegurar que el modal esté en el DOM
+    this.cdr.detectChanges();
+    
+    // Ejecutar GSAP después de que Angular renderice el modal
+    setTimeout(() => {
+      if (!prefersReducedMotion() && this.modalPanel?.nativeElement) {
+        gsap.fromTo(
+          this.modalPanel.nativeElement,
+          { y: 22, opacity: 0, filter: 'blur(10px)' },
+          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
+        );
+      }
+    }, 0);
+    
+    // Timeout para detectar si el iframe no carga (solo para iframes)
+    if (project.previewType === 'iframe' && !this.mixedContentError()) {
       setTimeout(() => {
         if (this.previewProject()?.title === project.title && !this.iframeError()) {
           // Si después de 5 segundos no hay señal de carga, mostrar fallback
@@ -273,6 +308,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   closeShowreel(): void {
     this.previewProject.set(null);
     this.iframeError.set(false);
+    this.mixedContentError.set(false);
+    this.safeUrl.set('');
     this.showreelOpen.set(false);
     document.body.style.overflow = '';
   }

@@ -286,7 +286,7 @@
 
 <!-- MODAL PREVIEW REUTILIZABLE -->
 <div class="modal" *ngIf="showreelOpen()" (click)="closeShowreel()" aria-label="Cerrar">
-  <div class="modal__panel" (click)="$event.stopPropagation()">
+  <div class="modal__panel" #modalPanel (click)="$event.stopPropagation()">
     <div class="modal__top">
       <div class="modal__title">
         @if (previewProject()) {
@@ -307,7 +307,7 @@
             @if (!iframeError()) {
               <div class="preview__loading">Cargando preview...</div>
               <iframe 
-                [src]="previewProject()!.domain" 
+                [src]="safeUrl()" 
                 class="preview__iframe"
                 loading="lazy"
                 sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
@@ -317,9 +317,15 @@
             } @else {
               <!-- FALLBACK IFRAME -->
               <div class="preview__fallback">
-                <div class="preview__fallback-icon">⚠️</div>
-                <div class="preview__fallback-title">No se puede cargar el preview</div>
-                <div class="preview__fallback-desc">El sitio no permite iframe o hay un error de conexión.</div>
+                @if (mixedContentError()) {
+                  <div class="preview__fallback-icon">🔒</div>
+                  <div class="preview__fallback-title">Contenido mixto bloqueado</div>
+                  <div class="preview__fallback-desc">El sitio usa HTTP y no se puede cargar en HTTPS por seguridad.</div>
+                } @else {
+                  <div class="preview__fallback-icon">⚠️</div>
+                  <div class="preview__fallback-title">No se puede cargar el preview</div>
+                  <div class="preview__fallback-desc">El sitio no permite iframe o hay un error de conexión.</div>
+                }
                 <button class="btn btn--primary" (click)="openInNewTab(previewProject()!.domain!)">
                   Abrir en nueva pestaña
                 </button>
