@@ -363,10 +363,13 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   scrollToContact(): void {
-    this.closeShowreel();
-    setTimeout(() => {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    this.openWhatsApp();
+  }
+
+  openWhatsApp(): void {
+    const message = encodeURIComponent('¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.');
+    const phoneNumber = '5491123456789'; // Reemplazar con número real
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   }
 
   async submit(): Promise<void> {

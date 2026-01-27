@@ -123,7 +123,7 @@
   </header>
 
   <div class="work__grid">
-    <article class="workCard" *ngFor="let w of works; let j = index; trackBy: trackByWork" tilt revealOnScroll [revealDelay]="j * 0.06">
+    <article class="workCard" *ngFor="let w of works; let j = index; trackBy: trackByWork" revealOnScroll [revealDelay]="j * 0.06">
       <div class="workCard__top">
         <span class="pill">{{ w.tag }}</span>
         <span class="metric">{{ w.metric }}</span>
@@ -134,7 +134,7 @@
         <button class="btn btn--ghost btn--sm" (click)="openPreview(w)">
           Ver preview
         </button>
-        <button magnetic class="btn btn--primary btn--sm" (click)="scrollToContact()">
+        <button class="btn btn--primary btn--sm btn--no-hover" (click)="scrollToContact()">
           Quiero esto
         </button>
       </div>

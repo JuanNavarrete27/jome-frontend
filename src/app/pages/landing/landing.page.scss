@@ -110,6 +110,15 @@
   width: 100%;
 }
 
+.btn--no-hover {
+  transform: none !important;
+}
+
+.btn--no-hover:hover {
+  transform: none !important;
+  box-shadow: 0 12px 60px rgba(0, 74, 173, 0.22) !important;
+}
+
 /* ---------------------------
    HERO
 --------------------------- */

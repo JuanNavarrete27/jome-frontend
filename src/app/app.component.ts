@@ -76,6 +76,12 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  openWhatsApp(): void {
+    const message = encodeURIComponent('¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.');
+    const phoneNumber = '5491123456789'; // Reemplazar con número real
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  }
+
   private loopProgress(): void {
     const update = () => {
       const doc = document.documentElement;
