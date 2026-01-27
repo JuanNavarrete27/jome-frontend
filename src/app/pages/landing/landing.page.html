@@ -1,0 +1,417 @@
+<section id="home" class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="shape shape--a" aria-hidden="true"></div>
+  <div class="shape shape--b" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <div class="hero__kicker">JOME SOLUCIONES DIGITALES / DESARROLLO WEB</div>
+
+      <h1 class="hero__title">
+        Soluciones digitales profesionales
+        <span class="hero__titleAccent">a tu medida</span>
+      </h1>
+
+      <p class="hero__subtitle">
+        Desarrollo de páginas web, sistemas y soluciones digitales. Si necesitas presencia online profesional, esto es para vos.
+      </p>
+
+      <div class="hero__actions">
+        <a magnetic class="btn btn--primary" href="#" (click)="openShowreel(); $event.preventDefault()">
+          Ver portafolio
+        </a>
+        <a magnetic class="btn btn--ghost" href="#services" (click)="$event.preventDefault()">
+          Servicios
+        </a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <div class="stat__num">6+</div>
+          <div class="stat__label">Proyectos entregados</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">24-48h</div>
+          <div class="stat__label">Plazo de entrega</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">5/5</div>
+          <div class="stat__label">Satisfacción</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual" tilt>
+      <div class="device">
+        <div class="device__top">
+          <div class="dot dot--r"></div>
+          <div class="dot dot--y"></div>
+          <div class="dot dot--g"></div>
+          <div class="device__title">JoMe Soluciones Digitales - Studio</div>
+        </div>
+
+        <div class="device__body">
+          <div class="meter">
+            <div class="meter__bar"></div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline__row">
+              <span class="chip">UX/UI</span>
+              <span class="track"></span>
+              <span class="chip chip--lime">ANGULAR</span>
+            </div>
+            <div class="timeline__row">
+              <span class="chip chip--blue">NODE</span>
+              <span class="track"></span>
+              <span class="chip">SQL</span>
+            </div>
+            <div class="timeline__row">
+              <span class="chip">API</span>
+              <span class="track"></span>
+              <span class="chip chip--blue">DEPLOY</span>
+            </div>
+          </div>
+
+          <div class="cards">
+            <div class="mini" revealOnScroll>
+              <div class="mini__tag">WEB</div>
+              <div class="mini__title">Diseño responsive</div>
+              <div class="mini__sub">Angular + animaciones</div>
+            </div>
+            <div class="mini" revealOnScroll [revealDelay]="0.08">
+              <div class="mini__tag">BACKEND</div>
+              <div class="mini__title">Node.js + SQL</div>
+              <div class="mini__sub">API REST completa</div>
+            </div>
+          </div>
+
+          <div class="glowLine" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section services" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">SERVICIOS</div>
+    <h2 class="h2">Desarrollo web profesional</h2>
+    <p class="p">Soluciones digitales a medida: páginas web, sistemas y plataformas con tecnología moderna.</p>
+  </header>
+
+  <div class="grid grid--3">
+    <article class="card" *ngFor="let s of services; let i = index; trackBy: trackByService" tilt revealOnScroll [revealDelay]="i * 0.06">
+      <div class="card__icon">{{ s.icon }}</div>
+      <div class="card__title">{{ s.title }}</div>
+      <div class="card__desc">{{ s.desc }}</div>
+
+      <ul class="card__list">
+        <li *ngFor="let b of s.bullets; trackBy: trackByBullet">{{ b }}</li>
+      </ul>
+
+      <div class="card__shine" aria-hidden="true"></div>
+    </article>
+  </div>
+</section>
+
+<section id="work" class="section work" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">PORTFOLIO</div>
+    <h2 class="h2">Proyectos destacados</h2>
+    <p class="p">Desarrollo web real para clientes reales. Cada proyecto con sus propias necesidades y soluciones.</p>
+  </header>
+
+  <div class="work__grid">
+    <article class="workCard" *ngFor="let w of works; let j = index; trackBy: trackByWork" tilt revealOnScroll [revealDelay]="j * 0.06">
+      <div class="workCard__top">
+        <span class="pill">{{ w.tag }}</span>
+        <span class="metric">{{ w.metric }}</span>
+      </div>
+      <div class="workCard__title">{{ w.title }}</div>
+      <div class="workCard__desc">{{ w.desc }}</div>
+      <div class="workCard__actions">
+        <button class="btn btn--ghost btn--sm" (click)="openPreview(w)">
+          Ver preview
+        </button>
+        <button magnetic class="btn btn--primary btn--sm" (click)="scrollToContact()">
+          Quiero esto
+        </button>
+      </div>
+      <div class="workCard__bg" aria-hidden="true"></div>
+    </article>
+  </div>
+</section>
+
+<section id="clients" class="section clients" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">CLIENTES</div>
+    <h2 class="h2">Clientes que confían en nosotros</h2>
+    <p class="p">Empresas que eligieron nuestras soluciones digitales para su presencia online.</p>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <a class="logo" *ngFor="let c of clients; trackBy: trackByClient" [href]="getClientUrl(c.name)" target="_blank" rel="noopener" [attr.data-client]="c.name">{{ c.name }}</a>
+      <a class="logo" *ngFor="let c of clients; trackBy: trackByClient" [href]="getClientUrl(c.name)" target="_blank" rel="noopener" [attr.data-client]="c.name">{{ c.name }}</a>
+    </div>
+  </div>
+
+  <div class="clientGrid">
+    <div class="clientTile" *ngFor="let c of clients; let k = index; trackBy: trackByClient" revealOnScroll [revealDelay]="k * 0.03" tilt (mouseenter)="highlightClient(c.name)" (mouseleave)="unhighlightClient(c.name)">
+      <div class="clientTile__ring"></div>
+      <img class="clientTile__logo" [src]="c.logo" [alt]="c.name" />
+    </div>
+  </div>
+</section>
+
+<section id="process" class="section process" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">PROCESO</div>
+    <h2 class="h2">Proceso de desarrollo</h2>
+    <p class="p">Metodología clara, entregas puntuales y comunicación constante durante todo el proyecto.</p>
+  </header>
+
+  <div class="steps">
+    <div class="step" revealOnScroll>
+      <div class="step__num">01</div>
+      <div class="step__title">Requerimientos + diseño</div>
+      <div class="step__desc">Definimos funcionalidades, diseño UX/UI y arquitectura del sistema.</div>
+    </div>
+    <div class="step" revealOnScroll [revealDelay]="0.06">
+      <div class="step__num">02</div>
+      <div class="step__title">Desarrollo frontend</div>
+      <div class="step__desc">Construcción de la interfaz con Angular, animaciones y responsive design.</div>
+    </div>
+    <div class="step" revealOnScroll [revealDelay]="0.12">
+      <div class="step__num">03</div>
+      <div class="step__title">Backend + base de datos</div>
+      <div class="step__desc">Servidor Node.js, base de datos SQL y API REST para funcionalidad completa.</div>
+    </div>
+    <div class="step" revealOnScroll [revealDelay]="0.18">
+      <div class="step__num">04</div>
+      <div class="step__title">Testing + deploy</div>
+      <div class="step__desc">Pruebas, optimización y puesta en producción. Incluye primer año de dominio.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">TESTIMONIOS</div>
+    <h2 class="h2">Resultados que funcionan</h2>
+    <p class="p">Código profesional, diseño moderno y soluciones que realmente resuelven problemas de negocio.</p>
+  </header>
+
+  <div class="grid grid--3">
+    <article class="quote" *ngFor="let t of testimonials; let n = index; trackBy: trackByTestimonial" revealOnScroll [revealDelay]="n * 0.05" tilt>
+      <div class="quote__stars">★★★★★</div>
+      <div class="quote__text">"{{ t.quote }}"</div>
+      <div class="quote__by">
+        <div class="quote__name">{{ t.name }}</div>
+        <div class="quote__role">{{ t.role }}</div>
+      </div>
+      <div class="quote__shine" aria-hidden="true"></div>
+    </article>
+  </div>
+</section>
+
+<section id="contact" class="section contact" revealOnScroll>
+  <header class="section__head">
+    <div class="eyebrow">CONTACTO</div>
+    <h2 class="h2">¿Listo para tu proyecto digital?</h2>
+    <p class="p">Contanos tu idea y te presentamos una propuesta con tiempos, tecnologías y presupuesto.</p>
+  </header>
+
+  <div class="contact__grid">
+    <div class="contact__left" tilt>
+      <div class="panel">
+        <div class="panel__kicker">Respuesta rapida</div>
+        <div class="panel__title">> 24h</div>
+        <div class="panel__sub">Web estática, web completa, sistemas de gestión y mantenimiento mensual.</div>
+
+        <div class="panel__pillRow">
+          <span class="pill">Web estática</span>
+          <span class="pill">Web completa</span>
+          <span class="pill">Sistemas</span>
+          <span class="pill">Mantenimiento</span>
+        </div>
+
+        <div class="panel__shine" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <form class="contact__form" [formGroup]="contactForm" (ngSubmit)="submit()">
+      <div class="field">
+        <label>Nombre</label>
+        <input type="text" formControlName="name" placeholder="Tu nombre" />
+        <div class="err" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+          Escribi tu nombre.
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="tu@email.com" />
+        <div class="err" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+          Email invalido.
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Servicio</label>
+        <select formControlName="service">
+          <option>Web estática</option>
+          <option>Web completa</option>
+          <option>Sistema de gestión</option>
+          <option>Mantenimiento mensual</option>
+          <option>Servicios adicionales</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Mensaje</label>
+        <textarea rows="5" formControlName="message" placeholder="Contame que queres lograr..."></textarea>
+      </div>
+
+      <!-- ✅ FIX: submit SIN magnetic (evita el salto hacia arriba) -->
+      <button class="btn btn--primary btn--full btn--submitStable" type="submit" [disabled]="sending()">
+        {{ sending() ? 'Enviando...' : 'Enviar mensaje' }}
+      </button>
+
+      <div class="contact__success" *ngIf="sentOk()">Listo! Te respondemos a la brevedad.</div>
+    </form>
+  </div>
+</section>
+
+<!-- MODAL PREVIEW REUTILIZABLE -->
+<div class="modal" *ngIf="showreelOpen()" (click)="closeShowreel()" aria-label="Cerrar">
+  <div class="modal__panel" (click)="$event.stopPropagation()">
+    <div class="modal__top">
+      <div class="modal__title">
+        @if (previewProject()) {
+          Preview del proyecto: {{ previewProject()!.title }}
+        } @else {
+          Portafolio (demo)
+        }
+      </div>
+      <button class="x" (click)="closeShowreel()" aria-label="Cerrar">×</button>
+    </div>
+
+    <div class="modal__body">
+      @if (previewProject()) {
+        <!-- PREVIEW ESPECÍFICO DE PROYECTO -->
+        @if (previewProject()!.previewType === 'iframe') {
+          <!-- IFRAME PREVIEW -->
+          <div class="preview-container">
+            @if (!iframeError()) {
+              <div class="preview__loading">Cargando preview...</div>
+              <iframe 
+                [src]="previewProject()!.domain" 
+                class="preview__iframe"
+                loading="lazy"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                (error)="onIframeError()"
+                (load)="onIframeLoad()">
+              </iframe>
+            } @else {
+              <!-- FALLBACK IFRAME -->
+              <div class="preview__fallback">
+                <div class="preview__fallback-icon">⚠️</div>
+                <div class="preview__fallback-title">No se puede cargar el preview</div>
+                <div class="preview__fallback-desc">El sitio no permite iframe o hay un error de conexión.</div>
+                <button class="btn btn--primary" (click)="openInNewTab(previewProject()!.domain!)">
+                  Abrir en nueva pestaña
+                </button>
+              </div>
+            }
+          </div>
+        } @else if (previewProject()!.previewType === 'video') {
+          <!-- VIDEO PREVIEW -->
+          <div class="preview-container">
+            <div class="preview__video">
+              <iframe 
+                [src]="previewProject()!.videoUrl" 
+                class="preview__video-iframe"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="preview__system-info">
+              <div class="preview__system-title">{{ previewProject()!.title }}</div>
+              <div class="preview__system-desc">
+                Por tratarse de un sistema clínico interno, el acceso público no está habilitado.
+              </div>
+              <div class="preview__system-actions">
+                <a magnetic class="btn btn--ghost" href="#contact" (click)="closeShowreel(); $event.preventDefault()">
+                  Solicitar demo
+                </a>
+                <a magnetic class="btn btn--primary" href="#contact" (click)="closeShowreel(); $event.preventDefault()">
+                  Contactar
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      } @else {
+        <!-- PORTAFOLIO GENERAL -->
+        <div class="portfolio">
+          <div class="portfolio__hint">Aca van tus proyectos reales (capturas de pantalla, demos funcionales). Por ahora es demo.</div>
+          <div class="portfolio__frame"></div>
+        </div>
+      }
+
+      @if (previewProject()) {
+        <div class="modal__meta">
+          @if (previewProject()!.previewType === 'iframe') {
+            <div class="meta">
+              <div class="meta__k">Tipo</div>
+              <div class="meta__v">Web pública</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Dominio</div>
+              <div class="meta__v">{{ previewProject()!.domain }}</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Acceso</div>
+              <div class="meta__v">Público</div>
+            </div>
+          } @else if (previewProject()!.previewType === 'video') {
+            <div class="meta">
+              <div class="meta__k">Tipo</div>
+              <div class="meta__v">Sistema privado</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Acceso</div>
+              <div class="meta__v">Restringido</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Demo</div>
+              <div class="meta__v">Video disponible</div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="modal__meta">
+          <div class="meta">
+            <div class="meta__k">Frontend</div>
+            <div class="meta__v">Angular + animaciones</div>
+          </div>
+          <div class="meta">
+            <div class="meta__k">Backend</div>
+            <div class="meta__v">Node.js + SQL</div>
+          </div>
+          <div class="meta">
+            <div class="meta__k">Entrega</div>
+            <div class="meta__v">24h - 14h hábiles</div>
+          </div>
+        </div>
+      }
+
+      <a magnetic class="btn btn--primary" href="#contact" (click)="closeShowreel(); $event.preventDefault()" style="margin-top: 20px;">
+        Quiero una propuesta
+      </a>
+    </div>
+  </div>
+</div>

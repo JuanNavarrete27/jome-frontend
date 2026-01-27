@@ -1,0 +1,435 @@
+:host {
+  display: block;
+
+  /* =========================
+     Creativo 360 - Tokens
+     ========================= */
+  --bg0: #05060d;
+  --bg1: #070910;
+  --bg2: #0b0e17;
+
+  --ink: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.66);
+
+  --lime: #b6cb33;
+  --blue: #004aad;
+  --teal: #0f4866;
+
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass2: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.12);
+
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  --shadow2: 0 12px 44px rgba(0, 0, 0, 0.5);
+
+  --radius: 18px;
+  --radius2: 24px;
+
+  /* ✅ control rápido del glow */
+  --cursorGlowOpacity: 0.62;
+
+  color: var(--ink);
+  background: radial-gradient(1200px 900px at 18% 8%, rgba(0, 74, 173, 0.18), transparent 60%),
+    radial-gradient(1000px 680px at 88% 18%, rgba(182, 203, 51, 0.14), transparent 55%),
+    radial-gradient(1100px 900px at 65% 92%, rgba(15, 72, 102, 0.22), transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg0));
+}
+
+/* Progress bar */
+.top-progress {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform-origin: left;
+  background: linear-gradient(90deg, rgba(182, 203, 51, 0.92), rgba(0, 74, 173, 0.92));
+  box-shadow: 0 0 20px rgba(182, 203, 51, 0.35);
+}
+
+/* Cursor glow
+   ✅ NO tocamos el concepto
+   ✅ Solo bajamos FUERTE la luz CELESTE que persigue
+*/
+.cursor-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    /* principal (verde) */
+    radial-gradient(220px 220px at var(--mx, 50%) var(--my, 50%), rgba(182, 203, 51, 0.08), transparent 60%),
+
+    /* ✅ esta era la “celeste molesta”: bajada y más chica */
+    radial-gradient(260px 260px at calc(var(--mx, 50%) + 80px) calc(var(--my, 50%) + 60px), rgba(0, 74, 173, 0.028), transparent 66%),
+
+    /* complemento (teal) */
+    radial-gradient(420px 420px at calc(var(--mx, 50%) - 120px) calc(var(--my, 50%) + 90px), rgba(15, 72, 102, 0.07), transparent 62%);
+  mix-blend-mode: screen;
+  opacity: var(--cursorGlowOpacity);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 14px 0;
+  backdrop-filter: blur(10px);
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 6, 13, 0.78), rgba(5, 6, 13, 0.28));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-header--scrolled::before {
+  background: linear-gradient(180deg, rgba(5, 6, 13, 0.92), rgba(5, 6, 13, 0.48));
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.app-header__inner {
+  position: relative;
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+/* =========================================================
+   ✅ LOGO MÁS PROTAGONISTA (wrap glass + más grande)
+   ========================================================= */
+.brand__logoWrap {
+  width: 100px;
+  height: 100px;
+  border-radius: 0;
+  display: grid;
+  place-items: center;
+  flex: 0 0 100px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 220ms ease;
+}
+
+.brand:hover .brand__logoWrap {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.brand__logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 0;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border: none;
+  box-shadow: none;
+  filter: none;
+  transition: transform 220ms ease;
+}
+
+.brand__name {
+  font-family: 'Unbounded', system-ui, sans-serif;
+  font-weight: 650;
+  letter-spacing: 0.35px;
+  font-size: 14px;
+}
+
+.brand__tag {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav__link {
+  position: relative;
+  font-size: 13px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+
+.nav__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(182, 203, 51, 0.22);
+  transform: translateY(-1px);
+}
+
+.cta {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  transition: transform 200ms ease, filter 200ms ease, background 200ms ease, border-color 200ms ease;
+  will-change: transform;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(260px 140px at 20% 10%, rgba(182, 203, 51, 0.22), transparent 60%),
+    radial-gradient(260px 140px at 70% 10%, rgba(0, 74, 173, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, rgba(182, 203, 51, 0.88), rgba(0, 74, 173, 0.74));
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.app-main {
+  position: relative;
+  z-index: 5;
+}
+
+.app-footer {
+  position: relative;
+  z-index: 5;
+  padding: 42px 0 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, rgba(5, 6, 13, 0.0), rgba(5, 6, 13, 0.7));
+}
+
+.app-footer__inner {
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: center;
+}
+
+.foot-logo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* footer logo wrap (más visible también) */
+.foot-logo__wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.foot-logo__img {
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
+  object-fit: contain;
+  border: none;
+  box-shadow: none;
+  filter: none;
+}
+
+.foot-title {
+  font-family: 'Unbounded', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+.foot-sub {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.foot-copy {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+}
+
+.foot-link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+  border-radius: 999px;
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.foot-link:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Social Media Icons */
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .app-header__inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .cta {
+    display: none;
+  }
+
+  /* logo más grande en mobile */
+  .brand__logoWrap {
+    width: 80px;
+    height: 80px;
+    border-radius: 0;
+    flex: 0 0 80px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .brand__logo {
+    width: 76px;
+    height: 76px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    filter: none;
+    object-fit: contain;
+  }
+}
+
+/* ✅ EMERGENCY VISIBILITY FIX (si GSAP no corre, no queda todo invisible) */
+.app-header,
+.app-main,
+.app-footer,
+.hero,
+.hero__kicker,
+.hero__title,
+.hero__subtitle,
+.hero__actions .btn,
+.hero__stats .stat {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header,
+.app-main,
+.app-footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Las capas de FX siempre atrás */
+app-bg-fx,
+.cursor-glow,
+.top-progress {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+
+/* ✅ Baja el FX completo (incluye la pelota celeste) */
+app-bg-fx {
+  opacity: 0.40 !important;
+  filter: saturate(0.9) brightness(0.9);
+}
