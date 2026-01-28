@@ -19,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   scrolled = signal(false);
 
   private rafId?: number;
+  private progressRafPending = false;
 
   ngOnInit(): void {
     ensureGsap();
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.loopProgress();
+    // ✅ calcular una vez al inicio (sin loop infinito)
+    this.updateProgressOnce();
   }
 
   ngOnDestroy(): void {
@@ -41,26 +43,33 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll')
   onScroll(): void {
     this.scrolled.set(window.scrollY > 12);
+    this.scheduleProgressUpdate();
   }
 
-  @HostListener("window:mousemove", ["$event"])
+  @HostListener('window:resize')
+  onResize(): void {
+    this.scheduleProgressUpdate();
+  }
+
+  @HostListener('window:orientationchange')
+  onOrientationChange(): void {
+    this.scheduleProgressUpdate();
+  }
+
+  @HostListener('window:mousemove', ['$event'])
   onMouse(ev: MouseEvent): void {
     const mx = (ev.clientX / Math.max(1, window.innerWidth)) * 100;
     const my = (ev.clientY / Math.max(1, window.innerHeight)) * 100;
-    document.documentElement.style.setProperty("--mx", mx + "%");
-    document.documentElement.style.setProperty("--my", my + "%");
+    document.documentElement.style.setProperty('--mx', mx + '%');
+    document.documentElement.style.setProperty('--my', my + '%');
   }
 
   scrollTo(id: string): void {
     const el = document.getElementById(id);
     if (!el) return;
 
-    // Fallback a JavaScript nativo si GSAP no está disponible
     if (!window.gsap) {
-      window.scrollTo({
-        top: el.offsetTop - 86,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: el.offsetTop - 86, behavior: 'smooth' });
       return;
     }
 
@@ -77,21 +86,31 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openWhatsApp(): void {
-    const message = encodeURIComponent('¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.');
+    const message = encodeURIComponent(
+      '¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.'
+    );
     const phoneNumber = '5491123456789'; // Reemplazar con número real
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   }
 
-  private loopProgress(): void {
-    const update = () => {
-      const doc = document.documentElement;
-      const scrollTop = doc.scrollTop || document.body.scrollTop;
-      const scrollHeight = doc.scrollHeight - doc.clientHeight;
-      const p = scrollHeight > 0 ? Math.min(1, Math.max(0, scrollTop / scrollHeight)) : 0;
-      this.progress.set(p);
-      this.rafId = requestAnimationFrame(update);
-    };
-    update();
+  // =========================
+  // ✅ Progress bar sin loop infinito
+  // =========================
+  private scheduleProgressUpdate(): void {
+    if (this.progressRafPending) return;
+    this.progressRafPending = true;
+
+    this.rafId = requestAnimationFrame(() => {
+      this.progressRafPending = false;
+      this.updateProgressOnce();
+    });
   }
-  
+
+  private updateProgressOnce(): void {
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const scrollHeight = doc.scrollHeight - doc.clientHeight;
+    const p = scrollHeight > 0 ? Math.min(1, Math.max(0, scrollTop / scrollHeight)) : 0;
+    this.progress.set(p);
+  }
 }

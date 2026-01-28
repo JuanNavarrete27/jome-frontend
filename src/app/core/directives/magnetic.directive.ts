@@ -9,10 +9,14 @@ export class MagneticDirective implements AfterViewInit, OnDestroy {
   private lastX = 0;
   private lastY = 0;
 
+  private disabled = false;
+
   constructor(private el: ElementRef<HTMLElement>) {}
 
   ngAfterViewInit(): void {
     ensureGsap();
+    // ✅ en touch/coarse pointer no aplicamos magnetic
+    this.disabled = window.matchMedia?.('(pointer: coarse)').matches ?? false;
     this.rect = this.el.nativeElement.getBoundingClientRect();
   }
 
@@ -23,10 +27,10 @@ export class MagneticDirective implements AfterViewInit, OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   onMove(ev: MouseEvent): void {
+    if (this.disabled) return;
     if (prefersReducedMotion()) return;
-    
     if (this.rafId) return;
-    
+
     this.rafId = requestAnimationFrame(() => {
       const el = this.el.nativeElement;
       if (!this.rect) this.rect = el.getBoundingClientRect();
@@ -50,20 +54,19 @@ export class MagneticDirective implements AfterViewInit, OnDestroy {
         this.lastX = targetX;
         this.lastY = targetY;
       }
-      
+
       this.rafId = undefined;
     });
   }
 
   @HostListener('mouseleave')
   onLeave(): void {
+    if (this.disabled) return;
     gsap.to(this.el.nativeElement, { x: 0, y: 0, duration: 0.35, ease: 'elastic.out(1, 0.35)' });
   }
 
   ngOnDestroy(): void {
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-    }
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     gsap.set(this.el.nativeElement, { x: 0, y: 0 });
   }
 }

@@ -73,3 +73,26 @@ body::before {
     overflow-x: hidden;
   }
 }
+
+/* =========================
+   ✅ Scroll sanity (mobile)
+   ========================= */
+html {
+  overflow-x: hidden;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh; /* mejor que 100vh en móviles con barra */
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+}
+
+/* Evitar “scroll anidado” accidental */
+app-root,
+.app-main,
+main {
+  overflow: visible;
+}
+

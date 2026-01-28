@@ -17,53 +17,65 @@ export class RevealOnScrollDirective implements AfterViewInit, OnDestroy {
     if (prefersReducedMotion()) return;
 
     const target = this.el.nativeElement;
-    
-    // PROGRESSIVE ENHANCEMENT: contenido visible por defecto
-    // Solo ocultar elementos decorativos, nunca contenido crítico
-    const isHeroContent = target.closest('.hero__copy, .hero__actions, .hero__stats');
-    const isMobile = window.innerWidth <= 768;
-    
+    const isMobile = window.matchMedia?.('(pointer: coarse)').matches ?? (window.innerWidth <= 768);
+
+    const isHeroContent = !!target.closest('.hero__copy, .hero__actions, .hero__stats');
+
+    // ✅ Progressive enhancement:
+    // - En mobile: NUNCA blur (caro y si falla trigger queda feo)
+    // - Hero: casi sin ocultar
     if (isHeroContent) {
-      // Contenido del hero: siempre visible, animación sutil solo en desktop
       if (!isMobile) {
-        gsap.set(target, { opacity: 0.95, y: 8 }); // Movimiento mínimo, casi visible
+        gsap.set(target, { opacity: 0.96, y: 8 });
+      } else {
+        gsap.set(target, { opacity: 1, y: 0 });
       }
     } else {
-      // Elementos decorativos: animación normal pero menos agresiva
       if (!isMobile) {
-        gsap.set(target, { opacity: 0.8, [this.revealFrom]: this.revealAmount * 0.6, filter: 'blur(3px)' } as any);
+        gsap.set(target, {
+          opacity: 0.85,
+          [this.revealFrom]: this.revealAmount * 0.6,
+          filter: 'blur(3px)'
+        } as any);
       } else {
-        gsap.set(target, { opacity: 0.9, [this.revealFrom]: this.revealAmount * 0.2, filter: 'blur(1px)' } as any);
+        gsap.set(target, {
+          opacity: 0.96,
+          [this.revealFrom]: this.revealAmount * 0.2
+          // ✅ sin blur
+        } as any);
       }
     }
 
-    this.trigger = ScrollTrigger.create({
-      trigger: target,
-      start: isHeroContent ? 'top 100%' : 'top 86%', // Hero anima inmediatamente
-      onEnter: () => {
-        if (isHeroContent) {
-          // Hero: animación ultra rápida y sutil
-          gsap.to(target, {
-            opacity: 1,
-            y: 0,
-            duration: isMobile ? 0.2 : 0.3,
-            ease: 'power1.out'
-          });
-        } else {
-          // Decorativos: animación normal
-          const duration = isMobile ? 0.4 : 0.7;
-          gsap.to(target, {
-            opacity: 1,
-            [this.revealFrom]: 0,
-            filter: 'blur(0px)',
-            delay: this.revealDelay,
-            duration: duration,
-            ease: 'power2.out'
-          } as any);
-        }
-      },
-      once: this.revealOnce
-    });
+    // ✅ Si ScrollTrigger falla por cualquier motivo -> no dejes nada “a medio estado”
+    try {
+      this.trigger = ScrollTrigger.create({
+        trigger: target,
+        start: isHeroContent ? 'top 100%' : 'top 86%',
+        onEnter: () => {
+          if (isHeroContent) {
+            gsap.to(target, {
+              opacity: 1,
+              y: 0,
+              duration: isMobile ? 0.18 : 0.28,
+              ease: 'power1.out'
+            });
+          } else {
+            gsap.to(target, {
+              opacity: 1,
+              [this.revealFrom]: 0,
+              filter: isMobile ? 'none' : 'blur(0px)',
+              delay: this.revealDelay,
+              duration: isMobile ? 0.28 : 0.65,
+              ease: 'power2.out'
+            } as any);
+          }
+        },
+        once: this.revealOnce
+      });
+    } catch {
+      // fallback: visible y listo
+      gsap.set(target, { opacity: 1, x: 0, y: 0, filter: 'none' } as any);
+    }
   }
 
   ngOnDestroy(): void {
