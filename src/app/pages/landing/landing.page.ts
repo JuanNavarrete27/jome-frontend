@@ -169,53 +169,66 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (prefersReducedMotion()) return;
+    // FASE 1: Render crítico inmediato - contenido visible sin animaciones
+    requestAnimationFrame(() => {
+      // Marcar que JS está listo para animaciones suaves
+      document.querySelector('.hero')?.classList.add('js-loaded');
+      
+      if (prefersReducedMotion()) return;
+      
+      // FASE 2: Animaciones suaves post-render (después del primer paint)
+      setTimeout(() => {
+        this.initNonCriticalAnimations();
+      }, 150); // 150ms después del render inicial
+    });
+  }
 
-    // HERO: optimized entrance animations
+  private initNonCriticalAnimations(): void {
+    // HERO: animaciones suaves que no bloquean contenido crítico
     this.heroTl = gsap
       .timeline({ defaults: { ease: 'power2.out' } })
       .fromTo(
         '.hero__kicker',
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 }
+        { y: 8, opacity: 0.7 }, // Menos movimiento, empieza más visible
+        { y: 0, opacity: 1, duration: 0.4 }
       )
       .fromTo(
         '.hero__title',
-        { y: 16, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        '-=0.4'
+        { y: 10, opacity: 0.8 }, // Menos movimiento, empieza más visible
+        { y: 0, opacity: 1, duration: 0.5 },
+        '-=0.2'
       )
       .fromTo(
         '.hero__subtitle',
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7 },
-        '-=0.5'
+        { y: 6, opacity: 0.7 }, // Menos movimiento, empieza más visible
+        { y: 0, opacity: 1, duration: 0.4 },
+        '-=0.3'
       )
       .fromTo(
         '.hero__actions .btn',
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.05 },
-        '-=0.4'
+        { y: 6, opacity: 0.8 }, // Menos movimiento, empieza más visible
+        { y: 0, opacity: 1, duration: 0.3, stagger: 0.03 },
+        '-=0.2'
       )
       .fromTo(
         '.hero__stats .stat',
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.04 },
-        '-=0.3'
+        { y: 6, opacity: 0.8 }, // Menos movimiento, empieza más visible
+        { y: 0, opacity: 1, duration: 0.3, stagger: 0.02 },
+        '-=0.2'
       );
 
-    // Simplified ambient effects
+    // Efectos ambientales livianos
     gsap.to('.hero__glow', {
-      opacity: 0.7,
-      duration: 1.5,
+      opacity: 0.6,
+      duration: 2,
       yoyo: true,
       repeat: -1,
       ease: 'sine.inOut'
     });
 
-    // Reduced floating animations
-    gsap.to('.shape--a', { y: -12, duration: 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.shape--b', { y: 16, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    // Animaciones flotantes reducidas para mejor performance
+    gsap.to('.shape--a', { y: -8, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.shape--b', { y: 10, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
   }
 
   ngOnDestroy(): void {

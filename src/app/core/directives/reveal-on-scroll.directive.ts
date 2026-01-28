@@ -17,18 +17,30 @@ export class RevealOnScrollDirective implements AfterViewInit, OnDestroy {
     if (prefersReducedMotion()) return;
 
     const target = this.el.nativeElement;
-    gsap.set(target, { opacity: 0, [this.revealFrom]: this.revealAmount, filter: 'blur(6px)' } as any);
+    
+    // Optimización mobile-first: no ocultar contenido inicialmente en móvil
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) {
+      gsap.set(target, { opacity: 0, [this.revealFrom]: this.revealAmount, filter: 'blur(6px)' } as any);
+    } else {
+      // En móvil: contenido visible por defecto, animación más sutil
+      gsap.set(target, { opacity: 0.85, [this.revealFrom]: this.revealAmount * 0.3, filter: 'blur(2px)' } as any);
+    }
 
     this.trigger = ScrollTrigger.create({
       trigger: target,
       start: 'top 86%',
       onEnter: () => {
+        const duration = isMobile ? 0.6 : 0.95; // Más rápido en móvil
+        const finalOpacity = isMobile ? 1 : 1;
+        const finalFilter = isMobile ? 'blur(0px)' : 'blur(0px)';
+        
         gsap.to(target, {
-          opacity: 1,
+          opacity: finalOpacity,
           [this.revealFrom]: 0,
-          filter: 'blur(0px)',
+          filter: finalFilter,
           delay: this.revealDelay,
-          duration: 0.95,
+          duration: duration,
           ease: 'power3.out'
         } as any);
       },
