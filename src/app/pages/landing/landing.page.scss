@@ -111,27 +111,28 @@
 }
 
 /* ---------------------------
-   Mobile Performance Optimizations
+   Mobile Performance Optimizations - ULTRA LITE
 --------------------------- */
 @media (max-width: 768px) {
-  /* Reducir efectos costosos en móvil */
+  /* Eliminar efectos costosos en móvil */
   .hero__glow {
-    opacity: 0.3; /* Menos intensidad */
-    background: radial-gradient(ellipse at center, rgba(0, 74, 173, 0.08), transparent 60%);
+    opacity: 0.1; /* Casi invisible */
+    background: radial-gradient(ellipse at center, rgba(0, 74, 173, 0.03), transparent 60%);
   }
   
   .shape {
-    opacity: 0.15; /* Menos opacidad */
+    opacity: 0.05; /* Mínima opacidad */
+    filter: none; /* Eliminar blur completamente */
   }
   
   .shape--a {
-    width: 120px; /* Más pequeños */
-    height: 120px;
+    width: 80px; /* Más pequeños */
+    height: 80px;
   }
   
   .shape--b {
-    width: 160px;
-    height: 160px;
+    width: 100px;
+    height: 100px;
   }
   
   /* Eliminar backdrop-filter en móvil (muy costoso) */
@@ -142,33 +143,35 @@
   
   /* Reducir box-shadow intensos */
   .device {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   }
   
   .btn:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: none; /* Eliminar transformaciones */
   }
   
   .btn--primary {
-    box-shadow: 0 4px 20px rgba(0, 74, 173, 0.15);
+    box-shadow: 0 2px 12px rgba(0, 74, 173, 0.1);
   }
   
-  /* Simplificar filtros en móvil */
+  /* Eliminar todas las transformaciones 3D en móvil */
   .card:hover,
   .workCard:hover,
   .clientTile:hover,
   .quote:hover,
   .panel:hover {
-    transform: none; /* Eliminar transformaciones 3D */
+    transform: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
   
-  /* Optimizar animaciones */
+  /* Simplificar animaciones - menos CPU */
   .meter__bar {
-    animation: meter 3s ease-in-out infinite; /* Más lento, menos CPU */
+    animation: meter 4s ease-in-out infinite; /* Más lento */
   }
   
   .track::after {
-    animation: sweep 2.5s ease-in-out infinite;
+    animation: sweep 3s ease-in-out infinite;
   }
 }
 
@@ -1180,4 +1183,4 @@
   flex-wrap: wrap;
 }
 
-/* Responsive adjus
+/* Responsive adjustments */

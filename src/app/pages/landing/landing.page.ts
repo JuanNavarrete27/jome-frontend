@@ -177,9 +177,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (prefersReducedMotion()) return;
       
       // FASE 2: Animaciones suaves post-render (después del primer paint)
+      // Reducido timeout para mejor percepción
       setTimeout(() => {
         this.initNonCriticalAnimations();
-      }, 150); // 150ms después del render inicial
+      }, 50); // 50ms después del render inicial (era 150ms)
     });
   }
 

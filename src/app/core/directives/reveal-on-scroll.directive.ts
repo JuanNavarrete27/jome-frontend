@@ -18,31 +18,49 @@ export class RevealOnScrollDirective implements AfterViewInit, OnDestroy {
 
     const target = this.el.nativeElement;
     
-    // Optimización mobile-first: no ocultar contenido inicialmente en móvil
+    // PROGRESSIVE ENHANCEMENT: contenido visible por defecto
+    // Solo ocultar elementos decorativos, nunca contenido crítico
+    const isHeroContent = target.closest('.hero__copy, .hero__actions, .hero__stats');
     const isMobile = window.innerWidth <= 768;
-    if (!isMobile) {
-      gsap.set(target, { opacity: 0, [this.revealFrom]: this.revealAmount, filter: 'blur(6px)' } as any);
+    
+    if (isHeroContent) {
+      // Contenido del hero: siempre visible, animación sutil solo en desktop
+      if (!isMobile) {
+        gsap.set(target, { opacity: 0.95, y: 8 }); // Movimiento mínimo, casi visible
+      }
     } else {
-      // En móvil: contenido visible por defecto, animación más sutil
-      gsap.set(target, { opacity: 0.85, [this.revealFrom]: this.revealAmount * 0.3, filter: 'blur(2px)' } as any);
+      // Elementos decorativos: animación normal pero menos agresiva
+      if (!isMobile) {
+        gsap.set(target, { opacity: 0.8, [this.revealFrom]: this.revealAmount * 0.6, filter: 'blur(3px)' } as any);
+      } else {
+        gsap.set(target, { opacity: 0.9, [this.revealFrom]: this.revealAmount * 0.2, filter: 'blur(1px)' } as any);
+      }
     }
 
     this.trigger = ScrollTrigger.create({
       trigger: target,
-      start: 'top 86%',
+      start: isHeroContent ? 'top 100%' : 'top 86%', // Hero anima inmediatamente
       onEnter: () => {
-        const duration = isMobile ? 0.6 : 0.95; // Más rápido en móvil
-        const finalOpacity = isMobile ? 1 : 1;
-        const finalFilter = isMobile ? 'blur(0px)' : 'blur(0px)';
-        
-        gsap.to(target, {
-          opacity: finalOpacity,
-          [this.revealFrom]: 0,
-          filter: finalFilter,
-          delay: this.revealDelay,
-          duration: duration,
-          ease: 'power3.out'
-        } as any);
+        if (isHeroContent) {
+          // Hero: animación ultra rápida y sutil
+          gsap.to(target, {
+            opacity: 1,
+            y: 0,
+            duration: isMobile ? 0.2 : 0.3,
+            ease: 'power1.out'
+          });
+        } else {
+          // Decorativos: animación normal
+          const duration = isMobile ? 0.4 : 0.7;
+          gsap.to(target, {
+            opacity: 1,
+            [this.revealFrom]: 0,
+            filter: 'blur(0px)',
+            delay: this.revealDelay,
+            duration: duration,
+            ease: 'power2.out'
+          } as any);
+        }
       },
       once: this.revealOnce
     });
