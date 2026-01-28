@@ -14,8 +14,8 @@ export class MagneticDirective implements OnDestroy {
   private disabled = false;
 
   constructor(private el: ElementRef<HTMLElement>) {
-    // Deshabilitar en móvil/touch desde el inicio
-    this.disabled = isMobile();
+    // ✅ Permitir magnetic ligero en móvil (no deshabilitar completamente)
+    this.disabled = false;
   }
 
   ngAfterViewInit(): void {
@@ -30,8 +30,16 @@ export class MagneticDirective implements OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   onMove(ev: MouseEvent): void {
-    if (this.disabled || prefersReducedMotion()) return;
+    if (prefersReducedMotion()) return;
     if (this.rafId) return;
+
+    const isMobileDevice = isMobile();
+    
+    // ✅ Permitir magnetic en móvil pero con fuerza reducida
+    if (isMobileDevice) {
+      this.magneticStrength = 0.1; // Muy ligero en móvil
+      this.magneticRadius = 40;   // Radio más pequeño
+    }
 
     this.rafId = requestAnimationFrame(() => {
       const el = this.el.nativeElement;
@@ -50,7 +58,7 @@ export class MagneticDirective implements OnDestroy {
         gsap.to(el, {
           x: targetX,
           y: targetY,
-          duration: 0.25,
+          duration: isMobileDevice ? 0.15 : 0.25, // Más rápido en móvil
           ease: 'power3.out'
         });
         this.lastX = targetX;
@@ -63,8 +71,13 @@ export class MagneticDirective implements OnDestroy {
 
   @HostListener('mouseleave')
   onLeave(): void {
-    if (this.disabled) return;
-    gsap.to(this.el.nativeElement, { x: 0, y: 0, duration: 0.35, ease: 'elastic.out(1, 0.35)' });
+    const isMobileDevice = isMobile();
+    gsap.to(this.el.nativeElement, { 
+      x: 0, 
+      y: 0, 
+      duration: isMobileDevice ? 0.2 : 0.35, // Más rápido en móvil
+      ease: 'power2.out' // Menos costoso que elastic
+    });
   }
 
   ngOnDestroy(): void {

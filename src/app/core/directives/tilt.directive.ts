@@ -10,8 +10,8 @@ export class TiltDirective {
   private disabled = false;
 
   constructor(private el: ElementRef<HTMLElement>) {
-    // ✅ Deshabilitar en móvil/touch desde el inicio
-    this.disabled = isMobile();
+    // ✅ Permitir tilt ligero en móvil (no deshabilitar completamente)
+    this.disabled = false;
   }
 
   @HostListener('mousemove', ['$event'])
@@ -21,12 +21,17 @@ export class TiltDirective {
 
     const target = this.el.nativeElement;
     const rect = target.getBoundingClientRect();
+    const isMobileDevice = isMobile();
 
     const px = (ev.clientX - rect.left) / rect.width;
     const py = (ev.clientY - rect.top) / rect.height;
 
-    const rx = (py - 0.5) * -this.tiltMax;
-    const ry = (px - 0.5) * this.tiltMax;
+    // ✅ Reducir intensidad en móvil pero permitir movimiento
+    const mobileMultiplier = isMobileDevice ? 0.3 : 1;
+    const adjustedMax = this.tiltMax * mobileMultiplier;
+    
+    const rx = (py - 0.5) * -adjustedMax;
+    const ry = (px - 0.5) * adjustedMax;
 
     target.style.transform = `perspective(${this.tiltPerspective}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
   }

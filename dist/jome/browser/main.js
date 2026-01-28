@@ -47508,8 +47508,8 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
     const mobileInfo = { isMobile: isMobile(), shouldReduceEffects: shouldReduceEffects() };
     this.isCoarsePointer = mobileInfo.isMobile;
     const saveData = navigator?.connection?.saveData === true;
-    this.targetFps = this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects ? 15 : 30;
-    if (this.isCoarsePointer && saveData && mobileInfo.shouldReduceEffects)
+    this.targetFps = this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects ? 20 : 30;
+    if (saveData && mobileInfo.shouldReduceEffects && this.isCoarsePointer)
       return;
     const canvas = this.canvasRef.nativeElement;
     this.ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
@@ -47559,12 +47559,12 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
     this.my = ev.clientY / Math.max(1, this.h);
   }
   seed() {
-    const baseCount = Math.floor(this.w / 180);
+    const baseCount = Math.floor(this.w / 160);
     const shouldReduce = shouldReduceEffects();
-    const count = this.isCoarsePointer ? Math.min(6, Math.max(3, baseCount)) : shouldReduce ? Math.min(8, Math.max(4, baseCount)) : Math.min(12, Math.max(6, baseCount));
+    const count = this.isCoarsePointer ? Math.min(8, Math.max(4, baseCount)) : shouldReduce ? Math.min(10, Math.max(5, baseCount)) : Math.min(12, Math.max(6, baseCount));
     this.orbs = Array.from({ length: count }).map(() => {
-      const baseRadius = this.isCoarsePointer ? 50 : 70;
-      const radiusVariation = this.isCoarsePointer ? 100 : 150;
+      const baseRadius = this.isCoarsePointer ? 60 : 70;
+      const radiusVariation = this.isCoarsePointer ? 120 : 150;
       const r = baseRadius + Math.random() * radiusVariation;
       return {
         x: Math.random() * this.w,
@@ -47623,7 +47623,7 @@ var MagneticDirective = class _MagneticDirective {
     this.lastX = 0;
     this.lastY = 0;
     this.disabled = false;
-    this.disabled = isMobile();
+    this.disabled = false;
   }
   ngAfterViewInit() {
     if (prefersReducedMotion() || this.disabled)
@@ -47634,10 +47634,15 @@ var MagneticDirective = class _MagneticDirective {
     this.rect = this.el.nativeElement.getBoundingClientRect();
   }
   onMove(ev) {
-    if (this.disabled || prefersReducedMotion())
+    if (prefersReducedMotion())
       return;
     if (this.rafId)
       return;
+    const isMobileDevice = isMobile();
+    if (isMobileDevice) {
+      this.magneticStrength = 0.1;
+      this.magneticRadius = 40;
+    }
     this.rafId = requestAnimationFrame(() => {
       const el = this.el.nativeElement;
       if (!this.rect)
@@ -47652,7 +47657,8 @@ var MagneticDirective = class _MagneticDirective {
         gsap.to(el, {
           x: targetX,
           y: targetY,
-          duration: 0.25,
+          duration: isMobileDevice ? 0.15 : 0.25,
+          // Más rápido en móvil
           ease: "power3.out"
         });
         this.lastX = targetX;
@@ -47662,9 +47668,15 @@ var MagneticDirective = class _MagneticDirective {
     });
   }
   onLeave() {
-    if (this.disabled)
-      return;
-    gsap.to(this.el.nativeElement, { x: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.35)" });
+    const isMobileDevice = isMobile();
+    gsap.to(this.el.nativeElement, {
+      x: 0,
+      y: 0,
+      duration: isMobileDevice ? 0.2 : 0.35,
+      // Más rápido en móvil
+      ease: "power2.out"
+      // Menos costoso que elastic
+    });
   }
   ngOnDestroy() {
     if (this.rafId)
@@ -47704,7 +47716,7 @@ function AppComponent_nav_13_Template(rf, ctx) {
     });
     \u0275\u0275text(2, "Servicios");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "a", 38);
+    \u0275\u0275elementStart(3, "a", 39);
     \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_3_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47713,7 +47725,7 @@ function AppComponent_nav_13_Template(rf, ctx) {
     });
     \u0275\u0275text(4, "Portfolio");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "a", 38);
+    \u0275\u0275elementStart(5, "a", 40);
     \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_5_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47722,7 +47734,7 @@ function AppComponent_nav_13_Template(rf, ctx) {
     });
     \u0275\u0275text(6, "Clientes");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "a", 38);
+    \u0275\u0275elementStart(7, "a", 41);
     \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_7_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47731,7 +47743,7 @@ function AppComponent_nav_13_Template(rf, ctx) {
     });
     \u0275\u0275text(8, "Proceso");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "a", 38);
+    \u0275\u0275elementStart(9, "a", 42);
     \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_9_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47745,7 +47757,7 @@ function AppComponent_nav_13_Template(rf, ctx) {
 function AppComponent_div_14_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 39)(1, "a", 40);
+    \u0275\u0275elementStart(0, "div", 43)(1, "a", 44);
     \u0275\u0275listener("click", function AppComponent_div_14_Template_a_click_1_listener($event) {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47754,7 +47766,7 @@ function AppComponent_div_14_Template(rf, ctx) {
     });
     \u0275\u0275text(2, " Ver trabajos ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "a", 41);
+    \u0275\u0275elementStart(3, "a", 45);
     \u0275\u0275listener("click", function AppComponent_div_14_Template_a_click_3_listener($event) {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -47768,13 +47780,13 @@ function AppComponent_div_14_Template(rf, ctx) {
 function AppComponent_button_15_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 42);
+    \u0275\u0275elementStart(0, "button", 46);
     \u0275\u0275listener("click", function AppComponent_button_15_Template_button_click_0_listener() {
       \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.toggleMenu());
     });
-    \u0275\u0275element(1, "span", 43)(2, "span", 43)(3, "span", 43);
+    \u0275\u0275element(1, "span", 47)(2, "span", 47)(3, "span", 47);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -47785,18 +47797,18 @@ function AppComponent_button_15_Template(rf, ctx) {
 function AppComponent_div_16_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 44);
+    \u0275\u0275elementStart(0, "div", 48);
     \u0275\u0275listener("click", function AppComponent_div_16_Template_div_click_0_listener() {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeMenu());
     });
-    \u0275\u0275elementStart(1, "nav", 45);
+    \u0275\u0275elementStart(1, "nav", 49);
     \u0275\u0275listener("click", function AppComponent_div_16_Template_nav_click_1_listener($event) {
       \u0275\u0275restoreView(_r5);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(2, "div", 46)(3, "div", 47)(4, "span", 5);
+    \u0275\u0275elementStart(2, "div", 50)(3, "div", 51)(4, "span", 5);
     \u0275\u0275element(5, "img", 6);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "span", 7)(7, "span", 8);
@@ -47805,100 +47817,110 @@ function AppComponent_div_16_Template(rf, ctx) {
     \u0275\u0275elementStart(9, "span", 9);
     \u0275\u0275text(10, "Soluciones Digitales");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(11, "button", 48);
+    \u0275\u0275elementStart(11, "button", 52);
     \u0275\u0275listener("click", function AppComponent_div_16_Template_button_click_11_listener() {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeMenu());
     });
     \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(12, "svg", 49);
-    \u0275\u0275element(13, "path", 50);
+    \u0275\u0275elementStart(12, "svg", 53);
+    \u0275\u0275element(13, "path", 54);
     \u0275\u0275elementEnd()()();
     \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(14, "div", 51)(15, "a", 52);
+    \u0275\u0275elementStart(14, "div", 55)(15, "a", 56);
     \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_15_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("services");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275elementStart(16, "span", 53);
-    \u0275\u0275text(17, "\u{1F6E0}\uFE0F");
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(16, "svg", 57);
+    \u0275\u0275element(17, "path", 58)(18, "path", 59);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(18, "span");
-    \u0275\u0275text(19, "Servicios");
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(19, "span");
+    \u0275\u0275text(20, "Servicios");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(20, "a", 52);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_20_listener($event) {
+    \u0275\u0275elementStart(21, "a", 60);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_21_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("work");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275elementStart(21, "span", 53);
-    \u0275\u0275text(22, "\u{1F4BC}");
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(22, "svg", 57);
+    \u0275\u0275element(23, "path", 61)(24, "path", 62);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(23, "span");
-    \u0275\u0275text(24, "Portfolio");
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(25, "span");
+    \u0275\u0275text(26, "Portfolio");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(25, "a", 52);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_25_listener($event) {
+    \u0275\u0275elementStart(27, "a", 63);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_27_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("clients");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275elementStart(26, "span", 53);
-    \u0275\u0275text(27, "\u{1F91D}");
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(28, "svg", 57);
+    \u0275\u0275element(29, "path", 64)(30, "circle", 65)(31, "path", 66)(32, "path", 67);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(28, "span");
-    \u0275\u0275text(29, "Clientes");
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(33, "span");
+    \u0275\u0275text(34, "Clientes");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(30, "a", 52);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_30_listener($event) {
+    \u0275\u0275elementStart(35, "a", 68);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_35_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("process");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275elementStart(31, "span", 53);
-    \u0275\u0275text(32, "\u{1F4CB}");
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(36, "svg", 57);
+    \u0275\u0275element(37, "path", 69)(38, "path", 70);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(33, "span");
-    \u0275\u0275text(34, "Proceso");
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(39, "span");
+    \u0275\u0275text(40, "Proceso");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(35, "a", 52);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_35_listener($event) {
+    \u0275\u0275elementStart(41, "a", 71);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_41_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("contact");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275elementStart(36, "span", 53);
-    \u0275\u0275text(37, "\u{1F4DE}");
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(42, "svg", 57);
+    \u0275\u0275element(43, "path", 72);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(38, "span");
-    \u0275\u0275text(39, "Contacto");
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(44, "span");
+    \u0275\u0275text(45, "Contacto");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(40, "div", 54)(41, "a", 55);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_41_listener($event) {
+    \u0275\u0275elementStart(46, "div", 73)(47, "a", 74);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_47_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.navigateAndClose("work");
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275text(42, " Ver trabajos ");
+    \u0275\u0275text(48, " Ver trabajos ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(43, "a", 56);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_43_listener($event) {
+    \u0275\u0275elementStart(49, "a", 75);
+    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_49_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.openWhatsApp();
       ctx_r1.closeMenu();
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275text(44, " Pedir propuesta ");
+    \u0275\u0275text(50, " Pedir propuesta ");
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -48054,7 +48076,7 @@ var AppComponent = class _AppComponent {
           return ctx.onMouse($event);
         }, false, \u0275\u0275resolveWindow);
       }
-    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 46, vars: 11, consts: [["aria-hidden", "true", 1, "cursor-glow"], ["aria-hidden", "true", 1, "top-progress"], [1, "app-header"], [1, "app-header__inner"], ["href", "#", 1, "brand", 3, "click"], ["aria-hidden", "true", 1, "brand__logoWrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "brand__logo"], [1, "brand__text"], [1, "brand__name"], [1, "brand__tag"], ["class", "nav", 4, "ngIf"], ["class", "cta", 4, "ngIf"], ["class", "hamburger-btn", "aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 3, "click", 4, "ngIf"], ["class", "mobile-nav-overlay", 3, "mobile-nav-overlay--open", "click", 4, "ngIf"], [1, "app-main"], [1, "app-footer"], [1, "app-footer__inner"], [1, "foot-left"], [1, "foot-logo"], ["aria-hidden", "true", 1, "foot-logo__wrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "foot-logo__img"], [1, "foot-title"], [1, "foot-sub"], [1, "foot-copy"], [1, "foot-right"], [1, "social-links"], ["href", "https://wa.me/59892454958", "target", "_blank", "aria-label", "WhatsApp", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "aria-label", "WhatsApp"], ["d", "M12 2a10 10 0 0 0-8.66 15.02L2 22l5.13-1.35A10 10 0 1 0 12 2Z", "fill", "none", "stroke", "#1E5BFF", "stroke-width", "2", "stroke-linejoin", "round"], ["d", "M16.7 13.9c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.8 6.8 0 0 1-3.2-3.2c-.1-.2 0-.4.1-.5l.6-.7c.2-.2.2-.4.1-.6l-.7-1.6c-.1-.3-.4-.3-.6-.3h-.5c-.2 0-.5.1-.7.3-.2.2-.9.8-.9 2 0 1.2.9 2.4 1 2.6.1.2 1.7 2.7 4.2 3.7 2.4 1 2.4.7 2.9.7.4 0 1.3-.5 1.5-1 .2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z", "fill", "#1E5BFF"], ["href", "https://instagram.com/jome.uy", "target", "_blank", "aria-label", "Instagram", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none", "aria-label", "Instagram"], ["x", "4", "y", "4", "width", "16", "height", "16", "rx", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "12", "cy", "12", "r", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "17", "cy", "7", "r", "1.2", "fill", "#1E5BFF"], [2, "height", "20px"], ["href", "#", 1, "foot-link", 3, "click"], [1, "nav"], ["magnetic", "", "href", "#", 1, "nav__link", 3, "click"], [1, "cta"], ["magnetic", "", "href", "#", 1, "btn", "btn--ghost", 3, "click"], ["magnetic", "", "href", "#", 1, "btn", "btn--primary", 3, "click"], ["aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 1, "hamburger-btn", 3, "click"], [1, "hamburger-line"], [1, "mobile-nav-overlay", 3, "click"], ["id", "mobile-nav", 1, "mobile-nav", 3, "click"], [1, "mobile-nav__header"], [1, "brand", "mobile-brand"], ["aria-label", "Close menu", 1, "mobile-nav__close", 3, "click"], ["width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none"], ["d", "M18 6L6 18M6 6l12 12", "stroke", "currentColor", "stroke-width", "2", "stroke-linecap", "round"], [1, "mobile-nav__links"], ["href", "#", 1, "mobile-nav__link", 3, "click"], [1, "mobile-nav__icon"], [1, "mobile-nav__footer"], ["href", "#", 1, "btn", "btn--ghost", "btn--full", 3, "click"], ["href", "#", 1, "btn", "btn--primary", "btn--full", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
+    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 46, vars: 11, consts: [["aria-hidden", "true", 1, "cursor-glow"], ["aria-hidden", "true", 1, "top-progress"], [1, "app-header"], [1, "app-header__inner"], ["href", "#", 1, "brand", 3, "click"], ["aria-hidden", "true", 1, "brand__logoWrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "brand__logo"], [1, "brand__text"], [1, "brand__name"], [1, "brand__tag"], ["class", "nav", 4, "ngIf"], ["class", "cta", 4, "ngIf"], ["class", "hamburger-btn", "aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 3, "click", 4, "ngIf"], ["class", "mobile-nav-overlay", 3, "mobile-nav-overlay--open", "click", 4, "ngIf"], [1, "app-main"], [1, "app-footer"], [1, "app-footer__inner"], [1, "foot-left"], [1, "foot-logo"], ["aria-hidden", "true", 1, "foot-logo__wrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "foot-logo__img"], [1, "foot-title"], [1, "foot-sub"], [1, "foot-copy"], [1, "foot-right"], [1, "social-links"], ["href", "https://wa.me/59892454958", "target", "_blank", "aria-label", "WhatsApp", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "aria-label", "WhatsApp"], ["d", "M12 2a10 10 0 0 0-8.66 15.02L2 22l5.13-1.35A10 10 0 1 0 12 2Z", "fill", "none", "stroke", "#1E5BFF", "stroke-width", "2", "stroke-linejoin", "round"], ["d", "M16.7 13.9c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.8 6.8 0 0 1-3.2-3.2c-.1-.2 0-.4.1-.5l.6-.7c.2-.2.2-.4.1-.6l-.7-1.6c-.1-.3-.4-.3-.6-.3h-.5c-.2 0-.5.1-.7.3-.2.2-.9.8-.9 2 0 1.2.9 2.4 1 2.6.1.2 1.7 2.7 4.2 3.7 2.4 1 2.4.7 2.9.7.4 0 1.3-.5 1.5-1 .2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z", "fill", "#1E5BFF"], ["href", "https://instagram.com/jome.uy", "target", "_blank", "aria-label", "Instagram", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none", "aria-label", "Instagram"], ["x", "4", "y", "4", "width", "16", "height", "16", "rx", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "12", "cy", "12", "r", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "17", "cy", "7", "r", "1.2", "fill", "#1E5BFF"], [2, "height", "20px"], ["href", "#", 1, "foot-link", 3, "click"], [1, "nav"], ["magnetic", "", "href", "#services", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#work", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#clients", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#process", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#contact", 1, "nav__link", 3, "click"], [1, "cta"], ["magnetic", "", "href", "#", 1, "btn", "btn--ghost", 3, "click"], ["magnetic", "", "href", "#", 1, "btn", "btn--primary", 3, "click"], ["aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 1, "hamburger-btn", 3, "click"], [1, "hamburger-line"], [1, "mobile-nav-overlay", 3, "click"], ["id", "mobile-nav", 1, "mobile-nav", 3, "click"], [1, "mobile-nav__header"], [1, "brand", "mobile-brand"], ["aria-label", "Close menu", 1, "mobile-nav__close", 3, "click"], ["width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none"], ["d", "M18 6L6 18M6 6l12 12", "stroke", "currentColor", "stroke-width", "2", "stroke-linecap", "round"], [1, "mobile-nav__links"], ["href", "#services", "id", "services", 1, "mobile-nav__link", 3, "click"], ["width", "20", "height", "20", "viewBox", "0 0 24 24", "fill", "none", 1, "mobile-nav__icon"], ["d", "M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M12 8v4m0 4h.01", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round"], ["href", "#work", "id", "work", 1, "mobile-nav__link", 3, "click"], ["d", "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M12 12l8-4m-8 4l-8-4m8 4v8m0-8L4 8m8 4l8-4", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#clients", "id", "clients", 1, "mobile-nav__link", 3, "click"], ["d", "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["cx", "9", "cy", "7", "r", "4", "stroke", "#004AAD", "stroke-width", "2"], ["d", "M23 21v-2a4 4 0 0 0-3-3.87", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M16 3.13a4 4 0 0 1 0 7.75", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#process", "id", "process", 1, "mobile-nav__link", 3, "click"], ["d", "M9 11l3 3L22 4", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#contact", "id", "contact", 1, "mobile-nav__link", 3, "click"], ["d", "M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], [1, "mobile-nav__footer"], [1, "btn", "btn--ghost", "btn--full", 3, "click"], ["href", "#", 1, "btn", "btn--primary", "btn--full", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
       if (rf & 1) {
         \u0275\u0275element(0, "app-bg-fx")(1, "div", 0)(2, "div", 1);
         \u0275\u0275elementStart(3, "header", 2)(4, "div", 3)(5, "a", 4);
@@ -48073,7 +48095,7 @@ var AppComponent = class _AppComponent {
         \u0275\u0275elementEnd()()();
         \u0275\u0275template(13, AppComponent_nav_13_Template, 11, 0, "nav", 10)(14, AppComponent_div_14_Template, 5, 0, "div", 11)(15, AppComponent_button_15_Template, 4, 1, "button", 12);
         \u0275\u0275elementEnd()();
-        \u0275\u0275template(16, AppComponent_div_16_Template, 45, 4, "div", 13);
+        \u0275\u0275template(16, AppComponent_div_16_Template, 51, 4, "div", 13);
         \u0275\u0275elementStart(17, "main", 14);
         \u0275\u0275element(18, "router-outlet");
         \u0275\u0275elementEnd();
@@ -48126,7 +48148,7 @@ var AppComponent = class _AppComponent {
         \u0275\u0275advance(15);
         \u0275\u0275textInterpolate1(" ", ctx.year, " JoMe Soluciones Digitales \u2014 Todos los derechos reservados.");
       }
-    }, dependencies: [RouterOutlet, BackgroundFxComponent, MagneticDirective, CommonModule, NgIf], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  --bg0: #05060d;\n  --bg1: #070910;\n  --bg2: #0b0e17;\n  --ink: rgba(255, 255, 255, 0.92);\n  --muted: rgba(255, 255, 255, 0.66);\n  --lime: #b6cb33;\n  --blue: #004aad;\n  --teal: #0f4866;\n  --glass: rgba(255, 255, 255, 0.06);\n  --glass2: rgba(255, 255, 255, 0.09);\n  --line: rgba(255, 255, 255, 0.12);\n  --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);\n  --shadow2: 0 12px 44px rgba(0, 0, 0, 0.5);\n  --radius: 18px;\n  --radius2: 24px;\n  --cursorGlowOpacity: 0.62;\n  color: var(--ink);\n  background:\n    radial-gradient(\n      1200px 900px at 18% 8%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%),\n    radial-gradient(\n      1000px 680px at 88% 18%,\n      rgba(182, 203, 51, 0.14),\n      transparent 55%),\n    radial-gradient(\n      1100px 900px at 65% 92%,\n      rgba(15, 72, 102, 0.22),\n      transparent 60%),\n    linear-gradient(\n      180deg,\n      var(--bg1),\n      var(--bg0));\n}\n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 3px;\n  transform-origin: left;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0.92),\n      rgba(0, 74, 173, 0.92));\n  box-shadow: 0 0 20px rgba(182, 203, 51, 0.35);\n}\n.cursor-glow[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 1;\n  background:\n    radial-gradient(\n      220px 220px at var(--mx, 50%) var(--my, 50%),\n      rgba(182, 203, 51, 0.08),\n      transparent 60%),\n    radial-gradient(\n      260px 260px at calc(var(--mx, 50%) + 80px) calc(var(--my, 50%) + 60px),\n      rgba(0, 74, 173, 0.028),\n      transparent 66%),\n    radial-gradient(\n      420px 420px at calc(var(--mx, 50%) - 120px) calc(var(--my, 50%) + 90px),\n      rgba(15, 72, 102, 0.07),\n      transparent 62%);\n  mix-blend-mode: screen;\n  opacity: var(--cursorGlowOpacity);\n}\n.app-header[_ngcontent-%COMP%] {\n  position: sticky;\n  top: 0;\n  z-index: 30;\n  padding: 14px 0;\n  backdrop-filter: blur(10px);\n}\n.app-header[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.78),\n      rgba(5, 6, 13, 0.28));\n  border-bottom: 1px solid rgba(255, 255, 255, 0.08);\n}\n.app-header--scrolled[_ngcontent-%COMP%]::before {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.92),\n      rgba(5, 6, 13, 0.48));\n  border-bottom-color: rgba(255, 255, 255, 0.12);\n}\n.app-header__inner[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: grid;\n  grid-template-columns: 1fr auto 1fr;\n  align-items: center;\n  gap: 16px;\n}\n.brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  text-decoration: none;\n  color: var(--ink);\n}\n.brand__logoWrap[_ngcontent-%COMP%] {\n  width: 100px;\n  height: 100px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  flex: 0 0 100px;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n  transition: transform 220ms ease;\n}\n.brand[_ngcontent-%COMP%]:hover   .brand__logoWrap[_ngcontent-%COMP%] {\n  transform: translateY(-1px);\n  filter: brightness(1.06);\n}\n.brand__logo[_ngcontent-%COMP%] {\n  width: 96px;\n  height: 96px;\n  border-radius: 0;\n  object-fit: contain;\n  object-position: center;\n  display: block;\n  border: none;\n  box-shadow: none;\n  filter: none;\n  transition: transform 220ms ease;\n}\n.brand__name[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 650;\n  letter-spacing: 0.35px;\n  font-size: 14px;\n}\n.brand__tag[_ngcontent-%COMP%] {\n  display: block;\n  font-size: 12px;\n  color: var(--muted);\n  margin-top: 2px;\n}\n.nav[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 14px;\n  justify-content: center;\n  align-items: center;\n}\n.nav__link[_ngcontent-%COMP%] {\n  position: relative;\n  font-size: 13px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.78);\n  padding: 10px 12px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.02);\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  transition:\n    transform 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n}\n.nav__link[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.06);\n  border-color: rgba(182, 203, 51, 0.22);\n  transform: translateY(-1px);\n}\n.cta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: flex-end;\n  gap: 10px;\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  height: 42px;\n  padding: 0 16px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  color: rgba(255, 255, 255, 0.92);\n  text-decoration: none;\n  cursor: pointer;\n  position: relative;\n  background: rgba(255, 255, 255, 0.04);\n  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);\n  transition:\n    transform 200ms ease,\n    filter 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n  will-change: transform;\n}\n.btn[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -1px;\n  border-radius: inherit;\n  background:\n    radial-gradient(\n      260px 140px at 20% 10%,\n      rgba(182, 203, 51, 0.22),\n      transparent 60%),\n    radial-gradient(\n      260px 140px at 70% 10%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%);\n  opacity: 0;\n  transition: opacity 220ms ease;\n  pointer-events: none;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  border-color: rgba(255, 255, 255, 0.18);\n}\n.btn[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: rgba(255, 255, 255, 0.03);\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(182, 203, 51, 0.88),\n      rgba(0, 74, 173, 0.74));\n  border-color: rgba(255, 255, 255, 0.22);\n}\n.app-main[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n}\n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n  padding: 42px 0 56px;\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0),\n      rgba(5, 6, 13, 0.7));\n}\n.app-footer__inner[_ngcontent-%COMP%] {\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: flex;\n  justify-content: space-between;\n  gap: 22px;\n  align-items: center;\n}\n.foot-logo[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  align-items: center;\n}\n.foot-logo__wrap[_ngcontent-%COMP%] {\n  width: 60px;\n  height: 60px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n}\n.foot-logo__img[_ngcontent-%COMP%] {\n  width: 56px;\n  height: 56px;\n  border-radius: 0;\n  object-fit: contain;\n  border: none;\n  box-shadow: none;\n  filter: none;\n}\n.foot-title[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 600;\n}\n.foot-sub[_ngcontent-%COMP%] {\n  color: var(--muted);\n  font-size: 12px;\n}\n.foot-copy[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.foot-link[_ngcontent-%COMP%] {\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.75);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.04);\n  padding: 12px 16px;\n  border-radius: 999px;\n  transition: transform 200ms ease, background 200ms ease;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 44px;\n  min-width: 44px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  cursor: pointer;\n  font-size: 14px;\n}\n@media (max-width: 768px) {\n  .foot-link[_ngcontent-%COMP%] {\n    padding: 10px 14px;\n    font-size: 13px;\n  }\n}\n.foot-link[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  background: rgba(255, 255, 255, 0.08);\n}\n.social-links[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n}\n.social-link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: rgba(59, 130, 246, 0.1);\n  border: 1px solid rgba(59, 130, 246, 0.2);\n  color: #3b82f6;\n  transition: all 0.2s ease;\n  text-decoration: none;\n}\n.social-link[_ngcontent-%COMP%]:hover {\n  background: rgba(59, 130, 246, 0.2);\n  border-color: rgba(59, 130, 246, 0.4);\n  transform: translateY(-2px);\n  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);\n}\n.social-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n@media (max-width: 980px) {\n  .app-header__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr auto;\n  }\n  .nav[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n.hamburger-btn[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 44px;\n  height: 44px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 12px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  position: relative;\n  z-index: 1001;\n}\n.hamburger-btn[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.hamburger-line[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 2px;\n  background: currentColor;\n  border-radius: 2px;\n  transition: all 0.3s ease;\n  margin: 2px 0;\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(1) {\n  transform: rotate(45deg) translate(5px, 5px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(2) {\n  opacity: 0;\n  transform: translateX(10px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(3) {\n  transform: rotate(-45deg) translate(7px, -6px);\n}\n.mobile-nav-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.5);\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.3s ease, visibility 0.3s ease;\n  z-index: 1000;\n}\n.mobile-nav-overlay--open[_ngcontent-%COMP%] {\n  opacity: 1;\n  visibility: visible;\n}\n.mobile-nav[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: min(320px, 85vw);\n  background: var(--bg1);\n  border-left: 1px solid var(--line);\n  transform: translateX(100%);\n  transition: transform 0.3s ease;\n  z-index: 1001;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.mobile-nav--open[_ngcontent-%COMP%] {\n  transform: translateX(0);\n}\n.mobile-nav__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px;\n  border-bottom: 1px solid var(--line);\n  background: rgba(255, 255, 255, 0.02);\n}\n.mobile-brand[_ngcontent-%COMP%] {\n  flex: 1;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logoWrap[_ngcontent-%COMP%] {\n  width: 50px;\n  height: 50px;\n  flex: 0 0 50px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logo[_ngcontent-%COMP%] {\n  width: 46px;\n  height: 46px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__tag[_ngcontent-%COMP%] {\n  display: none;\n}\n.mobile-nav__close[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 10px;\n  color: var(--ink);\n  cursor: pointer;\n  transition: all 0.2s ease;\n}\n.mobile-nav__close[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.mobile-nav__links[_ngcontent-%COMP%] {\n  padding: 16px 0;\n}\n.mobile-nav__link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n  padding: 16px 20px;\n  color: var(--ink);\n  text-decoration: none;\n  font-size: 16px;\n  font-weight: 500;\n  transition: all 0.2s ease;\n  border: none;\n  background: none;\n  width: 100%;\n  text-align: left;\n  cursor: pointer;\n}\n.mobile-nav__link[_ngcontent-%COMP%]:hover, \n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  background: rgba(182, 203, 51, 0.1);\n  color: var(--lime);\n}\n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--lime);\n  outline-offset: -2px;\n}\n.mobile-nav__icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 24px;\n  text-align: center;\n  opacity: 0.8;\n}\n.mobile-nav__footer[_ngcontent-%COMP%] {\n  padding: 16px;\n  border-top: 1px solid var(--line);\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  background: rgba(255, 255, 255, 0.02);\n}\n@media (max-width: 768px) {\n  .mobile-nav[_ngcontent-%COMP%] {\n    width: 85vw;\n  }\n  .mobile-nav__link[_ngcontent-%COMP%] {\n    font-size: 18px;\n    padding: 18px 20px;\n  }\n  .mobile-nav__icon[_ngcontent-%COMP%] {\n    font-size: 22px;\n  }\n}\n@media (max-width: 540px) {\n  .cta[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .brand__logoWrap[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    border-radius: 0;\n    flex: 0 0 80px;\n    background: transparent;\n    border: none;\n    box-shadow: none;\n  }\n  .brand__logo[_ngcontent-%COMP%] {\n    width: 76px;\n    height: 76px;\n    border-radius: 0;\n    border: none;\n    box-shadow: none;\n    filter: none;\n    object-fit: contain;\n  }\n  .app-header[_ngcontent-%COMP%] {\n    padding: 10px 0;\n  }\n  .app-header__inner[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%], \n.hero[_ngcontent-%COMP%], \n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n  filter: none !important;\n}\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n}\napp-bg-fx[_ngcontent-%COMP%], \n.cursor-glow[_ngcontent-%COMP%], \n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n}\napp-bg-fx[_ngcontent-%COMP%] {\n  opacity: 0.4 !important;\n  filter: saturate(0.9) brightness(0.9);\n}\n/*# sourceMappingURL=app.component.css.map */'], changeDetection: 0 });
+    }, dependencies: [RouterOutlet, BackgroundFxComponent, MagneticDirective, CommonModule, NgIf], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  --bg0: #05060d;\n  --bg1: #070910;\n  --bg2: #0b0e17;\n  --ink: rgba(255, 255, 255, 0.92);\n  --muted: rgba(255, 255, 255, 0.66);\n  --lime: #b6cb33;\n  --blue: #004aad;\n  --teal: #0f4866;\n  --glass: rgba(255, 255, 255, 0.06);\n  --glass2: rgba(255, 255, 255, 0.09);\n  --line: rgba(255, 255, 255, 0.12);\n  --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);\n  --shadow2: 0 12px 44px rgba(0, 0, 0, 0.5);\n  --radius: 18px;\n  --radius2: 24px;\n  --cursorGlowOpacity: 0.62;\n  color: var(--ink);\n  background:\n    radial-gradient(\n      1200px 900px at 18% 8%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%),\n    radial-gradient(\n      1000px 680px at 88% 18%,\n      rgba(182, 203, 51, 0.14),\n      transparent 55%),\n    radial-gradient(\n      1100px 900px at 65% 92%,\n      rgba(15, 72, 102, 0.22),\n      transparent 60%),\n    linear-gradient(\n      180deg,\n      var(--bg1),\n      var(--bg0));\n}\n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 3px;\n  transform-origin: left;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0.92),\n      rgba(0, 74, 173, 0.92));\n  box-shadow: 0 0 20px rgba(182, 203, 51, 0.35);\n}\n.cursor-glow[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 1;\n  background:\n    radial-gradient(\n      220px 220px at var(--mx, 50%) var(--my, 50%),\n      rgba(182, 203, 51, 0.08),\n      transparent 60%),\n    radial-gradient(\n      260px 260px at calc(var(--mx, 50%) + 80px) calc(var(--my, 50%) + 60px),\n      rgba(0, 74, 173, 0.028),\n      transparent 66%),\n    radial-gradient(\n      420px 420px at calc(var(--mx, 50%) - 120px) calc(var(--my, 50%) + 90px),\n      rgba(15, 72, 102, 0.07),\n      transparent 62%);\n  mix-blend-mode: screen;\n  opacity: var(--cursorGlowOpacity);\n}\n.app-header[_ngcontent-%COMP%] {\n  position: sticky;\n  top: 0;\n  z-index: 30;\n  padding: 14px 0;\n  backdrop-filter: blur(10px);\n}\n.app-header[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.78),\n      rgba(5, 6, 13, 0.28));\n  border-bottom: 1px solid rgba(255, 255, 255, 0.08);\n}\n.app-header--scrolled[_ngcontent-%COMP%]::before {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.92),\n      rgba(5, 6, 13, 0.48));\n  border-bottom-color: rgba(255, 255, 255, 0.12);\n}\n.app-header__inner[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: grid;\n  grid-template-columns: 1fr auto 1fr;\n  align-items: center;\n  gap: 16px;\n}\n.brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  text-decoration: none;\n  color: var(--ink);\n}\n.brand__logoWrap[_ngcontent-%COMP%] {\n  width: 100px;\n  height: 100px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  flex: 0 0 100px;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n  transition: transform 220ms ease;\n}\n.brand[_ngcontent-%COMP%]:hover   .brand__logoWrap[_ngcontent-%COMP%] {\n  transform: translateY(-1px);\n  filter: brightness(1.06);\n}\n.brand__logo[_ngcontent-%COMP%] {\n  width: 96px;\n  height: 96px;\n  border-radius: 0;\n  object-fit: contain;\n  object-position: center;\n  display: block;\n  border: none;\n  box-shadow: none;\n  filter: none;\n  transition: transform 220ms ease;\n}\n.brand__name[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 650;\n  letter-spacing: 0.35px;\n  font-size: 14px;\n}\n.brand__tag[_ngcontent-%COMP%] {\n  display: block;\n  font-size: 12px;\n  color: var(--muted);\n  margin-top: 2px;\n}\n.nav[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 14px;\n  justify-content: center;\n  align-items: center;\n}\n.nav__link[_ngcontent-%COMP%] {\n  position: relative;\n  font-size: 13px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.78);\n  padding: 10px 12px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.02);\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  transition:\n    transform 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n}\n.nav__link[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.06);\n  border-color: rgba(182, 203, 51, 0.22);\n  transform: translateY(-1px);\n}\n.cta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: flex-end;\n  gap: 10px;\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  height: 42px;\n  padding: 0 16px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  color: rgba(255, 255, 255, 0.92);\n  text-decoration: none;\n  cursor: pointer;\n  position: relative;\n  background: rgba(255, 255, 255, 0.04);\n  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);\n  transition:\n    transform 200ms ease,\n    filter 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n  will-change: transform;\n}\n.btn[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -1px;\n  border-radius: inherit;\n  background:\n    radial-gradient(\n      260px 140px at 20% 10%,\n      rgba(182, 203, 51, 0.22),\n      transparent 60%),\n    radial-gradient(\n      260px 140px at 70% 10%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%);\n  opacity: 0;\n  transition: opacity 220ms ease;\n  pointer-events: none;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  border-color: rgba(255, 255, 255, 0.18);\n}\n.btn[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: rgba(255, 255, 255, 0.03);\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(182, 203, 51, 0.88),\n      rgba(0, 74, 173, 0.74));\n  border-color: rgba(255, 255, 255, 0.22);\n}\n.app-main[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n}\n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n  padding: 42px 0 56px;\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0),\n      rgba(5, 6, 13, 0.7));\n}\n.app-footer__inner[_ngcontent-%COMP%] {\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: flex;\n  justify-content: space-between;\n  gap: 22px;\n  align-items: center;\n}\n.foot-logo[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  align-items: center;\n}\n.foot-logo__wrap[_ngcontent-%COMP%] {\n  width: 60px;\n  height: 60px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n}\n.foot-logo__img[_ngcontent-%COMP%] {\n  width: 56px;\n  height: 56px;\n  border-radius: 0;\n  object-fit: contain;\n  border: none;\n  box-shadow: none;\n  filter: none;\n}\n.foot-title[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 600;\n}\n.foot-sub[_ngcontent-%COMP%] {\n  color: var(--muted);\n  font-size: 12px;\n}\n.foot-copy[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.foot-link[_ngcontent-%COMP%] {\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.75);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.04);\n  padding: 12px 16px;\n  border-radius: 999px;\n  transition: transform 200ms ease, background 200ms ease;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 44px;\n  min-width: 44px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  cursor: pointer;\n  font-size: 14px;\n}\n@media (max-width: 768px) {\n  .foot-link[_ngcontent-%COMP%] {\n    padding: 10px 14px;\n    font-size: 13px;\n  }\n}\n.foot-link[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  background: rgba(255, 255, 255, 0.08);\n}\n.social-links[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n}\n.social-link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: rgba(59, 130, 246, 0.1);\n  border: 1px solid rgba(59, 130, 246, 0.2);\n  color: #3b82f6;\n  transition: all 0.2s ease;\n  text-decoration: none;\n}\n.social-link[_ngcontent-%COMP%]:hover {\n  background: rgba(59, 130, 246, 0.2);\n  border-color: rgba(59, 130, 246, 0.4);\n  transform: translateY(-2px);\n  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);\n}\n.social-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n@media (max-width: 980px) {\n  .app-header__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr auto;\n  }\n  .nav[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n.hamburger-btn[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 44px;\n  height: 44px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 12px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  position: relative;\n  z-index: 1001;\n}\n.hamburger-btn[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.hamburger-line[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 2px;\n  background: currentColor;\n  border-radius: 2px;\n  transition: all 0.3s ease;\n  margin: 2px 0;\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(1) {\n  transform: rotate(45deg) translate(5px, 5px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(2) {\n  opacity: 0;\n  transform: translateX(10px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(3) {\n  transform: rotate(-45deg) translate(7px, -6px);\n}\n.mobile-nav-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.5);\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.3s ease, visibility 0.3s ease;\n  z-index: 1000;\n}\n.mobile-nav-overlay--open[_ngcontent-%COMP%] {\n  opacity: 1;\n  visibility: visible;\n}\n.mobile-nav[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: min(320px, 85vw);\n  background: var(--bg1);\n  border-left: 1px solid var(--line);\n  transform: translateX(100%);\n  transition: transform 0.3s ease;\n  z-index: 1001;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.mobile-nav--open[_ngcontent-%COMP%] {\n  transform: translateX(0);\n}\n.mobile-nav__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px;\n  border-bottom: 1px solid var(--line);\n  background: rgba(255, 255, 255, 0.02);\n}\n.mobile-brand[_ngcontent-%COMP%] {\n  flex: 1;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logoWrap[_ngcontent-%COMP%] {\n  width: 50px;\n  height: 50px;\n  flex: 0 0 50px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logo[_ngcontent-%COMP%] {\n  width: 46px;\n  height: 46px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__tag[_ngcontent-%COMP%] {\n  display: none;\n}\n.mobile-nav__close[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 10px;\n  color: var(--ink);\n  cursor: pointer;\n  transition: all 0.2s ease;\n}\n.mobile-nav__close[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.mobile-nav__links[_ngcontent-%COMP%] {\n  padding: 16px 0;\n}\n.mobile-nav__link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n  padding: 16px 20px;\n  color: var(--ink);\n  text-decoration: none;\n  font-size: 16px;\n  font-weight: 500;\n  transition: all 0.2s ease;\n  border: none;\n  background: none;\n  width: 100%;\n  text-align: left;\n  cursor: pointer;\n}\n.mobile-nav__link[_ngcontent-%COMP%]:hover, \n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  background: rgba(182, 203, 51, 0.1);\n  color: var(--lime);\n}\n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--lime);\n  outline-offset: -2px;\n}\n.mobile-nav__icon[_ngcontent-%COMP%] {\n  width: 24px;\n  height: 24px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  opacity: 0.8;\n  flex-shrink: 0;\n}\n.mobile-nav__footer[_ngcontent-%COMP%] {\n  padding: 16px;\n  border-top: 1px solid var(--line);\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  background: rgba(255, 255, 255, 0.02);\n}\n@media (max-width: 768px) {\n  .mobile-nav[_ngcontent-%COMP%] {\n    width: 85vw;\n  }\n  .mobile-nav__link[_ngcontent-%COMP%] {\n    font-size: 18px;\n    padding: 18px 20px;\n  }\n  .mobile-nav__icon[_ngcontent-%COMP%] {\n    font-size: 22px;\n  }\n}\n@media (max-width: 540px) {\n  .cta[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .brand__logoWrap[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    border-radius: 0;\n    flex: 0 0 80px;\n    background: transparent;\n    border: none;\n    box-shadow: none;\n  }\n  .brand__logo[_ngcontent-%COMP%] {\n    width: 76px;\n    height: 76px;\n    border-radius: 0;\n    border: none;\n    box-shadow: none;\n    filter: none;\n    object-fit: contain;\n  }\n  .app-header[_ngcontent-%COMP%] {\n    padding: 10px 0;\n  }\n  .app-header__inner[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%], \n.hero[_ngcontent-%COMP%], \n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n  filter: none !important;\n}\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n}\napp-bg-fx[_ngcontent-%COMP%], \n.cursor-glow[_ngcontent-%COMP%], \n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n}\napp-bg-fx[_ngcontent-%COMP%] {\n  opacity: 0.4 !important;\n  filter: saturate(0.9) brightness(0.9);\n}\n/*# sourceMappingURL=app.component.css.map */'], changeDetection: 0 });
   }
 };
 (() => {
@@ -54591,7 +54613,7 @@ var TiltDirective = class _TiltDirective {
     this.tiltMax = 9;
     this.tiltPerspective = 900;
     this.disabled = false;
-    this.disabled = isMobile();
+    this.disabled = false;
   }
   onMove(ev) {
     if (this.disabled)
@@ -54600,10 +54622,13 @@ var TiltDirective = class _TiltDirective {
       return;
     const target = this.el.nativeElement;
     const rect = target.getBoundingClientRect();
+    const isMobileDevice = isMobile();
     const px = (ev.clientX - rect.left) / rect.width;
     const py = (ev.clientY - rect.top) / rect.height;
-    const rx = (py - 0.5) * -this.tiltMax;
-    const ry = (px - 0.5) * this.tiltMax;
+    const mobileMultiplier = isMobileDevice ? 0.3 : 1;
+    const adjustedMax = this.tiltMax * mobileMultiplier;
+    const rx = (py - 0.5) * -adjustedMax;
+    const ry = (px - 0.5) * adjustedMax;
     target.style.transform = `perspective(${this.tiltPerspective}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
   }
   onLeave() {
@@ -55236,43 +55261,78 @@ var LandingPageComponent = class _LandingPageComponent {
     ensureGsap();
   }
   ngAfterViewInit() {
+    console.log("\u{1F3AC} ngAfterViewInit iniciado");
     requestAnimationFrame(() => {
       document.querySelector(".hero")?.classList.add("js-loaded");
-      if (prefersReducedMotion())
+      if (prefersReducedMotion()) {
+        console.log("\u26A0\uFE0F Reduced motion detectado, omitiendo animaciones");
         return;
+      }
       const isMobileDevice = isMobile();
       const reduceEffects = shouldReduceEffects();
-      const delay = isMobileDevice ? 10 : 50;
+      console.log(`\u{1F4F1} Dispositivo: ${isMobileDevice ? "M\xF3vil" : "Desktop"}`);
+      console.log(`\u{1F3A8} Efectos reducidos: ${reduceEffects ? "S\xED" : "No"}`);
+      const delay = isMobileDevice ? 2e3 : 50;
+      console.log(`\u23F0 Delay de animaci\xF3n: ${delay}ms (${isMobileDevice ? "M\xF3vil - LENTO" : "Desktop - R\xE1pido"})`);
       setTimeout(() => {
+        console.log("\u{1F3AD} Iniciando animaciones no cr\xEDticas...");
         this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
         if (isMobileDevice) {
+          console.log("\u{1F4F1} Detectado m\xF3vil, iniciando animaciones de aparici\xF3n...");
           this.initMobileAppearAnimations();
+        } else {
+          console.log("\u{1F4BB} Desktop detectado, omitiendo animaciones m\xF3viles");
         }
       }, delay);
     });
   }
   // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL
   initMobileAppearAnimations() {
+    console.log("\u{1F680} Iniciando animaciones m\xF3viles...");
     const elements = [
-      { selector: ".card", delay: 0.1, duration: 0.4 },
-      { selector: ".workCard", delay: 0.15, duration: 0.4 },
-      { selector: ".clientTile", delay: 0.05, duration: 0.35 },
-      { selector: ".step", delay: 0.05, duration: 0.35 },
-      { selector: ".quote", delay: 0.05, duration: 0.35 },
-      { selector: ".panel", delay: 0.1, duration: 0.35 }
+      { selector: ".card", delay: 0.5, duration: 0.8, from: "left" },
+      { selector: ".workCard", delay: 0.8, duration: 0.8, from: "right" },
+      { selector: ".clientTile", delay: 0.3, duration: 0.6, from: "left" },
+      { selector: ".step", delay: 0.4, duration: 0.6, from: "right" },
+      { selector: ".quote", delay: 0.6, duration: 0.6, from: "left" },
+      { selector: ".panel", delay: 0.9, duration: 0.6, from: "bottom" }
     ];
-    elements.forEach(({ selector: selector3, delay, duration }) => {
+    elements.forEach(({ selector: selector3, delay, duration, from: from2 }) => {
       const els = document.querySelectorAll(selector3);
-      gsapWithCSS.fromTo(els, {
+      console.log(`\u{1F4F1} Found ${els.length} elements for ${selector3} (from: ${from2})`);
+      if (els.length === 0)
+        return;
+      let initialX = 0;
+      let initialY = 0;
+      switch (from2) {
+        case "left":
+          initialX = -100;
+          break;
+        case "right":
+          initialX = 100;
+          break;
+        case "bottom":
+          initialY = 80;
+          break;
+      }
+      gsapWithCSS.set(els, {
         opacity: 0,
-        y: 20
-      }, {
+        x: initialX,
+        y: initialY,
+        display: "none"
+        // Ocultar del layout completamente
+      });
+      gsapWithCSS.set(els, { display: "block" });
+      gsapWithCSS.to(els, {
         opacity: 1,
+        x: 0,
         y: 0,
         duration,
         delay,
-        stagger: 0.05,
-        ease: "power2.out"
+        stagger: 0.15,
+        ease: "power3.out",
+        // Suave y profesional
+        onComplete: () => console.log(`\u2705 Animaci\xF3n completada para ${selector3}`)
       });
     });
   }

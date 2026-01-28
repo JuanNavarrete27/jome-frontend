@@ -51,10 +51,11 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
     const saveData = (navigator as any)?.connection?.saveData === true;
 
     // Cap FPS por device y efectos reducidos
-    this.targetFps = (this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects) ? 15 : 30;
+    this.targetFps = (this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects) ? 20 : 30; // ✅ Subir FPS en móvil
 
-    // Si es móvil + saveData + efectos reducidos, directamente no correr canvas
-    if (this.isCoarsePointer && saveData && mobileInfo.shouldReduceEffects) return;
+    // ✅ Permitir canvas en móvil siempre (no bloquear completamente)
+    // Solo bloquear si es saveData + efectos reducidos extremos
+    if (saveData && mobileInfo.shouldReduceEffects && this.isCoarsePointer) return;
 
     const canvas = this.canvasRef.nativeElement;
     this.ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
@@ -117,18 +118,18 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
   }
 
   private seed(): void {
-    // ✅ reducir orbs drásticamente en móvil y efectos reducidos
-    const baseCount = Math.floor(this.w / 180); // Menos densidad
+    // ✅ Ajustar orbs para móvil - más que antes pero aún optimizado
+    const baseCount = Math.floor(this.w / 160); // Un poco más de densidad
     const shouldReduce = shouldReduceEffects();
     const count = this.isCoarsePointer 
-      ? Math.min(6, Math.max(3, baseCount)) // Muy pocos en móvil
+      ? Math.min(8, Math.max(4, baseCount)) // ✅ Más orbs en móvil (4-8)
       : shouldReduce
-        ? Math.min(8, Math.max(4, baseCount)) // Pocos en efectos reducidos
+        ? Math.min(10, Math.max(5, baseCount)) // Pocos en efectos reducidos
         : Math.min(12, Math.max(6, baseCount)); // Normal en desktop
 
     this.orbs = Array.from({ length: count }).map(() => {
-      const baseRadius = this.isCoarsePointer ? 50 : 70;
-      const radiusVariation = this.isCoarsePointer ? 100 : 150;
+      const baseRadius = this.isCoarsePointer ? 60 : 70; // ✅ Radio un poco más grande en móvil
+      const radiusVariation = this.isCoarsePointer ? 120 : 150;
       const r = baseRadius + Math.random() * radiusVariation;
       
       return {

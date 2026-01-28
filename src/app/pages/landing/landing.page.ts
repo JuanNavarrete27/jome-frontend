@@ -170,26 +170,40 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    console.log('🎬 ngAfterViewInit iniciado');
+    
     // FASE 1: Render crítico inmediato - contenido visible sin animaciones
     requestAnimationFrame(() => {
       // Marcar que JS está listo para animaciones suaves
       document.querySelector('.hero')?.classList.add('js-loaded');
       
-      if (prefersReducedMotion()) return;
+      if (prefersReducedMotion()) {
+        console.log('⚠️ Reduced motion detectado, omitiendo animaciones');
+        return;
+      }
       
       const isMobileDevice = isMobile();
       const reduceEffects = shouldReduceEffects();
       
+      console.log(`📱 Dispositivo: ${isMobileDevice ? 'Móvil' : 'Desktop'}`);
+      console.log(`🎨 Efectos reducidos: ${reduceEffects ? 'Sí' : 'No'}`);
+      
       // FASE 2: Animaciones suaves post-render (después del primer paint)
-      // Ultra rápido en móvil, normal en desktop
-      const delay = isMobileDevice ? 10 : 50; // 10ms en móvil, 50ms en desktop
+      // Ultra rápido en desktop, MUY LENTO en móvil para debugging
+      const delay = isMobileDevice ? 2000 : 50; // ✅ 2 segundos en móvil, 50ms en desktop
+      
+      console.log(`⏰ Delay de animación: ${delay}ms (${isMobileDevice ? 'Móvil - LENTO' : 'Desktop - Rápido'})`);
       
       setTimeout(() => {
+        console.log('🎭 Iniciando animaciones no críticas...');
         this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
         
         // ✅ INICIAR ANIMACIONES DE APARICIÓN EN MÓVIL
         if (isMobileDevice) {
+          console.log('📱 Detectado móvil, iniciando animaciones de aparición...');
           this.initMobileAppearAnimations();
+        } else {
+          console.log('💻 Desktop detectado, omitiendo animaciones móviles');
         }
       }, delay);
     });
@@ -197,28 +211,61 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL
   private initMobileAppearAnimations(): void {
+    console.log('🚀 Iniciando animaciones móviles...');
+    
     // Usar GSAP para más control y mejor performance en móvil
     const elements = [
-      { selector: '.card', delay: 0.1, duration: 0.4 },
-      { selector: '.workCard', delay: 0.15, duration: 0.4 },
-      { selector: '.clientTile', delay: 0.05, duration: 0.35 },
-      { selector: '.step', delay: 0.05, duration: 0.35 },
-      { selector: '.quote', delay: 0.05, duration: 0.35 },
-      { selector: '.panel', delay: 0.1, duration: 0.35 }
+      { selector: '.card', delay: 0.5, duration: 0.8, from: 'left' },
+      { selector: '.workCard', delay: 0.8, duration: 0.8, from: 'right' },
+      { selector: '.clientTile', delay: 0.3, duration: 0.6, from: 'left' },
+      { selector: '.step', delay: 0.4, duration: 0.6, from: 'right' },
+      { selector: '.quote', delay: 0.6, duration: 0.6, from: 'left' },
+      { selector: '.panel', delay: 0.9, duration: 0.6, from: 'bottom' }
     ];
 
-    elements.forEach(({ selector, delay, duration }) => {
+    elements.forEach(({ selector, delay, duration, from }) => {
       const els = document.querySelectorAll(selector);
-      gsap.fromTo(els, {
+      console.log(`📱 Found ${els.length} elements for ${selector} (from: ${from})`);
+      
+      if (els.length === 0) return;
+      
+      // ✅ Determinar posición inicial según dirección
+      let initialX = 0;
+      let initialY = 0;
+      
+      switch(from) {
+        case 'left':
+          initialX = -100; // Entrar desde izquierda
+          break;
+        case 'right':
+          initialX = 100;  // Entrar desde derecha
+          break;
+        case 'bottom':
+          initialY = 80;   // Entrar desde abajo
+          break;
+      }
+      
+      // ✅ OCULTAR COMPLETAMENTE al inicio
+      gsap.set(els, {
         opacity: 0,
-        y: 20
-      }, {
+        x: initialX,
+        y: initialY,
+        display: 'none' // Ocultar del layout completamente
+      });
+      
+      // Mostrar primero, luego animar
+      gsap.set(els, { display: 'block' });
+      
+      // Animación deslizante suave
+      gsap.to(els, {
         opacity: 1,
+        x: 0,
         y: 0,
         duration,
         delay,
-        stagger: 0.05,
-        ease: 'power2.out'
+        stagger: 0.15,
+        ease: 'power3.out', // Suave y profesional
+        onComplete: () => console.log(`✅ Animación completada para ${selector}`)
       });
     });
   }

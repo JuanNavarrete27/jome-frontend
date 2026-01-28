@@ -543,10 +543,13 @@
 }
 
 .mobile-nav__icon {
-  font-size: 20px;
   width: 24px;
-  text-align: center;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0.8;
+  flex-shrink: 0;
 }
 
 .mobile-nav__footer {
