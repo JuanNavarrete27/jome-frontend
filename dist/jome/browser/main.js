@@ -55286,40 +55286,130 @@ var LandingPageComponent = class _LandingPageComponent {
       }, delay);
     });
   }
-  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - TODA LA WEB
+  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - SIN ERRORES
   initMobileAppearAnimations() {
-    console.log("\u{1F680} Iniciando animaciones m\xF3viles COMPLETAS...");
-    const elements = [
-      // HERO
-      { selector: ".hero__kicker", delay: 0.2, duration: 0.6, from: "top" },
-      { selector: ".hero__title", delay: 0.3, duration: 0.8, from: "left" },
-      { selector: ".hero__titleAccent", delay: 0.4, duration: 0.6, from: "right" },
-      { selector: ".hero__subtitle", delay: 0.5, duration: 0.6, from: "bottom" },
-      { selector: ".hero__actions", delay: 0.6, duration: 0.6, from: "left" },
-      { selector: ".stat", delay: 0.7, duration: 0.5, from: "bottom" },
-      { selector: ".hero__visual", delay: 0.8, duration: 0.8, from: "right" },
-      { selector: ".mini", delay: 0.9, duration: 0.5, from: "left" },
-      // SERVICES
-      { selector: ".section__head", delay: 1, duration: 0.6, from: "top" },
-      { selector: ".card", delay: 1.1, duration: 0.7, from: "left" },
-      // WORK
-      { selector: ".workCard", delay: 1.3, duration: 0.7, from: "right" },
-      // CLIENTS
-      { selector: ".clientTile", delay: 1.5, duration: 0.6, from: "bottom" },
-      { selector: ".logo", delay: 1.6, duration: 0.5, from: "left" },
-      // PROCESS
-      { selector: ".step", delay: 1.7, duration: 0.6, from: "top" },
-      // CONTACT
-      { selector: ".panel", delay: 1.8, duration: 0.7, from: "bottom" },
-      { selector: ".quote", delay: 1.9, duration: 0.6, from: "right" }
+    console.log("\u{1F680} Iniciando animaciones m\xF3viles robustas...");
+    const heroElements = [
+      { selector: ".hero__kicker", delay: 0.1, duration: 0.6, from: "top" },
+      { selector: ".hero__title", delay: 0.2, duration: 0.8, from: "left" },
+      { selector: ".hero__titleAccent", delay: 0.3, duration: 0.6, from: "right" },
+      { selector: ".hero__subtitle", delay: 0.4, duration: 0.6, from: "bottom" },
+      { selector: ".hero__actions", delay: 0.5, duration: 0.6, from: "left" },
+      { selector: ".stat", delay: 0.6, duration: 0.5, from: "bottom" },
+      { selector: ".hero__visual", delay: 0.7, duration: 0.8, from: "right" },
+      { selector: ".mini", delay: 0.8, duration: 0.5, from: "left" }
     ];
-    elements.forEach(({ selector: selector3, delay, duration, from: from2 }) => {
+    heroElements.forEach(({ selector: selector3, delay, duration, from: from2 }) => {
       const els = document.querySelectorAll(selector3);
-      console.log(`\u{1F4F1} Found ${els.length} elements for ${selector3} (from: ${from2})`);
       if (els.length === 0)
         return;
-      let initialX = 0;
-      let initialY = 0;
+      let initialX = 0, initialY = 0;
+      switch (from2) {
+        case "left":
+          initialX = -150;
+          break;
+        case "right":
+          initialX = 150;
+          break;
+        case "top":
+          initialY = -100;
+          break;
+        case "bottom":
+          initialY = 100;
+          break;
+      }
+      gsapWithCSS.set(els, { opacity: 0, x: initialX, y: initialY, display: "none" });
+      gsapWithCSS.set(els, { display: "block" });
+      gsapWithCSS.to(els, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration,
+        delay,
+        stagger: 0.1,
+        ease: "power3.out"
+      });
+    });
+    const allSectionElements = [
+      ".section__head",
+      ".card",
+      ".workCard",
+      ".clientTile",
+      ".logo",
+      ".step",
+      ".quote",
+      ".panel"
+    ];
+    allSectionElements.forEach((selector3) => {
+      const els = document.querySelectorAll(selector3);
+      if (els.length > 0) {
+        gsapWithCSS.set(els, { opacity: 0, display: "none" });
+        console.log(`\u{1F6AB} Ocultados ${els.length} elementos: ${selector3}`);
+      }
+    });
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          console.log(`\u{1F3AF} Secci\xF3n visible: ${sectionId}`);
+          this.animateSection(sectionId);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    const sections = document.querySelectorAll("#services, #work, #clients, #process, #contact");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  }
+  // ✅ ANIMAR SECCIÓN ESPECÍFICA
+  animateSection(sectionId) {
+    console.log(`\u{1F3AC} Animando secci\xF3n: ${sectionId}`);
+    let elementsToAnimate = [];
+    switch (sectionId) {
+      case "services":
+        elementsToAnimate = [
+          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
+          { selector: ".card", delay: 0.2, duration: 0.7, from: "left" }
+        ];
+        break;
+      case "work":
+        elementsToAnimate = [
+          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
+          { selector: ".workCard", delay: 0.2, duration: 0.7, from: "right" }
+        ];
+        break;
+      case "clients":
+        elementsToAnimate = [
+          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
+          { selector: ".clientTile", delay: 0.2, duration: 0.6, from: "bottom" },
+          { selector: ".logo", delay: 0.3, duration: 0.5, from: "left" }
+        ];
+        break;
+      case "process":
+        elementsToAnimate = [
+          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
+          { selector: ".step", delay: 0.2, duration: 0.6, from: "top" }
+        ];
+        break;
+      case "contact":
+        elementsToAnimate = [
+          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
+          { selector: ".panel", delay: 0.2, duration: 0.7, from: "bottom" },
+          { selector: ".quote", delay: 0.3, duration: 0.6, from: "right" }
+        ];
+        break;
+    }
+    elementsToAnimate.forEach(({ selector: selector3, delay, duration, from: from2 }) => {
+      const els = document.querySelectorAll(selector3);
+      if (els.length === 0)
+        return;
+      let initialX = 0, initialY = 0;
       switch (from2) {
         case "left":
           initialX = -150;
@@ -55339,7 +55429,6 @@ var LandingPageComponent = class _LandingPageComponent {
         x: initialX,
         y: initialY,
         display: "none"
-        // Ocultar del layout completamente
       });
       gsapWithCSS.set(els, { display: "block" });
       gsapWithCSS.to(els, {
@@ -55350,7 +55439,7 @@ var LandingPageComponent = class _LandingPageComponent {
         delay,
         stagger: 0.1,
         ease: "power3.out",
-        onComplete: () => console.log(`\u2705 Animaci\xF3n completada para ${selector3}`)
+        onComplete: () => console.log(`\u2705 Animaci\xF3n completada para ${selector3} en ${sectionId}`)
       });
     });
   }

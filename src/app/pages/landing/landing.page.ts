@@ -209,87 +209,168 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - TODA LA WEB
+  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - SIN ERRORES
   private initMobileAppearAnimations(): void {
-    console.log('🚀 Iniciando animaciones móviles COMPLETAS...');
+    console.log('🚀 Iniciando animaciones móviles robustas...');
     
-    // TODOS los elementos que deben animarse
-    const elements = [
-      // HERO
-      { selector: '.hero__kicker', delay: 0.2, duration: 0.6, from: 'top' },
-      { selector: '.hero__title', delay: 0.3, duration: 0.8, from: 'left' },
-      { selector: '.hero__titleAccent', delay: 0.4, duration: 0.6, from: 'right' },
-      { selector: '.hero__subtitle', delay: 0.5, duration: 0.6, from: 'bottom' },
-      { selector: '.hero__actions', delay: 0.6, duration: 0.6, from: 'left' },
-      { selector: '.stat', delay: 0.7, duration: 0.5, from: 'bottom' },
-      { selector: '.hero__visual', delay: 0.8, duration: 0.8, from: 'right' },
-      { selector: '.mini', delay: 0.9, duration: 0.5, from: 'left' },
-      
-      // SERVICES
-      { selector: '.section__head', delay: 1.0, duration: 0.6, from: 'top' },
-      { selector: '.card', delay: 1.1, duration: 0.7, from: 'left' },
-      
-      // WORK
-      { selector: '.workCard', delay: 1.3, duration: 0.7, from: 'right' },
-      
-      // CLIENTS
-      { selector: '.clientTile', delay: 1.5, duration: 0.6, from: 'bottom' },
-      { selector: '.logo', delay: 1.6, duration: 0.5, from: 'left' },
-      
-      // PROCESS
-      { selector: '.step', delay: 1.7, duration: 0.6, from: 'top' },
-      
-      // CONTACT
-      { selector: '.panel', delay: 1.8, duration: 0.7, from: 'bottom' },
-      { selector: '.quote', delay: 1.9, duration: 0.6, from: 'right' }
+    // HERO - Animar inmediatamente
+    const heroElements = [
+      { selector: '.hero__kicker', delay: 0.1, duration: 0.6, from: 'top' },
+      { selector: '.hero__title', delay: 0.2, duration: 0.8, from: 'left' },
+      { selector: '.hero__titleAccent', delay: 0.3, duration: 0.6, from: 'right' },
+      { selector: '.hero__subtitle', delay: 0.4, duration: 0.6, from: 'bottom' },
+      { selector: '.hero__actions', delay: 0.5, duration: 0.6, from: 'left' },
+      { selector: '.stat', delay: 0.6, duration: 0.5, from: 'bottom' },
+      { selector: '.hero__visual', delay: 0.7, duration: 0.8, from: 'right' },
+      { selector: '.mini', delay: 0.8, duration: 0.5, from: 'left' }
     ];
 
-    elements.forEach(({ selector, delay, duration, from }) => {
+    // Animar hero inmediatamente
+    heroElements.forEach(({ selector, delay, duration, from }) => {
       const els = document.querySelectorAll(selector);
-      console.log(`📱 Found ${els.length} elements for ${selector} (from: ${from})`);
-      
       if (els.length === 0) return;
       
-      // ✅ Determinar posición inicial según dirección
-      let initialX = 0;
-      let initialY = 0;
-      
+      let initialX = 0, initialY = 0;
       switch(from) {
-        case 'left':
-          initialX = -150; // Más distancia para mayor impacto
-          break;
-        case 'right':
-          initialX = 150;
-          break;
-        case 'top':
-          initialY = -100;
-          break;
-        case 'bottom':
-          initialY = 100;
-          break;
+        case 'left': initialX = -150; break;
+        case 'right': initialX = 150; break;
+        case 'top': initialY = -100; break;
+        case 'bottom': initialY = 100; break;
       }
       
-      // ✅ OCULTAR COMPLETAMENTE al inicio
-      gsap.set(els, {
-        opacity: 0,
-        x: initialX,
-        y: initialY,
-        display: 'none' // Ocultar del layout completamente
-      });
-      
-      // Mostrar primero, luego animar
+      gsap.set(els, { opacity: 0, x: initialX, y: initialY, display: 'none' });
       gsap.set(els, { display: 'block' });
       
-      // Animación deslizante suave
       gsap.to(els, {
-        opacity: 1,
-        x: 0,
+        opacity: 1, x: 0, y: 0,
+        duration, delay,
+        stagger: 0.1,
+        ease: 'power3.out'
+      });
+    });
+    
+    // OCULTAR TODOS LOS ELEMENTOS DE SECCIONES INICIALMENTE
+    const allSectionElements = [
+      '.section__head',
+      '.card',
+      '.workCard', 
+      '.clientTile',
+      '.logo',
+      '.step',
+      '.quote',
+      '.panel'
+    ];
+
+    allSectionElements.forEach(selector => {
+      const els = document.querySelectorAll(selector);
+      if (els.length > 0) {
+        gsap.set(els, { opacity: 0, display: 'none' });
+        console.log(`🚫 Ocultados ${els.length} elementos: ${selector}`);
+      }
+    });
+
+    // USAR INTERSECTION OBSERVER EN LUGAR DE SCROLLTRIGGER (MÁS ROBUSTO)
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          console.log(`🎯 Sección visible: ${sectionId}`);
+          
+          // Animar elementos según la sección
+          this.animateSection(sectionId);
+          observer.unobserve(entry.target); // Solo animar una vez
+        }
+      });
+    }, observerOptions);
+
+    // Observar todas las secciones
+    const sections = document.querySelectorAll('#services, #work, #clients, #process, #contact');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  }
+
+  // ✅ ANIMAR SECCIÓN ESPECÍFICA
+  private animateSection(sectionId: string): void {
+    console.log(`🎬 Animando sección: ${sectionId}`);
+    
+    let elementsToAnimate: Array<{selector: string, delay: number, duration: number, from: string}> = [];
+    
+    switch(sectionId) {
+      case 'services':
+        elementsToAnimate = [
+          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
+          { selector: '.card', delay: 0.2, duration: 0.7, from: 'left' }
+        ];
+        break;
+      
+      case 'work':
+        elementsToAnimate = [
+          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
+          { selector: '.workCard', delay: 0.2, duration: 0.7, from: 'right' }
+        ];
+        break;
+      
+      case 'clients':
+        elementsToAnimate = [
+          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
+          { selector: '.clientTile', delay: 0.2, duration: 0.6, from: 'bottom' },
+          { selector: '.logo', delay: 0.3, duration: 0.5, from: 'left' }
+        ];
+        break;
+      
+      case 'process':
+        elementsToAnimate = [
+          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
+          { selector: '.step', delay: 0.2, duration: 0.6, from: 'top' }
+        ];
+        break;
+      
+      case 'contact':
+        elementsToAnimate = [
+          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
+          { selector: '.panel', delay: 0.2, duration: 0.7, from: 'bottom' },
+          { selector: '.quote', delay: 0.3, duration: 0.6, from: 'right' }
+        ];
+        break;
+    }
+
+    // Animar elementos de la sección
+    elementsToAnimate.forEach(({ selector, delay, duration, from }) => {
+      const els = document.querySelectorAll(selector);
+      if (els.length === 0) return;
+      
+      let initialX = 0, initialY = 0;
+      switch(from) {
+        case 'left': initialX = -150; break;
+        case 'right': initialX = 150; break;
+        case 'top': initialY = -100; break;
+        case 'bottom': initialY = 100; break;
+      }
+      
+      gsap.set(els, { 
+        opacity: 0, 
+        x: initialX, 
+        y: initialY, 
+        display: 'none' 
+      });
+      gsap.set(els, { display: 'block' });
+      
+      gsap.to(els, {
+        opacity: 1, 
+        x: 0, 
         y: 0,
-        duration,
+        duration, 
         delay,
         stagger: 0.1,
         ease: 'power3.out',
-        onComplete: () => console.log(`✅ Animación completada para ${selector}`)
+        onComplete: () => console.log(`✅ Animación completada para ${selector} en ${sectionId}`)
       });
     });
   }
