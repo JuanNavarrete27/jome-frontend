@@ -186,7 +186,40 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       
       setTimeout(() => {
         this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
+        
+        // ✅ INICIAR ANIMACIONES DE APARICIÓN EN MÓVIL
+        if (isMobileDevice) {
+          this.initMobileAppearAnimations();
+        }
       }, delay);
+    });
+  }
+
+  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL
+  private initMobileAppearAnimations(): void {
+    // Usar GSAP para más control y mejor performance en móvil
+    const elements = [
+      { selector: '.card', delay: 0.1, duration: 0.4 },
+      { selector: '.workCard', delay: 0.15, duration: 0.4 },
+      { selector: '.clientTile', delay: 0.05, duration: 0.35 },
+      { selector: '.step', delay: 0.05, duration: 0.35 },
+      { selector: '.quote', delay: 0.05, duration: 0.35 },
+      { selector: '.panel', delay: 0.1, duration: 0.35 }
+    ];
+
+    elements.forEach(({ selector, delay, duration }) => {
+      const els = document.querySelectorAll(selector);
+      gsap.fromTo(els, {
+        opacity: 0,
+        y: 20
+      }, {
+        opacity: 1,
+        y: 0,
+        duration,
+        delay,
+        stagger: 0.05,
+        ease: 'power2.out'
+      });
     });
   }
 

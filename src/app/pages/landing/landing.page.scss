@@ -111,7 +111,7 @@
 }
 
 /* ---------------------------
-   Mobile Performance Optimizations - ULTRA LITE con movimiento y aparición
+   Mobile Performance Optimizations - ULTRA LITE con movimiento
 --------------------------- */
 @media (max-width: 768px) {
   /* Eliminar efectos costosos en móvil pero mantener movimiento */
@@ -138,62 +138,14 @@
     animation: mobileFloatB 6s ease-in-out infinite; /* ✅ ANIMACIÓN */
   }
   
-  /* ✅ ANIMACIONES DE APARICIÓN PARA CARDS EN MÓVIL */
-  .card {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: mobileCardAppear 0.6s ease-out forwards;
-  }
-  
-  .card:nth-child(1) { animation-delay: 0.1s; }
-  .card:nth-child(2) { animation-delay: 0.2s; }
-  .card:nth-child(3) { animation-delay: 0.3s; }
-  
-  .workCard {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: mobileCardAppear 0.6s ease-out forwards;
-  }
-  
-  .workCard:nth-child(1) { animation-delay: 0.1s; }
-  .workCard:nth-child(2) { animation-delay: 0.2s; }
-  
-  .clientTile {
-    opacity: 0;
-    transform: translateY(15px);
-    animation: mobileCardAppear 0.5s ease-out forwards;
-  }
-  
-  .clientTile:nth-child(1) { animation-delay: 0.05s; }
-  .clientTile:nth-child(2) { animation-delay: 0.1s; }
-  .clientTile:nth-child(3) { animation-delay: 0.15s; }
-  .clientTile:nth-child(4) { animation-delay: 0.2s; }
-  
-  .step {
-    opacity: 0;
-    transform: translateY(15px);
-    animation: mobileCardAppear 0.5s ease-out forwards;
-  }
-  
-  .step:nth-child(1) { animation-delay: 0.05s; }
-  .step:nth-child(2) { animation-delay: 0.1s; }
-  .step:nth-child(3) { animation-delay: 0.15s; }
-  .step:nth-child(4) { animation-delay: 0.2s; }
-  
-  .quote {
-    opacity: 0;
-    transform: translateY(15px);
-    animation: mobileCardAppear 0.5s ease-out forwards;
-  }
-  
-  .quote:nth-child(1) { animation-delay: 0.05s; }
-  .quote:nth-child(2) { animation-delay: 0.1s; }
-  .quote:nth-child(3) { animation-delay: 0.15s; }
-  
+  /* ✅ ANIMACIONES DE APARICIÓN CONTROLADAS POR GSAP */
+  .card,
+  .workCard,
+  .clientTile,
+  .step,
+  .quote,
   .panel {
-    opacity: 0;
-    transform: translateY(15px);
-    animation: mobileCardAppear 0.5s ease-out forwards;
+    opacity: 1;
   }
   
   /* Eliminar backdrop-filter en móvil (muy costoso) */
@@ -250,18 +202,6 @@
 @keyframes mobileFloatB {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(8px); }
-}
-
-/* ✅ ANIMACIÓN DE APARICIÓN ULTRA LIGERA PARA MÓVIL */
-@keyframes mobileCardAppear {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* ---------------------------
