@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { prefersReducedMotion } from '../utils/gsap';
+import { isMobile } from '../utils/mobile';
 
 @Directive({ selector: '[tilt]', standalone: true })
 export class TiltDirective {
@@ -9,7 +10,8 @@ export class TiltDirective {
   private disabled = false;
 
   constructor(private el: ElementRef<HTMLElement>) {
-    this.disabled = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    // ✅ Deshabilitar en móvil/touch desde el inicio
+    this.disabled = isMobile();
   }
 
   @HostListener('mousemove', ['$event'])

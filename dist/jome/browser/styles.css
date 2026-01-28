@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* src/styles.scss */
 :root {
   color-scheme: dark;
@@ -69,6 +71,35 @@ body::before {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  app-root,
+  .app-main,
+  main,
+  .app {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+html {
+  overflow-x: hidden;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  min-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+}
+app-root,
+.app-main,
+main {
+  overflow: visible;
 }
 
 /* angular:styles/global:styles */

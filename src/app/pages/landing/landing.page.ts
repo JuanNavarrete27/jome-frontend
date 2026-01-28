@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ensureGsap, gsap, prefersReducedMotion } from '../../core/utils/gsap';
+import { shouldReduceEffects, isMobile } from '../../core/utils/mobile';
 import { RevealOnScrollDirective } from '../../core/directives/reveal-on-scroll.directive';
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
 import { TiltDirective } from '../../core/directives/tilt.directive';
@@ -176,60 +177,82 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       
       if (prefersReducedMotion()) return;
       
+      const isMobileDevice = isMobile();
+      const reduceEffects = shouldReduceEffects();
+      
       // FASE 2: Animaciones suaves post-render (después del primer paint)
-      // Reducido timeout para mejor percepción
+      // Ultra rápido en móvil, normal en desktop
+      const delay = isMobileDevice ? 10 : 50; // 10ms en móvil, 50ms en desktop
+      
       setTimeout(() => {
-        this.initNonCriticalAnimations();
-      }, 50); // 50ms después del render inicial (era 150ms)
+        this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
+      }, delay);
     });
   }
 
-  private initNonCriticalAnimations(): void {
-    // HERO: animaciones suaves que no bloquean contenido crítico
+  private initNonCriticalAnimations(isMobileDevice: boolean, reduceEffects: boolean): void {
+    // HERO: animaciones adaptadas al dispositivo
+    const heroDuration = isMobileDevice ? 0.25 : 0.5;
+    const heroStagger = isMobileDevice ? 0.01 : 0.03;
+    
     this.heroTl = gsap
       .timeline({ defaults: { ease: 'power2.out' } })
       .fromTo(
         '.hero__kicker',
-        { y: 8, opacity: 0.7 }, // Menos movimiento, empieza más visible
-        { y: 0, opacity: 1, duration: 0.4 }
+        { y: isMobileDevice ? 4 : 8, opacity: isMobileDevice ? 0.9 : 0.7 },
+        { y: 0, opacity: 1, duration: heroDuration * 0.8 }
       )
       .fromTo(
         '.hero__title',
-        { y: 10, opacity: 0.8 }, // Menos movimiento, empieza más visible
-        { y: 0, opacity: 1, duration: 0.5 },
+        { y: isMobileDevice ? 6 : 10, opacity: isMobileDevice ? 0.92 : 0.8 },
+        { y: 0, opacity: 1, duration: heroDuration },
         '-=0.2'
       )
       .fromTo(
         '.hero__subtitle',
-        { y: 6, opacity: 0.7 }, // Menos movimiento, empieza más visible
-        { y: 0, opacity: 1, duration: 0.4 },
+        { y: isMobileDevice ? 3 : 6, opacity: isMobileDevice ? 0.9 : 0.7 },
+        { y: 0, opacity: 1, duration: heroDuration * 0.8 },
         '-=0.3'
       )
       .fromTo(
         '.hero__actions .btn',
-        { y: 6, opacity: 0.8 }, // Menos movimiento, empieza más visible
-        { y: 0, opacity: 1, duration: 0.3, stagger: 0.03 },
+        { y: isMobileDevice ? 3 : 6, opacity: isMobileDevice ? 0.92 : 0.8 },
+        { y: 0, opacity: 1, duration: heroDuration * 0.6, stagger: heroStagger },
         '-=0.2'
       )
       .fromTo(
         '.hero__stats .stat',
-        { y: 6, opacity: 0.8 }, // Menos movimiento, empieza más visible
-        { y: 0, opacity: 1, duration: 0.3, stagger: 0.02 },
+        { y: isMobileDevice ? 3 : 6, opacity: isMobileDevice ? 0.92 : 0.8 },
+        { y: 0, opacity: 1, duration: heroDuration * 0.6, stagger: heroStagger * 0.8 },
         '-=0.2'
       );
 
-    // Efectos ambientales livianos
-    gsap.to('.hero__glow', {
-      opacity: 0.6,
-      duration: 2,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
-    });
+    // Efectos ambientales adaptados
+    if (!reduceEffects) {
+      // Desktop: efectos completos
+      gsap.to('.hero__glow', {
+        opacity: 0.6,
+        duration: 2,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+      });
 
-    // Animaciones flotantes reducidas para mejor performance
-    gsap.to('.shape--a', { y: -8, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.shape--b', { y: 10, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+      gsap.to('.shape--a', { y: -8, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+      gsap.to('.shape--b', { y: 10, duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    } else {
+      // Móvil: efectos mínimos pero con movimiento
+      gsap.to('.hero__glow', {
+        opacity: 0.3,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+      });
+
+      gsap.to('.shape--a', { y: -4, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+      gsap.to('.shape--b', { y: 6, duration: 4.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    }
   }
 
   ngOnDestroy(): void {

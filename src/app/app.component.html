@@ -21,7 +21,8 @@
       </span>
     </a>
 
-    <nav class="nav">
+    <!-- Desktop Navigation -->
+    <nav class="nav" *ngIf="!showHamburger">
       <a magnetic class="nav__link" href="#" (click)="scrollTo('services'); $event.preventDefault()">Servicios</a>
       <a magnetic class="nav__link" href="#" (click)="scrollTo('work'); $event.preventDefault()">Portfolio</a>
       <a magnetic class="nav__link" href="#" (click)="scrollTo('clients'); $event.preventDefault()">Clientes</a>
@@ -29,7 +30,8 @@
       <a magnetic class="nav__link" href="#" (click)="scrollTo('contact'); $event.preventDefault()">Contacto</a>
     </nav>
 
-    <div class="cta">
+    <!-- Desktop CTA -->
+    <div class="cta" *ngIf="!showHamburger">
       <a magnetic class="btn btn--ghost" href="#" (click)="scrollTo('work'); $event.preventDefault()">
         Ver trabajos
       </a>
@@ -37,8 +39,114 @@
         Pedir propuesta
       </a>
     </div>
+
+    <!-- Hamburger Menu Button -->
+    <button 
+      *ngIf="showHamburger" 
+      class="hamburger-btn" 
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="mobile-nav"
+      aria-label="Toggle navigation menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div 
+  *ngIf="showHamburger" 
+  class="mobile-nav-overlay" 
+  [class.mobile-nav-overlay--open]="menuOpen()"
+  (click)="closeMenu()">
+  
+  <nav 
+    id="mobile-nav" 
+    class="mobile-nav" 
+    [class.mobile-nav--open]="menuOpen()"
+    (click)="$event.stopPropagation()">
+    
+    <div class="mobile-nav__header">
+      <div class="brand mobile-brand">
+        <span class="brand__logoWrap" aria-hidden="true">
+          <img class="brand__logo" src="assets/logo.png" alt="JoMe Soluciones Digitales" />
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">JoMe</span>
+          <span class="brand__tag">Soluciones Digitales</span>
+        </span>
+      </div>
+      
+      <button 
+        class="mobile-nav__close" 
+        (click)="closeMenu()"
+        aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="mobile-nav__links">
+      <a 
+        class="mobile-nav__link" 
+        href="#" 
+        (click)="navigateAndClose('services'); $event.preventDefault()">
+        <span class="mobile-nav__icon">🛠️</span>
+        <span>Servicios</span>
+      </a>
+      
+      <a 
+        class="mobile-nav__link" 
+        href="#" 
+        (click)="navigateAndClose('work'); $event.preventDefault()">
+        <span class="mobile-nav__icon">💼</span>
+        <span>Portfolio</span>
+      </a>
+      
+      <a 
+        class="mobile-nav__link" 
+        href="#" 
+        (click)="navigateAndClose('clients'); $event.preventDefault()">
+        <span class="mobile-nav__icon">🤝</span>
+        <span>Clientes</span>
+      </a>
+      
+      <a 
+        class="mobile-nav__link" 
+        href="#" 
+        (click)="navigateAndClose('process'); $event.preventDefault()">
+        <span class="mobile-nav__icon">📋</span>
+        <span>Proceso</span>
+      </a>
+      
+      <a 
+        class="mobile-nav__link" 
+        href="#" 
+        (click)="navigateAndClose('contact'); $event.preventDefault()">
+        <span class="mobile-nav__icon">📞</span>
+        <span>Contacto</span>
+      </a>
+    </div>
+    
+    <div class="mobile-nav__footer">
+      <a 
+        class="btn btn--ghost btn--full" 
+        href="#" 
+        (click)="navigateAndClose('work'); $event.preventDefault()">
+        Ver trabajos
+      </a>
+      <a 
+        class="btn btn--primary btn--full" 
+        href="#" 
+        (click)="openWhatsApp(); closeMenu(); $event.preventDefault()">
+        Pedir propuesta
+      </a>
+    </div>
+  </nav>
+</div>
 
 <main class="app-main">
   <router-outlet></router-outlet>

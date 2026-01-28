@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { prefersReducedMotion } from '../utils/gsap';
+import { shouldReduceEffects, isMobile } from '../utils/mobile';
 
 type Orb = {
   x: number;
@@ -34,25 +35,26 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
   private mx = 0.5;
   private my = 0.5;
 
-  // ✅ perf modes
-  private isCoarsePointer = false; // mobile/touch
-  private targetFps = 30;          // default cap
+  // ✅ perf modes - usando detección centralizada
+  private isCoarsePointer = false;
+  private targetFps = 30;
   private running = false;
 
   ngAfterViewInit(): void {
     if (prefersReducedMotion()) return;
 
-    // coarse pointer = móvil/táctil (mucho más sensible al jank)
-    this.isCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    // Usar detección centralizada de móvil
+    const mobileInfo = { isMobile: isMobile(), shouldReduceEffects: shouldReduceEffects() };
+    this.isCoarsePointer = mobileInfo.isMobile;
 
     // Save-Data (cuando existe) => bajar calidad fuerte
     const saveData = (navigator as any)?.connection?.saveData === true;
 
-    // Cap FPS por device
-    this.targetFps = (this.isCoarsePointer || saveData) ? 20 : 30;
+    // Cap FPS por device y efectos reducidos
+    this.targetFps = (this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects) ? 15 : 30;
 
-    // Si es mobile + saveData, directamente no correr canvas (solo CSS vignette/scanlines)
-    if (this.isCoarsePointer && saveData) return;
+    // Si es móvil + saveData + efectos reducidos, directamente no correr canvas
+    if (this.isCoarsePointer && saveData && mobileInfo.shouldReduceEffects) return;
 
     const canvas = this.canvasRef.nativeElement;
     this.ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
@@ -108,26 +110,34 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:mousemove', ['$event'])
   onMouse(ev: MouseEvent): void {
-    // ✅ en coarse pointer no seguimos mouse (no existe / no aporta)
-    if (this.isCoarsePointer) return;
+    // ✅ en móvil o efectos reducidos no seguimos mouse
+    if (this.isCoarsePointer || shouldReduceEffects()) return;
     this.mx = ev.clientX / Math.max(1, this.w);
     this.my = ev.clientY / Math.max(1, this.h);
   }
 
   private seed(): void {
-    // ✅ bajar orbs en móvil
-    const baseCount = Math.floor(this.w / 120);
-    const count = this.isCoarsePointer ? Math.min(10, Math.max(6, baseCount)) : Math.min(18, Math.max(10, baseCount));
+    // ✅ reducir orbs drásticamente en móvil y efectos reducidos
+    const baseCount = Math.floor(this.w / 180); // Menos densidad
+    const shouldReduce = shouldReduceEffects();
+    const count = this.isCoarsePointer 
+      ? Math.min(6, Math.max(3, baseCount)) // Muy pocos en móvil
+      : shouldReduce
+        ? Math.min(8, Math.max(4, baseCount)) // Pocos en efectos reducidos
+        : Math.min(12, Math.max(6, baseCount)); // Normal en desktop
 
     this.orbs = Array.from({ length: count }).map(() => {
-      const r = (this.isCoarsePointer ? 70 : 90) + Math.random() * (this.isCoarsePointer ? 160 : 220);
+      const baseRadius = this.isCoarsePointer ? 50 : 70;
+      const radiusVariation = this.isCoarsePointer ? 100 : 150;
+      const r = baseRadius + Math.random() * radiusVariation;
+      
       return {
         x: Math.random() * this.w,
         y: Math.random() * this.h,
         r,
-        vx: (-0.35 + Math.random() * 0.7) * 0.45,
-        vy: (-0.35 + Math.random() * 0.7) * 0.45,
-        a: (this.isCoarsePointer ? 0.07 : 0.11) + Math.random() * (this.isCoarsePointer ? 0.10 : 0.16)
+        vx: (-0.35 + Math.random() * 0.7) * 0.3, // Más lento
+        vy: (-0.35 + Math.random() * 0.7) * 0.3,
+        a: (this.isCoarsePointer ? 0.04 : 0.08) + Math.random() * (this.isCoarsePointer ? 0.06 : 0.12)
       };
     });
   }
@@ -172,8 +182,8 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
 
     ctx.globalCompositeOperation = 'lighter';
 
-    // ✅ en móvil: menos “mouse gravity”, menos cálculos
-    const gravityOn = !this.isCoarsePointer;
+    // ✅ en móvil o efectos reducidos: menos "mouse gravity", menos cálculos
+    const gravityOn = !this.isCoarsePointer && !shouldReduceEffects();
 
     for (const o of this.orbs) {
       o.x += o.vx * dt;
@@ -197,11 +207,18 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
       const pulse = 0.76 + Math.sin(this.t + o.x * 0.002) * 0.24;
       const rr = o.r * pulse;
 
-      // ✅ optimización: en móvil reducimos complejidad visual (1 gradiente, stops más simples)
+      // ✅ optimización extrema: en móvil y efectos reducidos, gradiente ultra simple
       const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, rr);
-      g.addColorStop(0, `rgba(182,203,51,${o.a})`);
-      g.addColorStop(0.55, `rgba(0,74,173,${o.a * 0.55})`);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
+      if (this.isCoarsePointer || shouldReduceEffects()) {
+        // Móvil: solo 2 stops, opacidad mínima
+        g.addColorStop(0, `rgba(182,203,51,${o.a * 0.5})`);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+      } else {
+        // Desktop: gradiente completo
+        g.addColorStop(0, `rgba(182,203,51,${o.a})`);
+        g.addColorStop(0.55, `rgba(0,74,173,${o.a * 0.55})`);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+      }
 
       ctx.fillStyle = g;
       ctx.beginPath();

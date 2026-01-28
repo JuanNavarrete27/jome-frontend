@@ -1,22 +1,25 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
-import { ensureGsap, prefersReducedMotion, gsap } from '../utils/gsap';
+import { Directive, ElementRef, HostListener, OnDestroy, Input } from '@angular/core';
+import { prefersReducedMotion } from '../utils/gsap';
+import { isMobile } from '../utils/mobile';
 
 @Directive({ selector: '[magnetic]', standalone: true })
-export class MagneticDirective implements AfterViewInit, OnDestroy {
-  @Input() magneticStrength = 0.22;
+export class MagneticDirective implements OnDestroy {
+  @Input() magneticStrength = 0.3;
+  @Input() magneticRadius = 80;
+
   private rect?: DOMRect;
   private rafId?: number;
   private lastX = 0;
   private lastY = 0;
-
   private disabled = false;
 
-  constructor(private el: ElementRef<HTMLElement>) {}
+  constructor(private el: ElementRef<HTMLElement>) {
+    // Deshabilitar en móvil/touch desde el inicio
+    this.disabled = isMobile();
+  }
 
   ngAfterViewInit(): void {
-    ensureGsap();
-    // ✅ en touch/coarse pointer no aplicamos magnetic
-    this.disabled = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    if (prefersReducedMotion() || this.disabled) return;
     this.rect = this.el.nativeElement.getBoundingClientRect();
   }
 
@@ -27,8 +30,7 @@ export class MagneticDirective implements AfterViewInit, OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   onMove(ev: MouseEvent): void {
-    if (this.disabled) return;
-    if (prefersReducedMotion()) return;
+    if (this.disabled || prefersReducedMotion()) return;
     if (this.rafId) return;
 
     this.rafId = requestAnimationFrame(() => {

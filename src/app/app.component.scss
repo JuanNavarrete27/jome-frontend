@@ -377,6 +377,203 @@
   }
 }
 
+/* =========================
+   ✅ Hamburger Menu Styles
+   ========================= */
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1001;
+}
+
+.hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(182, 203, 51, 0.3);
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin: 2px 0;
+}
+
+/* Animación hamburguesa → X */
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Navigation Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+}
+
+.mobile-nav-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile Navigation Drawer */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 85vw);
+  background: var(--bg1);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-nav--open {
+  transform: translateX(0);
+}
+
+.mobile-nav__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mobile-brand {
+  flex: 1;
+}
+
+.mobile-brand .brand__logoWrap {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+}
+
+.mobile-brand .brand__logo {
+  width: 46px;
+  height: 46px;
+}
+
+.mobile-brand .brand__tag {
+  display: none;
+}
+
+.mobile-nav__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(182, 203, 51, 0.3);
+}
+
+.mobile-nav__links {
+  padding: 16px 0;
+}
+
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-nav__link:hover,
+.mobile-nav__link:focus {
+  background: rgba(182, 203, 51, 0.1);
+  color: var(--lime);
+}
+
+.mobile-nav__link:focus {
+  outline: 2px solid var(--lime);
+  outline-offset: -2px;
+}
+
+.mobile-nav__icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.mobile-nav__footer {
+  padding: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .mobile-nav {
+    width: 85vw;
+  }
+  
+  .mobile-nav__link {
+    font-size: 18px;
+    padding: 18px 20px;
+  }
+  
+  .mobile-nav__icon {
+    font-size: 22px;
+  }
+}
+
 @media (max-width: 540px) {
   .cta {
     display: none;
@@ -401,6 +598,15 @@
     box-shadow: none;
     filter: none;
     object-fit: contain;
+  }
+  
+  /* Reducir padding en header móvil */
+  .app-header {
+    padding: 10px 0;
+  }
+  
+  .app-header__inner {
+    gap: 12px;
   }
 }
 

@@ -1,25 +1,34 @@
-import { Component, HostListener, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnInit, signal, ChangeDetectionStrategy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { ensureGsap, gsap, prefersReducedMotion } from './core/utils/gsap';
+import { isMobile, shouldReduceEffects, getMobileInfo } from './core/utils/mobile';
 import { BackgroundFxComponent } from './core/fx/bg-fx.component';
 import { MagneticDirective } from './core/directives/magnetic.directive';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, BackgroundFxComponent, MagneticDirective],
+  imports: [RouterOutlet, BackgroundFxComponent, MagneticDirective, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
+  title = 'jome';
   year = new Date().getFullYear();
   progress = signal(0);
   scrolled = signal(false);
 
+  // Hamburger menu state
+  menuOpen = signal(false);
+  private menuRafId?: number;
+
   private rafId?: number;
   private progressRafPending = false;
+
+  // Mobile detection cache
+  private mobileInfo = getMobileInfo();
 
   ngOnInit(): void {
     ensureGsap();
@@ -38,6 +47,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.rafId) cancelAnimationFrame(this.rafId);
+    if (this.menuRafId) cancelAnimationFrame(this.menuRafId);
+    // Restaurar scroll por si quedó bloqueado
+    document.body.style.overflow = '';
   }
 
   @HostListener('window:scroll')
@@ -54,6 +66,14 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('window:orientationchange')
   onOrientationChange(): void {
     this.scheduleProgressUpdate();
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    // Cerrar menú con Escape
+    if (event.key === 'Escape' && this.menuOpen()) {
+      this.closeMenu();
+    }
   }
 
   @HostListener('window:mousemove', ['$event'])
@@ -91,6 +111,58 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     const phoneNumber = '5491123456789'; // Reemplazar con número real
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  }
+
+  // =========================
+  // ✅ Hamburger Menu Logic
+  // =========================
+  toggleMenu(): void {
+    if (this.menuOpen()) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
+  }
+
+  openMenu(): void {
+    this.menuOpen.set(true);
+    
+    // Bloquear scroll del body en móvil
+    if (this.mobileInfo.isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
+    
+    // Focus al primer link para accesibilidad
+    this.menuRafId = requestAnimationFrame(() => {
+      const firstLink = document.querySelector('.mobile-nav__link') as HTMLElement;
+      firstLink?.focus();
+    });
+  }
+
+  closeMenu(): void {
+    this.menuOpen.set(false);
+    
+    // Restaurar scroll
+    document.body.style.overflow = '';
+    
+    if (this.menuRafId) {
+      cancelAnimationFrame(this.menuRafId);
+      this.menuRafId = undefined;
+    }
+  }
+
+  navigateAndClose(sectionId: string): void {
+    this.scrollTo(sectionId);
+    this.closeMenu();
+  }
+
+  // Getters para template
+  get isMobileDevice(): boolean {
+    return this.mobileInfo.isMobile;
+  }
+
+  get showHamburger(): boolean {
+    return this.mobileInfo.isSmallScreen; // ≤768px
   }
 
   // =========================
