@@ -209,18 +209,39 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL
+  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - TODA LA WEB
   private initMobileAppearAnimations(): void {
-    console.log('🚀 Iniciando animaciones móviles...');
+    console.log('🚀 Iniciando animaciones móviles COMPLETAS...');
     
-    // Usar GSAP para más control y mejor performance en móvil
+    // TODOS los elementos que deben animarse
     const elements = [
-      { selector: '.card', delay: 0.5, duration: 0.8, from: 'left' },
-      { selector: '.workCard', delay: 0.8, duration: 0.8, from: 'right' },
-      { selector: '.clientTile', delay: 0.3, duration: 0.6, from: 'left' },
-      { selector: '.step', delay: 0.4, duration: 0.6, from: 'right' },
-      { selector: '.quote', delay: 0.6, duration: 0.6, from: 'left' },
-      { selector: '.panel', delay: 0.9, duration: 0.6, from: 'bottom' }
+      // HERO
+      { selector: '.hero__kicker', delay: 0.2, duration: 0.6, from: 'top' },
+      { selector: '.hero__title', delay: 0.3, duration: 0.8, from: 'left' },
+      { selector: '.hero__titleAccent', delay: 0.4, duration: 0.6, from: 'right' },
+      { selector: '.hero__subtitle', delay: 0.5, duration: 0.6, from: 'bottom' },
+      { selector: '.hero__actions', delay: 0.6, duration: 0.6, from: 'left' },
+      { selector: '.stat', delay: 0.7, duration: 0.5, from: 'bottom' },
+      { selector: '.hero__visual', delay: 0.8, duration: 0.8, from: 'right' },
+      { selector: '.mini', delay: 0.9, duration: 0.5, from: 'left' },
+      
+      // SERVICES
+      { selector: '.section__head', delay: 1.0, duration: 0.6, from: 'top' },
+      { selector: '.card', delay: 1.1, duration: 0.7, from: 'left' },
+      
+      // WORK
+      { selector: '.workCard', delay: 1.3, duration: 0.7, from: 'right' },
+      
+      // CLIENTS
+      { selector: '.clientTile', delay: 1.5, duration: 0.6, from: 'bottom' },
+      { selector: '.logo', delay: 1.6, duration: 0.5, from: 'left' },
+      
+      // PROCESS
+      { selector: '.step', delay: 1.7, duration: 0.6, from: 'top' },
+      
+      // CONTACT
+      { selector: '.panel', delay: 1.8, duration: 0.7, from: 'bottom' },
+      { selector: '.quote', delay: 1.9, duration: 0.6, from: 'right' }
     ];
 
     elements.forEach(({ selector, delay, duration, from }) => {
@@ -235,13 +256,16 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       
       switch(from) {
         case 'left':
-          initialX = -100; // Entrar desde izquierda
+          initialX = -150; // Más distancia para mayor impacto
           break;
         case 'right':
-          initialX = 100;  // Entrar desde derecha
+          initialX = 150;
+          break;
+        case 'top':
+          initialY = -100;
           break;
         case 'bottom':
-          initialY = 80;   // Entrar desde abajo
+          initialY = 100;
           break;
       }
       
@@ -263,8 +287,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
         y: 0,
         duration,
         delay,
-        stagger: 0.15,
-        ease: 'power3.out', // Suave y profesional
+        stagger: 0.1,
+        ease: 'power3.out',
         onComplete: () => console.log(`✅ Animación completada para ${selector}`)
       });
     });

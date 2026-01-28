@@ -5,6 +5,29 @@
   padding-top: 92px;
 }
 
+/* ✅ OCULTAR CONTENIDO INICIALMENTE EN MÓVIL */
+@media (max-width: 980px) {
+  .hero__kicker,
+  .hero__title,
+  .hero__titleAccent,
+  .hero__subtitle,
+  .hero__actions,
+  .stat,
+  .hero__visual,
+  .mini,
+  .section__head,
+  .card,
+  .workCard,
+  .clientTile,
+  .logo,
+  .step,
+  .panel,
+  .quote {
+    opacity: 0;
+    display: none;
+  }
+}
+
 /* ---------------------------
    Shared utilities
 --------------------------- */
