@@ -16,12 +16,172 @@ canvas {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(1200px 900px at 20% 10%, rgba(0, 74, 173, 0.22), transparent 64%),
-    radial-gradient(900px 720px at 85% 15%, rgba(182, 203, 51, 0.16), transparent 66%),
-    radial-gradient(900px 900px at 55% 85%, rgba(15, 72, 102, 0.18), transparent 70%),
-    radial-gradient(circle at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.58) 92%);
+    radial-gradient(1200px 900px at 20% 10%, rgba(156, 163, 175, 0.18), transparent 64%),
+    radial-gradient(900px 720px at 85% 15%, rgba(107, 114, 128, 0.14), transparent 66%),
+    radial-gradient(900px 900px at 55% 85%, rgba(209, 213, 219, 0.16), transparent 70%),
+    radial-gradient(1400px 1000px at 25% 75%, rgba(156, 163, 175, 0.12), transparent 68%),
+    radial-gradient(600px 600px at 75% 25%, rgba(107, 114, 128, 0.10), transparent 65%),
+    radial-gradient(800px 800px at 15% 60%, rgba(209, 213, 219, 0.08), transparent 62%),
+    radial-gradient(circle at 50% 50%, transparent 30%, rgba(26, 26, 26, 0.58) 92%);
   mix-blend-mode: screen;
-  opacity: 0.8;
+  opacity: 0.85;
+}
+
+/* IMMEDIATE BACKGROUND CIRCLES - Visible from first paint */
+.immediate-circles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.immediate-circles::before,
+.immediate-circles::after,
+.circle-1,
+.circle-2,
+.circle-3,
+.circle-4,
+.circle-5,
+.circle-6 {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+}
+
+.immediate-circles::before {
+  width: 350px;
+  height: 350px;
+  top: 5%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+  animation: float-1 25s ease-in-out infinite;
+}
+
+.immediate-circles::after {
+  width: 280px;
+  height: 280px;
+  top: 15%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(156, 163, 175, 0.15), transparent 65%);
+  animation: float-2 20s ease-in-out infinite;
+  animation-delay: 5s;
+}
+
+.circle-1 {
+  width: 200px;
+  height: 200px;
+  top: 30%;
+  left: 25%;
+  background: radial-gradient(circle, rgba(107, 114, 128, 0.12), transparent 60%);
+  animation: float-3 18s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.circle-2 {
+  width: 400px;
+  height: 400px;
+  bottom: 20%;
+  right: 20%;
+  background: radial-gradient(circle, rgba(209, 213, 219, 0.1), transparent 70%);
+  animation: float-4 22s ease-in-out infinite;
+  animation-delay: 8s;
+}
+
+.circle-3 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  left: 60%;
+  background: radial-gradient(circle, rgba(156, 163, 175, 0.08), transparent 55%);
+  animation: float-5 15s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.circle-4 {
+  width: 320px;
+  height: 320px;
+  top: 70%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(107, 114, 128, 0.09), transparent 65%);
+  animation: float-6 28s ease-in-out infinite;
+  animation-delay: 12s;
+}
+
+.circle-5 {
+  width: 180px;
+  height: 180px;
+  top: 40%;
+  right: 40%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 50%);
+  animation: float-1 20s ease-in-out infinite;
+  animation-delay: 7s;
+}
+
+.circle-6 {
+  width: 250px;
+  height: 250px;
+  bottom: 10%;
+  left: 40%;
+  background: radial-gradient(circle, rgba(209, 213, 219, 0.07), transparent 60%);
+  animation: float-2 25s ease-in-out infinite;
+  animation-delay: 10s;
+}
+
+/* SUBTLE FLOATING ANIMATIONS */
+@keyframes float-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, -15px) scale(1.05);
+  }
+}
+
+@keyframes float-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-25px, 20px) scale(1.08);
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, 25px) scale(1.03);
+  }
+}
+
+@keyframes float-4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-18px, -22px) scale(1.06);
+  }
+}
+
+@keyframes float-5 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(22px, 18px) scale(1.04);
+  }
+}
+
+@keyframes float-6 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-20px, -25px) scale(1.07);
+  }
 }
 
 .scanlines {

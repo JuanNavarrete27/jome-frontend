@@ -1,7 +1,20 @@
 <section id="home" class="hero">
   <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__background-circle" aria-hidden="true"></div>
   <div class="shape shape--a" aria-hidden="true"></div>
   <div class="shape shape--b" aria-hidden="true"></div>
+  
+  <!-- ADDITIONAL AMBIENT CIRCLES THROUGHOUT PAGE -->
+  <div class="ambient-circles">
+    <div class="ambient-circle ambient-circle-1"></div>
+    <div class="ambient-circle ambient-circle-2"></div>
+    <div class="ambient-circle ambient-circle-3"></div>
+    <div class="ambient-circle ambient-circle-4"></div>
+    <div class="ambient-circle ambient-circle-5"></div>
+    <div class="ambient-circle ambient-circle-6"></div>
+    <div class="ambient-circle ambient-circle-7"></div>
+    <div class="ambient-circle ambient-circle-8"></div>
+  </div>
 
   <div class="hero__inner">
     <div class="hero__copy">
@@ -17,10 +30,10 @@
       </p>
 
       <div class="hero__actions">
-        <a magnetic class="btn btn--primary" href="#" (click)="openShowreel(); $event.preventDefault()">
-          Ver portafolio
+        <a magnetic class="btn btn--primary" href="#work" (click)="scrollToWork(); $event.preventDefault()">
+          Ver trabajos
         </a>
-        <a magnetic class="btn btn--ghost" href="#services" (click)="$event.preventDefault()">
+        <a magnetic class="btn btn--ghost" href="#services" (click)="scrollToServices(); $event.preventDefault()">
           Servicios
         </a>
       </div>
@@ -59,17 +72,17 @@
             <div class="timeline__row">
               <span class="chip">UX/UI</span>
               <span class="track"></span>
-              <span class="chip chip--lime">ANGULAR</span>
+              <span class="chip">ANGULAR</span>
             </div>
             <div class="timeline__row">
-              <span class="chip chip--blue">NODE</span>
+              <span class="chip">NODE</span>
               <span class="track"></span>
               <span class="chip">SQL</span>
             </div>
             <div class="timeline__row">
               <span class="chip">API</span>
               <span class="track"></span>
-              <span class="chip chip--blue">DEPLOY</span>
+              <span class="chip">DEPLOY</span>
             </div>
           </div>
 

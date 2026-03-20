@@ -40565,7 +40565,7 @@ var _globals = {};
 var _installScope = {};
 var _coreReady;
 var _install = function _install2(scope) {
-  return (_installScope = _merge(scope, _globals)) && gsap2;
+  return (_installScope = _merge(scope, _globals)) && gsap;
 };
 var _missingPlugin = function _missingPlugin2(property, value) {
   return console.warn("Invalid property", property, "set to", value, "Missing plugin? gsap.registerPlugin()");
@@ -41279,7 +41279,7 @@ var _createPlugin = function _createPlugin2(config4) {
       name = (name === "css" ? "CSS" : name.charAt(0).toUpperCase() + name.substr(1)) + "Plugin";
     }
     _addGlobal(name, Plugin);
-    config4.register && config4.register(gsap2, Plugin, PropTween);
+    config4.register && config4.register(gsap, Plugin, PropTween);
   } else {
     _registerPluginQueue.push(config4);
   }
@@ -41467,8 +41467,8 @@ var _ticker = function() {
         if (!_coreInitted && _windowExists()) {
           _win = _coreInitted = window;
           _doc = _win.document || {};
-          _globals.gsap = gsap2;
-          (_win.gsapVersions || (_win.gsapVersions = [])).push(gsap2.version);
+          _globals.gsap = gsap;
+          (_win.gsapVersions || (_win.gsapVersions = [])).push(gsap.version);
           _install(_installScope || _win.GreenSockGlobals || !_win.gsap && _win || {});
           _registerPluginQueue.forEach(_createPlugin);
         }
@@ -43389,7 +43389,7 @@ var _gsap = {
     target = toArray(target);
     if (target.length > 1) {
       var setters = target.map(function(t) {
-        return gsap2.quickSetter(t, property, unit);
+        return gsap.quickSetter(t, property, unit);
       }), l = setters.length;
       return function(value) {
         var i = l;
@@ -43412,7 +43412,7 @@ var _gsap = {
   },
   quickTo: function quickTo(target, property, vars) {
     var _setDefaults22;
-    var tween = gsap2.to(target, _setDefaults((_setDefaults22 = {}, _setDefaults22[property] = "+=0.1", _setDefaults22.paused = true, _setDefaults22.stagger = 0, _setDefaults22), vars || {})), func = function func2(value, start, startIsRelative) {
+    var tween = gsap.to(target, _setDefaults((_setDefaults22 = {}, _setDefaults22[property] = "+=0.1", _setDefaults22.paused = true, _setDefaults22.stagger = 0, _setDefaults22), vars || {})), func = function func2(value, start, startIsRelative) {
       return tween.resetTo(property, value, start, startIsRelative);
     };
     func.tween = tween;
@@ -43601,7 +43601,7 @@ var _buildModifierPlugin = function _buildModifierPlugin2(name, modifier) {
     }
   };
 };
-var gsap2 = _gsap.registerPlugin({
+var gsap = _gsap.registerPlugin({
   name: "attr",
   init: function init(target, vars, tween, index, targets) {
     var p, pt, v;
@@ -43631,7 +43631,7 @@ var gsap2 = _gsap.registerPlugin({
     }
   }
 }, _buildModifierPlugin("roundProps", _roundModifier), _buildModifierPlugin("modifiers"), _buildModifierPlugin("snap", snap)) || _gsap;
-Tween.version = Timeline.version = gsap2.version = "3.14.2";
+Tween.version = Timeline.version = gsap.version = "3.14.2";
 _coreReady = 1;
 _windowExists() && _wake();
 var Power0 = _easeMap.Power0;
@@ -43796,7 +43796,7 @@ var _getStyleSaver = function _getStyleSaver2(target, properties) {
     revert: _revertStyle,
     save: _saveStyle
   };
-  target._gsap || gsap2.core.getCache(target);
+  target._gsap || gsap.core.getCache(target);
   properties && target.style && target.nodeType && properties.split(",").forEach(function(p) {
     return saver.save(p);
   });
@@ -43835,7 +43835,7 @@ var _initCore = function _initCore2() {
     _transformOriginProp = _transformProp + "Origin";
     _tempDiv.style.cssText = "border-width:0;line-height:0;position:absolute;padding:0";
     _supports3D = !!_checkPropPrefix("perspective");
-    _reverting2 = gsap2.core.reverting;
+    _reverting2 = gsap.core.reverting;
     _pluginInitted = 1;
   }
 };
@@ -44749,8 +44749,8 @@ var CSSPlugin = {
     _getMatrix
   }
 };
-gsap2.utils.checkPrefix = _checkPropPrefix;
-gsap2.core.getStyleSaver = _getStyleSaver;
+gsap.utils.checkPrefix = _checkPropPrefix;
+gsap.core.getStyleSaver = _getStyleSaver;
 (function(positionAndScale, rotation, others, aliases) {
   var all = _forEachName(positionAndScale + "," + rotation + "," + others, function(name) {
     _transformProps[name] = 1;
@@ -44768,10 +44768,10 @@ gsap2.core.getStyleSaver = _getStyleSaver;
 _forEachName("x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,perspective", function(name) {
   _config.units[name] = "px";
 });
-gsap2.registerPlugin(CSSPlugin);
+gsap.registerPlugin(CSSPlugin);
 
 // node_modules/gsap/index.js
-var gsapWithCSS = gsap2.registerPlugin(CSSPlugin) || gsap2;
+var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap;
 var TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
 // node_modules/gsap/Observer.js
@@ -44789,7 +44789,7 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
 }
-var gsap3;
+var gsap2;
 var _coreInitted2;
 var _clamp3;
 var _win3;
@@ -44804,7 +44804,7 @@ var _normalizer;
 var _eventTypes;
 var _context2;
 var _getGSAP = function _getGSAP2() {
-  return gsap3 || typeof window !== "undefined" && (gsap3 = window.gsap) && gsap3.registerPlugin && gsap3;
+  return gsap2 || typeof window !== "undefined" && (gsap2 = window.gsap) && gsap2.registerPlugin && gsap2;
 };
 var _startup = 1;
 var _observers = [];
@@ -44890,7 +44890,7 @@ var _vertical = {
   })
 };
 var _getTarget = function _getTarget2(t, self2) {
-  return (self2 && self2._ctx && self2._ctx.selector || gsap3.utils.toArray)(t)[0] || (typeof t === "string" && gsap3.config().nullTargetWarn !== false ? console.warn("Element not found:", t) : null);
+  return (self2 && self2._ctx && self2._ctx.selector || gsap2.utils.toArray)(t)[0] || (typeof t === "string" && gsap2.config().nullTargetWarn !== false ? console.warn("Element not found:", t) : null);
 };
 var _isWithin = function _isWithin2(element, list) {
   var i = list.length;
@@ -44911,7 +44911,7 @@ var _getScrollFunc = function _getScrollFunc2(element, _ref) {
     return arguments.length ? element[s] = value : element[s];
   })));
   func.target = element;
-  prev || (func.smooth = gsap3.getProperty(element, "scrollBehavior") === "smooth");
+  prev || (func.smooth = gsap2.getProperty(element, "scrollBehavior") === "smooth");
   return func;
 };
 var _getVelocityProp = function _getVelocityProp2(value, minTimeRefresh, useDelta) {
@@ -44950,19 +44950,19 @@ var _getAbsoluteMax = function _getAbsoluteMax2(a) {
   return Math.abs(max) >= Math.abs(min) ? max : min;
 };
 var _setScrollTrigger = function _setScrollTrigger2() {
-  ScrollTrigger = gsap3.core.globals().ScrollTrigger;
+  ScrollTrigger = gsap2.core.globals().ScrollTrigger;
   ScrollTrigger && ScrollTrigger.core && _integrate();
 };
 var _initCore3 = function _initCore4(core) {
-  gsap3 = core || _getGSAP();
-  if (!_coreInitted2 && gsap3 && typeof document !== "undefined" && document.body) {
+  gsap2 = core || _getGSAP();
+  if (!_coreInitted2 && gsap2 && typeof document !== "undefined" && document.body) {
     _win3 = window;
     _doc3 = document;
     _docEl = _doc3.documentElement;
     _body = _doc3.body;
     _root = [_win3, _doc3, _docEl, _body];
-    _clamp3 = gsap3.utils.clamp;
-    _context2 = gsap3.core.context || function() {
+    _clamp3 = gsap2.utils.clamp;
+    _context2 = gsap2.core.context || function() {
     };
     _pointerType = "onpointerenter" in _body ? "pointer" : "mouse";
     _isTouch = Observer.isTouch = _win3.matchMedia && _win3.matchMedia("(hover: none), (pointer: coarse)").matches ? 1 : "ontouchstart" in _win3 || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 ? 2 : 0;
@@ -44983,12 +44983,12 @@ var Observer = /* @__PURE__ */ function() {
   }
   var _proto = Observer2.prototype;
   _proto.init = function init5(vars) {
-    _coreInitted2 || _initCore3(gsap3) || console.warn("Please gsap.registerPlugin(Observer)");
+    _coreInitted2 || _initCore3(gsap2) || console.warn("Please gsap.registerPlugin(Observer)");
     ScrollTrigger || _setScrollTrigger();
     var tolerance = vars.tolerance, dragMinimum = vars.dragMinimum, type = vars.type, target = vars.target, lineHeight = vars.lineHeight, debounce = vars.debounce, preventDefault = vars.preventDefault, onStop = vars.onStop, onStopDelay = vars.onStopDelay, ignore = vars.ignore, wheelSpeed = vars.wheelSpeed, event = vars.event, onDragStart = vars.onDragStart, onDragEnd = vars.onDragEnd, onDrag = vars.onDrag, onPress = vars.onPress, onRelease = vars.onRelease, onRight = vars.onRight, onLeft = vars.onLeft, onUp = vars.onUp, onDown = vars.onDown, onChangeX = vars.onChangeX, onChangeY = vars.onChangeY, onChange = vars.onChange, onToggleX = vars.onToggleX, onToggleY = vars.onToggleY, onHover2 = vars.onHover, onHoverEnd = vars.onHoverEnd, onMove = vars.onMove, ignoreCheck = vars.ignoreCheck, isNormalizer = vars.isNormalizer, onGestureStart = vars.onGestureStart, onGestureEnd = vars.onGestureEnd, onWheel = vars.onWheel, onEnable = vars.onEnable, onDisable = vars.onDisable, onClick = vars.onClick, scrollSpeed = vars.scrollSpeed, capture = vars.capture, allowClicks = vars.allowClicks, lockAxis = vars.lockAxis, onLockAxis = vars.onLockAxis;
     this.target = target = _getTarget(target) || _docEl;
     this.vars = vars;
-    ignore && (ignore = gsap3.utils.toArray(ignore));
+    ignore && (ignore = gsap2.utils.toArray(ignore));
     tolerance = tolerance || 1e-9;
     dragMinimum = dragMinimum || 0;
     wheelSpeed = wheelSpeed || 1;
@@ -45098,7 +45098,7 @@ var Observer = /* @__PURE__ */ function() {
         self2._vx.reset();
         self2._vy.reset();
         if (preventDefault && allowClicks) {
-          gsap3.delayedCall(0.08, function() {
+          gsap2.delayedCall(0.08, function() {
             if (_getTime() - onClickTime > 300 && !e.defaultPrevented) {
               if (e.target.click) {
                 e.target.click();
@@ -45157,7 +45157,7 @@ var Observer = /* @__PURE__ */ function() {
     }, _onClick = function _onClick2(e) {
       return _ignoreCheck(e) || _getEvent(e, preventDefault) && onClick(self2);
     };
-    onStopDelayedCall = self2._dc = gsap3.delayedCall(onStopDelay || 0.25, onStopFunc).pause();
+    onStopDelayedCall = self2._dc = gsap2.delayedCall(onStopDelay || 0.25, onStopFunc).pause();
     self2.deltaX = self2.deltaY = 0;
     self2._vx = _getVelocityProp(0, 50, true);
     self2._vy = _getVelocityProp(0, 50, true);
@@ -45255,10 +45255,10 @@ Observer.getById = function(id) {
     return o.vars.id === id;
   })[0];
 };
-_getGSAP() && gsap3.registerPlugin(Observer);
+_getGSAP() && gsap2.registerPlugin(Observer);
 
 // node_modules/gsap/ScrollTrigger.js
-var gsap4;
+var gsap3;
 var _coreInitted3;
 var _win4;
 var _doc4;
@@ -45324,7 +45324,7 @@ var _windowExists5 = function _windowExists6() {
   return typeof window !== "undefined";
 };
 var _getGSAP3 = function _getGSAP4() {
-  return gsap4 || _windowExists5() && (gsap4 = window.gsap) && gsap4.registerPlugin && gsap4;
+  return gsap3 || _windowExists5() && (gsap3 = window.gsap) && gsap3.registerPlugin && gsap3;
 };
 var _isViewport3 = function _isViewport4(e) {
   return !!~_root2.indexOf(e);
@@ -45416,7 +45416,7 @@ var _setDefaults3 = function _setDefaults4(obj, defaults2) {
   return obj;
 };
 var _getBounds = function _getBounds2(element, withoutTransforms) {
-  var tween = withoutTransforms && _getComputedStyle(element)[_transformProp2] !== "matrix(1, 0, 0, 1, 0, 0)" && gsap4.to(element, {
+  var tween = withoutTransforms && _getComputedStyle(element)[_transformProp2] !== "matrix(1, 0, 0, 1, 0, 0)" && gsap3.to(element, {
     x: 0,
     y: 0,
     xPercent: 0,
@@ -45444,11 +45444,11 @@ var _getLabelRatioArray = function _getLabelRatioArray2(timeline2) {
 };
 var _getClosestLabel = function _getClosestLabel2(animation) {
   return function(value) {
-    return gsap4.utils.snap(_getLabelRatioArray(animation), value);
+    return gsap3.utils.snap(_getLabelRatioArray(animation), value);
   };
 };
 var _snapDirectional = function _snapDirectional2(snapIncrementOrArray) {
-  var snap3 = gsap4.utils.snap(snapIncrementOrArray), a = Array.isArray(snapIncrementOrArray) && snapIncrementOrArray.slice(0).sort(function(a2, b) {
+  var snap3 = gsap3.utils.snap(snapIncrementOrArray), a = Array.isArray(snapIncrementOrArray) && snapIncrementOrArray.slice(0).sort(function(a2, b) {
     return a2 - b;
   });
   return a ? function(value, direction, threshold) {
@@ -45565,7 +45565,7 @@ var _positionMarker = function _positionMarker2(marker, start, direction, flippe
   vars["border" + side + _Width] = 1;
   vars["border" + oppositeSide + _Width] = 0;
   vars[direction.p] = start + "px";
-  gsap4.set(marker, vars);
+  gsap3.set(marker, vars);
 };
 var _triggers = [];
 var _ids = {};
@@ -45804,7 +45804,7 @@ var _capsExp2 = /([A-Z])/g;
 var _setState = function _setState2(state) {
   if (state) {
     var style2 = state.t.style, l = state.length, i = 0, p, value;
-    (state.t._gsap || gsap4.core.getCache(state.t)).uncache = 1;
+    (state.t._gsap || gsap3.core.getCache(state.t)).uncache = 1;
     for (; i < l; i += 2) {
       value = state[i + 1];
       p = state[i];
@@ -45862,7 +45862,7 @@ var _parsePosition3 = function _parsePosition4(value, trigger, scrollerSize, dir
     markerScroller && _positionMarker(markerScroller, globalOffset, direction, scrollerSize - globalOffset < 20 || markerScroller._isStart && globalOffset > 20);
     scrollerSize -= scrollerSize - globalOffset;
   } else {
-    containerAnimation && (value = gsap4.utils.mapRange(containerAnimation.scrollTrigger.start, containerAnimation.scrollTrigger.end, 0, scrollerMax, value));
+    containerAnimation && (value = gsap3.utils.mapRange(containerAnimation.scrollTrigger.start, containerAnimation.scrollTrigger.end, 0, scrollerMax, value));
     markerScroller && _positionMarker(markerScroller, scrollerSize, direction, true);
   }
   if (clampZeroProp) {
@@ -45905,7 +45905,7 @@ var _reparent = function _reparent2(element, parent, top, left) {
     } else {
       style2.cssText = element._stOrig;
     }
-    gsap4.core.getCache(element).uncache = 1;
+    gsap3.core.getCache(element).uncache = 1;
     parent.appendChild(element);
   }
 };
@@ -45925,7 +45925,7 @@ var _interruptionTracker = function _interruptionTracker2(getValueFunc, initialV
 var _shiftMarker = function _shiftMarker2(marker, direction, value) {
   var vars = {};
   vars[direction.p] = "+=" + value;
-  gsap4.set(marker, vars);
+  gsap3.set(marker, vars);
 };
 var _getTweenCreator = function _getTweenCreator2(scroller, direction) {
   var getScroll = _getScrollFunc(scroller, direction), prop = "_scroll" + direction.p2, getTween = function getTween2(scrollTo, vars, initialValue, change1, change2) {
@@ -45952,7 +45952,7 @@ var _getTweenCreator = function _getTweenCreator2(scroller, direction) {
       getTween2.tween = 0;
       onComplete && onComplete.call(tween);
     };
-    tween = getTween2.tween = gsap4.to(scroller, vars);
+    tween = getTween2.tween = gsap3.to(scroller, vars);
     return tween;
   };
   scroller[prop] = getScroll;
@@ -45965,7 +45965,7 @@ var _getTweenCreator = function _getTweenCreator2(scroller, direction) {
 };
 var ScrollTrigger2 = /* @__PURE__ */ function() {
   function ScrollTrigger4(vars, animation) {
-    _coreInitted3 || ScrollTrigger4.register(gsap4) || console.warn("Please gsap.registerPlugin(ScrollTrigger)");
+    _coreInitted3 || ScrollTrigger4.register(gsap3) || console.warn("Please gsap.registerPlugin(ScrollTrigger)");
     _context3(this);
     this.init(vars, animation);
   }
@@ -45980,7 +45980,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
     vars = _setDefaults3(_isString3(vars) || _isNumber3(vars) || vars.nodeType ? {
       trigger: vars
     } : vars, _defaults2);
-    var _vars = vars, onUpdate = _vars.onUpdate, toggleClass = _vars.toggleClass, id = _vars.id, onToggle = _vars.onToggle, onRefresh = _vars.onRefresh, scrub = _vars.scrub, trigger = _vars.trigger, pin = _vars.pin, pinSpacing = _vars.pinSpacing, invalidateOnRefresh = _vars.invalidateOnRefresh, anticipatePin = _vars.anticipatePin, onScrubComplete = _vars.onScrubComplete, onSnapComplete = _vars.onSnapComplete, once = _vars.once, snap3 = _vars.snap, pinReparent = _vars.pinReparent, pinSpacer = _vars.pinSpacer, containerAnimation = _vars.containerAnimation, fastScrollEnd = _vars.fastScrollEnd, preventOverlaps = _vars.preventOverlaps, direction = vars.horizontal || vars.containerAnimation && vars.horizontal !== false ? _horizontal : _vertical, isToggle = !scrub && scrub !== 0, scroller = _getTarget(vars.scroller || _win4), scrollerCache = gsap4.core.getCache(scroller), isViewport = _isViewport3(scroller), useFixedPosition = ("pinType" in vars ? vars.pinType : _getProxyProp(scroller, "pinType") || isViewport && "fixed") === "fixed", callbacks = [vars.onEnter, vars.onLeave, vars.onEnterBack, vars.onLeaveBack], toggleActions = isToggle && vars.toggleActions.split(" "), markers = "markers" in vars ? vars.markers : _defaults2.markers, borderWidth = isViewport ? 0 : parseFloat(_getComputedStyle(scroller)["border" + direction.p2 + _Width]) || 0, self2 = this, onRefreshInit = vars.onRefreshInit && function() {
+    var _vars = vars, onUpdate = _vars.onUpdate, toggleClass = _vars.toggleClass, id = _vars.id, onToggle = _vars.onToggle, onRefresh = _vars.onRefresh, scrub = _vars.scrub, trigger = _vars.trigger, pin = _vars.pin, pinSpacing = _vars.pinSpacing, invalidateOnRefresh = _vars.invalidateOnRefresh, anticipatePin = _vars.anticipatePin, onScrubComplete = _vars.onScrubComplete, onSnapComplete = _vars.onSnapComplete, once = _vars.once, snap3 = _vars.snap, pinReparent = _vars.pinReparent, pinSpacer = _vars.pinSpacer, containerAnimation = _vars.containerAnimation, fastScrollEnd = _vars.fastScrollEnd, preventOverlaps = _vars.preventOverlaps, direction = vars.horizontal || vars.containerAnimation && vars.horizontal !== false ? _horizontal : _vertical, isToggle = !scrub && scrub !== 0, scroller = _getTarget(vars.scroller || _win4), scrollerCache = gsap3.core.getCache(scroller), isViewport = _isViewport3(scroller), useFixedPosition = ("pinType" in vars ? vars.pinType : _getProxyProp(scroller, "pinType") || isViewport && "fixed") === "fixed", callbacks = [vars.onEnter, vars.onLeave, vars.onEnterBack, vars.onLeaveBack], toggleActions = isToggle && vars.toggleActions.split(" "), markers = "markers" in vars ? vars.markers : _defaults2.markers, borderWidth = isViewport ? 0 : parseFloat(_getComputedStyle(scroller)["border" + direction.p2 + _Width]) || 0, self2 = this, onRefreshInit = vars.onRefreshInit && function() {
       return vars.onRefreshInit(self2);
     }, getScrollerSize = _getSizeFunc(scroller, isViewport, direction), getScrollerOffsets = _getOffsetsFunc(scroller, isViewport), lastSnap = 0, lastRefresh = 0, prevProgress = 0, scrollFunc = _getScrollFunc(scroller, direction), tweenTo, pinCache, snapFunc, scroll1, scroll2, start, end, markerStart, markerEnd, markerStartTrigger, markerEndTrigger, markerVars, executingOnRefresh, change, pinOriginalState, pinActiveState, pinState, spacer, offset, pinGetter, pinSetter, pinStart, pinChange, spacingStart, spacerState, markerStartSetter, pinMoves, markerEndSetter, cs, snap1, snap22, scrubTween, scrubSmooth, snapDurClamp, snapDelayedCall, prevScroll, prevAnimProgress, caMarkerSetter, customRevertReturn;
     self2._startClamp = self2._endClamp = false;
@@ -46006,7 +46006,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
         scrubTween && scrubTween.progress(1).kill();
         scrubTween = 0;
       } else {
-        scrubTween ? scrubTween.duration(value) : scrubTween = gsap4.to(animation, {
+        scrubTween ? scrubTween.duration(value) : scrubTween = gsap3.to(animation, {
           ease: "expo",
           totalProgress: "+=0",
           inherit: false,
@@ -46033,7 +46033,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
           snapTo: snap3
         };
       }
-      "scrollBehavior" in _body2.style && gsap4.set(isViewport ? [_body2, _docEl2] : scroller, {
+      "scrollBehavior" in _body2.style && gsap3.set(isViewport ? [_body2, _docEl2] : scroller, {
         scrollBehavior: "auto"
       });
       _scrollers.forEach(function(o) {
@@ -46041,16 +46041,16 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       });
       snapFunc = _isFunction3(snap3.snapTo) ? snap3.snapTo : snap3.snapTo === "labels" ? _getClosestLabel(animation) : snap3.snapTo === "labelsDirectional" ? _getLabelAtDirection(animation) : snap3.directional !== false ? function(value, st) {
         return _snapDirectional(snap3.snapTo)(value, _getTime2() - lastRefresh < 500 ? 0 : st.direction);
-      } : gsap4.utils.snap(snap3.snapTo);
+      } : gsap3.utils.snap(snap3.snapTo);
       snapDurClamp = snap3.duration || {
         min: 0.1,
         max: 2
       };
       snapDurClamp = _isObject3(snapDurClamp) ? _clamp4(snapDurClamp.min, snapDurClamp.max) : _clamp4(snapDurClamp, snapDurClamp);
-      snapDelayedCall = gsap4.delayedCall(snap3.delay || scrubSmooth / 2 || 0.1, function() {
+      snapDelayedCall = gsap3.delayedCall(snap3.delay || scrubSmooth / 2 || 0.1, function() {
         var scroll = scrollFunc(), refreshedRecently = _getTime2() - lastRefresh < 500, tween = tweenTo.tween;
         if ((refreshedRecently || Math.abs(self2.getVelocity()) < 10) && !tween && !_pointerIsDown && lastSnap !== scroll) {
-          var progress = (scroll - start) / change, totalProgress = animation && !isToggle ? animation.totalProgress() : progress, velocity = refreshedRecently ? 0 : (totalProgress - snap22) / (_getTime2() - _time2) * 1e3 || 0, change1 = gsap4.utils.clamp(-progress, 1 - progress, _abs(velocity / 2) * velocity / 0.185), naturalEnd = progress + (snap3.inertia === false ? 0 : change1), endValue, endScroll, _snap = snap3, onStart = _snap.onStart, _onInterrupt = _snap.onInterrupt, _onComplete = _snap.onComplete;
+          var progress = (scroll - start) / change, totalProgress = animation && !isToggle ? animation.totalProgress() : progress, velocity = refreshedRecently ? 0 : (totalProgress - snap22) / (_getTime2() - _time2) * 1e3 || 0, change1 = gsap3.utils.clamp(-progress, 1 - progress, _abs(velocity / 2) * velocity / 0.185), naturalEnd = progress + (snap3.inertia === false ? 0 : change1), endValue, endScroll, _snap = snap3, onStart = _snap.onStart, _onInterrupt = _snap.onInterrupt, _onComplete = _snap.onComplete;
           endValue = snapFunc(naturalEnd, self2);
           _isNumber3(endValue) || (endValue = naturalEnd);
           endScroll = Math.max(0, Math.round(start + endValue * change));
@@ -46099,7 +46099,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
     if (pin) {
       pinSpacing === false || pinSpacing === _margin || (pinSpacing = !pinSpacing && pin.parentNode && pin.parentNode.style && _getComputedStyle(pin.parentNode).display === "flex" ? false : _padding);
       self2.pin = pin;
-      pinCache = gsap4.core.getCache(pin);
+      pinCache = gsap3.core.getCache(pin);
       if (!pinCache.spacer) {
         if (pinSpacer) {
           pinSpacer = _getTarget(pinSpacer);
@@ -46114,14 +46114,14 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       } else {
         pinOriginalState = pinCache.pinState;
       }
-      vars.force3D !== false && gsap4.set(pin, {
+      vars.force3D !== false && gsap3.set(pin, {
         force3D: true
       });
       self2.spacer = spacer = pinCache.spacer;
       cs = _getComputedStyle(pin);
       spacingStart = cs[pinSpacing + direction.os2];
-      pinGetter = gsap4.getProperty(pin);
-      pinSetter = gsap4.quickSetter(pin, direction.a, _px);
+      pinGetter = gsap3.getProperty(pin);
+      pinSetter = gsap3.quickSetter(pin, direction.a, _px);
       _swapPinIn(pin, spacer, cs);
       pinState = _getState(pin);
     }
@@ -46133,14 +46133,14 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       var content = _getTarget(_getProxyProp(scroller, "content") || scroller);
       markerStart = this.markerStart = _createMarker("start", id, content, direction, markerVars, offset, 0, containerAnimation);
       markerEnd = this.markerEnd = _createMarker("end", id, content, direction, markerVars, offset, 0, containerAnimation);
-      containerAnimation && (caMarkerSetter = gsap4.quickSetter([markerStart, markerEnd], direction.a, _px));
+      containerAnimation && (caMarkerSetter = gsap3.quickSetter([markerStart, markerEnd], direction.a, _px));
       if (!useFixedPosition && !(_proxies.length && _getProxyProp(scroller, "fixedMarkers") === true)) {
         _makePositionable(isViewport ? _body2 : scroller);
-        gsap4.set([markerStartTrigger, markerEndTrigger], {
+        gsap3.set([markerStartTrigger, markerEndTrigger], {
           force3D: true
         });
-        markerStartSetter = gsap4.quickSetter(markerStartTrigger, direction.a, _px);
-        markerEndSetter = gsap4.quickSetter(markerEndTrigger, direction.a, _px);
+        markerStartSetter = gsap3.quickSetter(markerStartTrigger, direction.a, _px);
+        markerEndSetter = gsap3.quickSetter(markerEndTrigger, direction.a, _px);
       }
     }
     if (containerAnimation) {
@@ -46213,8 +46213,8 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       self2._subPinOffset = false;
       var size = getScrollerSize(), scrollerBounds = getScrollerOffsets(), max = containerAnimation ? containerAnimation.duration() : _maxScroll(scroller, direction), isFirstRefresh = change <= 0.01 || !change, offset2 = 0, otherPinOffset = pinOffset || 0, parsedEnd = _isObject3(position) ? position.end : vars.end, parsedEndTrigger = vars.endTrigger || trigger, parsedStart = _isObject3(position) ? position.start : vars.start || (vars.start === 0 || !trigger ? 0 : pin ? "0 0" : "0 100%"), pinnedContainer = self2.pinnedContainer = vars.pinnedContainer && _getTarget(vars.pinnedContainer, self2), triggerIndex = trigger && Math.max(0, _triggers.indexOf(self2)) || 0, i = triggerIndex, cs2, bounds, scroll, isVertical, override, curTrigger, curPin, oppositeScroll, initted, revertedPins, forcedOverflow, markerStartOffset, markerEndOffset;
       if (markers && _isObject3(position)) {
-        markerStartOffset = gsap4.getProperty(markerStartTrigger, direction.p);
-        markerEndOffset = gsap4.getProperty(markerEndTrigger, direction.p);
+        markerStartOffset = gsap3.getProperty(markerStartTrigger, direction.p);
+        markerEndOffset = gsap3.getProperty(markerEndTrigger, direction.p);
       }
       while (i-- > 0) {
         curTrigger = _triggers[i];
@@ -46239,7 +46239,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
           parsedEnd = (_isString3(parsedStart) ? parsedStart.split(" ")[0] : "") + parsedEnd;
         } else {
           offset2 = _offsetToPx(parsedEnd.substr(2), size);
-          parsedEnd = _isString3(parsedStart) ? parsedStart : (containerAnimation ? gsap4.utils.mapRange(0, containerAnimation.duration(), containerAnimation.scrollTrigger.start, containerAnimation.scrollTrigger.end, start) : start) + offset2;
+          parsedEnd = _isString3(parsedStart) ? parsedStart : (containerAnimation ? gsap3.utils.mapRange(0, containerAnimation.duration(), containerAnimation.scrollTrigger.start, containerAnimation.scrollTrigger.end, start) : start) + offset2;
           parsedEndTrigger = trigger;
         }
       }
@@ -46267,14 +46267,14 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       }
       change = end - start || (start -= 0.01) && 1e-3;
       if (isFirstRefresh) {
-        prevProgress = gsap4.utils.clamp(0, 1, gsap4.utils.normalize(start, end, prevScroll));
+        prevProgress = gsap3.utils.clamp(0, 1, gsap3.utils.normalize(start, end, prevScroll));
       }
       self2._pinPush = otherPinOffset;
       if (markerStart && offset2) {
         cs2 = {};
         cs2[direction.a] = "+=" + offset2;
         pinnedContainer && (cs2[direction.p] = "-=" + scrollFunc());
-        gsap4.set([markerStart, markerEnd], cs2);
+        gsap3.set([markerStart, markerEnd], cs2);
       }
       if (pin && !(_clampingMax && self2.end >= _maxScroll(scroller, direction))) {
         cs2 = _getComputedStyle(pin);
@@ -46378,14 +46378,14 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
       _refreshing = 0;
       animation && isToggle && (animation._initted || prevAnimProgress) && animation.progress() !== prevAnimProgress && animation.progress(prevAnimProgress || 0, true).render(animation.time(), true, true);
       if (isFirstRefresh || prevProgress !== self2.progress || containerAnimation || invalidateOnRefresh || animation && !animation._initted) {
-        animation && !isToggle && (animation._initted || prevProgress || animation.vars.immediateRender !== false) && animation.totalProgress(containerAnimation && start < -1e-3 && !prevProgress ? gsap4.utils.normalize(start, end, 0) : prevProgress, true);
+        animation && !isToggle && (animation._initted || prevProgress || animation.vars.immediateRender !== false) && animation.totalProgress(containerAnimation && start < -1e-3 && !prevProgress ? gsap3.utils.normalize(start, end, 0) : prevProgress, true);
         self2.progress = isFirstRefresh || (scroll1 - start) / change === prevProgress ? 0 : prevProgress;
       }
       pin && pinSpacing && (spacer._pinOffset = Math.round(self2.progress * pinChange));
       scrubTween && scrubTween.invalidate();
       if (!isNaN(markerStartOffset)) {
-        markerStartOffset -= gsap4.getProperty(markerStartTrigger, direction.p);
-        markerEndOffset -= gsap4.getProperty(markerEndTrigger, direction.p);
+        markerStartOffset -= gsap3.getProperty(markerStartTrigger, direction.p);
+        markerEndOffset -= gsap3.getProperty(markerEndTrigger, direction.p);
         _shiftMarker(markerStartTrigger, direction, markerStartOffset);
         _shiftMarker(markerStart, direction, markerStartOffset - (pinOffset || 0));
         _shiftMarker(markerEndTrigger, direction, markerEndOffset);
@@ -46633,7 +46633,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
         _scrollers.cache++;
         start || end || self2.refresh();
       };
-      gsap4.delayedCall(0.01, self2.update);
+      gsap3.delayedCall(0.01, self2.update);
       change = 0.01;
       start = end = 0;
     } else {
@@ -46643,7 +46643,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
   };
   ScrollTrigger4.register = function register2(core) {
     if (!_coreInitted3) {
-      gsap4 = core || _getGSAP3();
+      gsap3 = core || _getGSAP3();
       _windowExists5() && window.document && ScrollTrigger4.enable();
       _coreInitted3 = _enabled;
     }
@@ -46681,14 +46681,14 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
     _doc4 = document;
     _docEl2 = _doc4.documentElement;
     _body2 = _doc4.body;
-    if (gsap4) {
-      _toArray = gsap4.utils.toArray;
-      _clamp4 = gsap4.utils.clamp;
-      _context3 = gsap4.core.context || _passThrough3;
-      _suppressOverwrites2 = gsap4.core.suppressOverwrites || _passThrough3;
+    if (gsap3) {
+      _toArray = gsap3.utils.toArray;
+      _clamp4 = gsap3.utils.clamp;
+      _context3 = gsap3.core.context || _passThrough3;
+      _suppressOverwrites2 = gsap3.core.suppressOverwrites || _passThrough3;
       _scrollRestoration = _win4.history.scrollRestoration || "auto";
       _lastScroll = _win4.pageYOffset || 0;
-      gsap4.core.globals("ScrollTrigger", ScrollTrigger4);
+      gsap3.core.globals("ScrollTrigger", ScrollTrigger4);
       if (_body2) {
         _enabled = 1;
         _div100vh = document.createElement("div");
@@ -46696,32 +46696,32 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
         _div100vh.style.position = "absolute";
         _refresh100vh();
         _rafBugFix();
-        Observer.register(gsap4);
+        Observer.register(gsap3);
         ScrollTrigger4.isTouch = Observer.isTouch;
         _fixIOSBug = Observer.isTouch && /(iPad|iPhone|iPod|Mac)/g.test(navigator.userAgent);
         _ignoreMobileResize = Observer.isTouch === 1;
         _addListener3(_win4, "wheel", _onScroll3);
         _root2 = [_win4, _doc4, _docEl2, _body2];
-        if (gsap4.matchMedia) {
+        if (gsap3.matchMedia) {
           ScrollTrigger4.matchMedia = function(vars) {
-            var mm = gsap4.matchMedia(), p;
+            var mm = gsap3.matchMedia(), p;
             for (p in vars) {
               mm.add(p, vars[p]);
             }
             return mm;
           };
-          gsap4.addEventListener("matchMediaInit", function() {
+          gsap3.addEventListener("matchMediaInit", function() {
             _recordScrollPositions();
             _revertAll();
           });
-          gsap4.addEventListener("matchMediaRevert", function() {
+          gsap3.addEventListener("matchMediaRevert", function() {
             return _revertRecorded();
           });
-          gsap4.addEventListener("matchMedia", function() {
+          gsap3.addEventListener("matchMedia", function() {
             _refreshAll(0, 1);
             _dispatch3("matchMedia");
           });
-          gsap4.matchMedia().add("(orientation: portrait)", function() {
+          gsap3.matchMedia().add("(orientation: portrait)", function() {
             _setBaseDimensions();
             return _setBaseDimensions;
           });
@@ -46730,7 +46730,7 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
         }
         _setBaseDimensions();
         _addListener3(_doc4, "scroll", _onScroll3);
-        var bodyHasStyle = _body2.hasAttribute("style"), bodyStyle = _body2.style, border = bodyStyle.borderTopStyle, AnimationProto = gsap4.core.Animation.prototype, bounds, i;
+        var bodyHasStyle = _body2.hasAttribute("style"), bodyStyle = _body2.style, border = bodyStyle.borderTopStyle, AnimationProto = gsap3.core.Animation.prototype, bounds, i;
         AnimationProto.revert || Object.defineProperty(AnimationProto, "revert", {
           value: function value() {
             return this.time(-0.01, true);
@@ -46746,17 +46746,17 @@ var ScrollTrigger2 = /* @__PURE__ */ function() {
           _body2.removeAttribute("style");
         }
         _syncInterval = setInterval(_sync, 250);
-        gsap4.delayedCall(0.5, function() {
+        gsap3.delayedCall(0.5, function() {
           return _startup2 = 0;
         });
         _addListener3(_doc4, "touchcancel", _passThrough3);
         _addListener3(_body2, "touchstart", _passThrough3);
         _multiListener(_addListener3, _doc4, "pointerdown,touchstart,mousedown", _pointerDownHandler);
         _multiListener(_addListener3, _doc4, "pointerup,touchend,mouseup", _pointerUpHandler);
-        _transformProp2 = gsap4.utils.checkPrefix("transform");
+        _transformProp2 = gsap3.utils.checkPrefix("transform");
         _stateProps.push(_transformProp2);
         _coreInitted3 = _getTime2();
-        _resizeDelay = gsap4.delayedCall(0.2, _refreshAll).pause();
+        _resizeDelay = gsap3.delayedCall(0.2, _refreshAll).pause();
         _autoRefresh = [_doc4, "visibilitychange", function() {
           var w = _win4.innerWidth, h = _win4.innerHeight;
           if (_doc4.hidden) {
@@ -46830,7 +46830,7 @@ ScrollTrigger2.saveStyles = function(targets) {
     if (target && target.style) {
       var i = _savedStyles.indexOf(target);
       i >= 0 && _savedStyles.splice(i, 5);
-      _savedStyles.push(target, target.style.cssText, target.getBBox && target.getAttribute("transform"), gsap4.core.getCache(target), _context3());
+      _savedStyles.push(target, target.style.cssText, target.getBBox && target.getAttribute("transform"), gsap3.core.getCache(target), _context3());
     }
   }) : _savedStyles;
 };
@@ -46875,7 +46875,7 @@ ScrollTrigger2.removeEventListener = function(type, callback) {
 };
 ScrollTrigger2.batch = function(targets, vars) {
   var result = [], varsCopy = {}, interval = vars.interval || 0.016, batchMax = vars.batchMax || 1e9, proxyCallback = function proxyCallback2(type, callback) {
-    var elements = [], triggers = [], delay = gsap4.delayedCall(interval, function() {
+    var elements = [], triggers = [], delay = gsap3.delayedCall(interval, function() {
       callback(elements, triggers);
       elements = [];
       triggers = [];
@@ -46924,7 +46924,7 @@ var _overflow = {
 };
 var _nestedScroll = function _nestedScroll2(_ref5) {
   var event = _ref5.event, target = _ref5.target, axis = _ref5.axis;
-  var node = (event.changedTouches ? event.changedTouches[0] : event).target, cache = node._gsap || gsap4.core.getCache(node), time = _getTime2(), cs;
+  var node = (event.changedTouches ? event.changedTouches[0] : event).target, cache = node._gsap || gsap3.core.getCache(node), time = _getTime2(), cs;
   if (!cache._isScrollT || time - cache._isScrollT > 2e3) {
     while (node && node !== _body2 && (node.scrollHeight <= node.clientHeight && node.scrollWidth <= node.clientWidth || !(_overflow[(cs = _getComputedStyle(node)).overflowY] || _overflow[cs.overflowX]))) {
       node = node.parentNode;
@@ -46971,7 +46971,7 @@ var _getScrollNormalizer = function _getScrollNormalizer2(vars) {
   vars.type || (vars.type = "wheel,touch");
   vars.debounce = !!vars.debounce;
   vars.id = vars.id || "normalizer";
-  var _vars2 = vars, normalizeScrollX = _vars2.normalizeScrollX, momentum = _vars2.momentum, allowNestedScroll = _vars2.allowNestedScroll, onRelease = _vars2.onRelease, self2, maxY, target = _getTarget(vars.target) || _docEl2, smoother = gsap4.core.globals().ScrollSmoother, smootherInstance = smoother && smoother.get(), content = _fixIOSBug && (vars.content && _getTarget(vars.content) || smootherInstance && vars.content !== false && !smootherInstance.smooth() && smootherInstance.content()), scrollFuncY = _getScrollFunc(target, _vertical), scrollFuncX = _getScrollFunc(target, _horizontal), scale = 1, initialScale = (Observer.isTouch && _win4.visualViewport ? _win4.visualViewport.scale * _win4.visualViewport.width : _win4.outerWidth) / _win4.innerWidth, wheelRefresh = 0, resolveMomentumDuration = _isFunction3(momentum) ? function() {
+  var _vars2 = vars, normalizeScrollX = _vars2.normalizeScrollX, momentum = _vars2.momentum, allowNestedScroll = _vars2.allowNestedScroll, onRelease = _vars2.onRelease, self2, maxY, target = _getTarget(vars.target) || _docEl2, smoother = gsap3.core.globals().ScrollSmoother, smootherInstance = smoother && smoother.get(), content = _fixIOSBug && (vars.content && _getTarget(vars.content) || smootherInstance && vars.content !== false && !smootherInstance.smooth() && smootherInstance.content()), scrollFuncY = _getScrollFunc(target, _vertical), scrollFuncX = _getScrollFunc(target, _horizontal), scale = 1, initialScale = (Observer.isTouch && _win4.visualViewport ? _win4.visualViewport.scale * _win4.visualViewport.width : _win4.outerWidth) / _win4.innerWidth, wheelRefresh = 0, resolveMomentumDuration = _isFunction3(momentum) ? function() {
     return momentum(self2);
   } : function() {
     return momentum || 2.8;
@@ -47008,7 +47008,7 @@ var _getScrollNormalizer = function _getScrollNormalizer2(vars) {
       scrollFuncY() > maxY ? tween.progress(1) && scrollFuncY(maxY) : tween.resetTo("scrollY", maxY);
     }
   };
-  content && gsap4.set(content, {
+  content && gsap3.set(content, {
     y: "+=0"
   });
   vars.ignoreCheck = function(e) {
@@ -47044,7 +47044,7 @@ var _getScrollNormalizer = function _getScrollNormalizer2(vars) {
       tween.vars.scrollY = scrollClampY(endScroll);
       tween.invalidate().duration(dur).play(0.01);
       if (_fixIOSBug && tween.vars.scrollY >= maxY || currentScroll >= maxY - 1) {
-        gsap4.to({}, {
+        gsap3.to({}, {
           onUpdate: onResize,
           duration: dur
         });
@@ -47090,9 +47090,9 @@ var _getScrollNormalizer = function _getScrollNormalizer2(vars) {
   self2 = new Observer(vars);
   self2.iOS = _fixIOSBug;
   _fixIOSBug && !scrollFuncY() && scrollFuncY(1);
-  _fixIOSBug && gsap4.ticker.add(_passThrough3);
+  _fixIOSBug && gsap3.ticker.add(_passThrough3);
   onStopDelayedCall = self2._dc;
-  tween = gsap4.to(self2, {
+  tween = gsap3.to(self2, {
     ease: "power4",
     paused: true,
     inherit: false,
@@ -47158,10 +47158,10 @@ ScrollTrigger2.core = {
     }
   }
 };
-_getGSAP3() && gsap4.registerPlugin(ScrollTrigger2);
+_getGSAP3() && gsap3.registerPlugin(ScrollTrigger2);
 
 // node_modules/gsap/ScrollToPlugin.js
-var gsap5;
+var gsap4;
 var _coreInitted4;
 var _window;
 var _docEl3;
@@ -47173,7 +47173,7 @@ var _windowExists7 = function _windowExists8() {
   return typeof window !== "undefined";
 };
 var _getGSAP5 = function _getGSAP6() {
-  return gsap5 || _windowExists7() && (gsap5 = window.gsap) && gsap5.registerPlugin && gsap5;
+  return gsap4 || _windowExists7() && (gsap4 = window.gsap) && gsap4.registerPlugin && gsap4;
 };
 var _isString5 = function _isString6(value) {
   return typeof value === "string";
@@ -47245,16 +47245,16 @@ var _parseVal = function _parseVal2(value, target, axis, currentVal, offset) {
   return !isNaN(value) && typeof value !== "object" ? parseFloat(value) - offset : _isString5(value) && value.charAt(1) === "=" ? parseFloat(value.substr(2)) * (value.charAt(0) === "-" ? -1 : 1) + currentVal - offset : value === "max" ? _max(target, axis) - offset : Math.min(_max(target, axis), _getOffset(value, target)[axis] - offset);
 };
 var _initCore5 = function _initCore6() {
-  gsap5 = _getGSAP5();
-  if (_windowExists7() && gsap5 && typeof document !== "undefined" && document.body) {
+  gsap4 = _getGSAP5();
+  if (_windowExists7() && gsap4 && typeof document !== "undefined" && document.body) {
     _window = window;
     _body3 = document.body;
     _docEl3 = document.documentElement;
-    _toArray2 = gsap5.utils.toArray;
-    gsap5.config({
+    _toArray2 = gsap4.utils.toArray;
+    gsap4.config({
       autoKillThreshold: 7
     });
-    _config2 = gsap5.config();
+    _config2 = gsap4.config();
     _coreInitted4 = 1;
   }
 };
@@ -47263,12 +47263,12 @@ var ScrollToPlugin = {
   name: "scrollTo",
   rawVars: 1,
   register: function register(core) {
-    gsap5 = core;
+    gsap4 = core;
     _initCore5();
   },
   init: function init4(target, value, tween, index, targets) {
     _coreInitted4 || _initCore5();
-    var data = this, snapType = gsap5.getProperty(target, "scrollSnapType");
+    var data = this, snapType = gsap4.getProperty(target, "scrollSnapType");
     data.isWin = target === _window;
     data.target = target;
     data.tween = tween;
@@ -47279,8 +47279,8 @@ var ScrollToPlugin = {
     data.getY = _buildGetter(target, "y");
     data.x = data.xPrev = data.getX();
     data.y = data.yPrev = data.getY();
-    ScrollTrigger3 || (ScrollTrigger3 = gsap5.core.globals().ScrollTrigger);
-    gsap5.getProperty(target, "scrollBehavior") === "smooth" && gsap5.set(target, {
+    ScrollTrigger3 || (ScrollTrigger3 = gsap4.core.globals().ScrollTrigger);
+    gsap4.getProperty(target, "scrollBehavior") === "smooth" && gsap4.set(target, {
       scrollBehavior: "auto"
     });
     if (snapType && snapType !== "none") {
@@ -47365,12 +47365,12 @@ ScrollToPlugin.max = _max;
 ScrollToPlugin.getOffset = _getOffset;
 ScrollToPlugin.buildGetter = _buildGetter;
 ScrollToPlugin.config = function(vars) {
-  _config2 || _initCore5() || (_config2 = gsap5.config());
+  _config2 || _initCore5() || (_config2 = gsap4.config());
   for (var p in vars) {
     _config2[p] = vars[p];
   }
 };
-_getGSAP5() && gsap5.registerPlugin(ScrollToPlugin);
+_getGSAP5() && gsap4.registerPlugin(ScrollToPlugin);
 
 // src/app/core/utils/gsap.ts
 var registered = false;
@@ -47456,10 +47456,12 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
       this.t += 7e-3 * dt;
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.w, this.h);
-      const grd = ctx.createRadialGradient(this.w * (0.4 + (this.mx - 0.5) * 0.06), this.h * (0.45 + (this.my - 0.5) * 0.06), 10, this.w * 0.5, this.h * 0.5, Math.max(this.w, this.h));
-      grd.addColorStop(0, "rgba(0,74,173,0.18)");
-      grd.addColorStop(0.35, "rgba(15,72,102,0.08)");
-      grd.addColorStop(1, "rgba(0,0,0,0)");
+      const grd = ctx.createRadialGradient(this.w * (0.25 + (this.mx - 0.5) * 0.15), this.h * (0.3 + (this.my - 0.5) * 0.12), 25, this.w * 0.5, this.h * 0.5, Math.max(this.w, this.h));
+      grd.addColorStop(0, "rgba(255, 255, 255, 0.45)");
+      grd.addColorStop(0.2, "rgba(248, 250, 252, 0.35)");
+      grd.addColorStop(0.4, "rgba(226, 232, 240, 0.28)");
+      grd.addColorStop(0.6, "rgba(156, 163, 175, 0.22)");
+      grd.addColorStop(1, "rgba(55, 65, 81, 0.1)");
       ctx.fillStyle = grd;
       ctx.fillRect(0, 0, this.w, this.h);
       ctx.globalCompositeOperation = "lighter";
@@ -47487,12 +47489,17 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
         const rr = o.r * pulse;
         const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, rr);
         if (this.isCoarsePointer || shouldReduceEffects()) {
-          g.addColorStop(0, `rgba(182,203,51,${o.a * 0.5})`);
-          g.addColorStop(1, "rgba(0,0,0,0)");
+          g.addColorStop(0, `rgba(255, 255, 255, ${o.a * 0.9})`);
+          g.addColorStop(0.4, `rgba(248, 250, 252, ${o.a * 0.7})`);
+          g.addColorStop(0.6, `rgba(226, 232, 240, ${o.a * 0.4})`);
+          g.addColorStop(0.8, `rgba(156, 163, 175, ${o.a * 0.2})`);
+          g.addColorStop(1, `rgba(107, 114, 128, ${o.a * 0.08})`);
         } else {
-          g.addColorStop(0, `rgba(182,203,51,${o.a})`);
-          g.addColorStop(0.55, `rgba(0,74,173,${o.a * 0.55})`);
-          g.addColorStop(1, "rgba(0,0,0,0)");
+          g.addColorStop(0, `rgba(255, 255, 255, ${o.a * 0.06})`);
+          g.addColorStop(0.5, `rgba(248, 250, 252, ${o.a * 0.28})`);
+          g.addColorStop(0.6, `rgba(226, 232, 240, ${o.a * 0.28})`);
+          g.addColorStop(0.8, `rgba(156, 163, 175, ${o.a * 0.22})`);
+          g.addColorStop(1, `rgba(55, 65, 81, ${o.a * 0.1})`);
         }
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -47555,25 +47562,23 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
   onMouse(ev) {
     if (this.isCoarsePointer || shouldReduceEffects())
       return;
-    this.mx = ev.clientX / Math.max(1, this.w);
-    this.my = ev.clientY / Math.max(1, this.h);
+    this.mx = ev.clientX;
   }
   seed() {
-    const baseCount = Math.floor(this.w / 160);
+    const baseCount = Math.floor(this.w / 60);
     const shouldReduce = shouldReduceEffects();
-    const count = this.isCoarsePointer ? Math.min(8, Math.max(4, baseCount)) : shouldReduce ? Math.min(10, Math.max(5, baseCount)) : Math.min(12, Math.max(6, baseCount));
+    const count = this.isCoarsePointer ? Math.min(20, Math.max(12, baseCount)) : shouldReduce ? Math.min(24, Math.max(16, baseCount)) : Math.min(32, Math.max(20, baseCount));
     this.orbs = Array.from({ length: count }).map(() => {
-      const baseRadius = this.isCoarsePointer ? 60 : 70;
-      const radiusVariation = this.isCoarsePointer ? 120 : 150;
+      const baseRadius = this.isCoarsePointer ? 80 : 100;
+      const radiusVariation = this.isCoarsePointer ? 150 : 200;
       const r = baseRadius + Math.random() * radiusVariation;
       return {
         x: Math.random() * this.w,
         y: Math.random() * this.h,
         r,
-        vx: (-0.35 + Math.random() * 0.7) * 0.3,
-        // Más lento
-        vy: (-0.35 + Math.random() * 0.7) * 0.3,
-        a: (this.isCoarsePointer ? 0.04 : 0.08) + Math.random() * (this.isCoarsePointer ? 0.06 : 0.12)
+        vx: (-0.6 + Math.random() * 1.2) * 0.6,
+        vy: (-0.6 + Math.random() * 1.2) * 0.6,
+        a: (this.isCoarsePointer ? 0.12 : 0.18) + Math.random() * (this.isCoarsePointer ? 0.15 : 0.25)
       };
     });
   }
@@ -47601,13 +47606,17 @@ var BackgroundFxComponent = class _BackgroundFxComponent {
           return ctx.onMouse($event);
         }, false, \u0275\u0275resolveWindow);
       }
-    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 5, vars: 0, consts: [["c", ""], ["aria-hidden", "true", 1, "bg"], [1, "vignette"], [1, "scanlines"]], template: function BackgroundFxComponent_Template(rf, ctx) {
+    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 12, vars: 0, consts: [["c", ""], ["aria-hidden", "true", 1, "bg"], [1, "vignette"], [1, "immediate-circles"], [1, "circle-1"], [1, "circle-2"], [1, "circle-3"], [1, "circle-4"], [1, "circle-5"], [1, "circle-6"], [1, "scanlines"]], template: function BackgroundFxComponent_Template(rf, ctx) {
       if (rf & 1) {
         \u0275\u0275elementStart(0, "div", 1);
-        \u0275\u0275element(1, "canvas", null, 0)(3, "div", 2)(4, "div", 3);
+        \u0275\u0275element(1, "canvas", null, 0)(3, "div", 2);
+        \u0275\u0275elementStart(4, "div", 3);
+        \u0275\u0275element(5, "div", 4)(6, "div", 5)(7, "div", 6)(8, "div", 7)(9, "div", 8)(10, "div", 9);
+        \u0275\u0275elementEnd();
+        \u0275\u0275element(11, "div", 10);
         \u0275\u0275elementEnd();
       }
-    }, styles: ["\n\n.bg[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n  overflow: hidden;\n}\ncanvas[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: block;\n}\n.vignette[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(\n      1200px 900px at 20% 10%,\n      rgba(0, 74, 173, 0.22),\n      transparent 64%),\n    radial-gradient(\n      900px 720px at 85% 15%,\n      rgba(182, 203, 51, 0.16),\n      transparent 66%),\n    radial-gradient(\n      900px 900px at 55% 85%,\n      rgba(15, 72, 102, 0.18),\n      transparent 70%),\n    radial-gradient(\n      circle at 50% 50%,\n      transparent 30%,\n      rgba(0, 0, 0, 0.58) 92%);\n  mix-blend-mode: screen;\n  opacity: 0.8;\n}\n.scanlines[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    repeating-linear-gradient(\n      to bottom,\n      rgba(255, 255, 255, 0.02),\n      rgba(255, 255, 255, 0.02) 1px,\n      transparent 1px,\n      transparent 5px);\n  opacity: 0.25;\n  mix-blend-mode: overlay;\n}\n/*# sourceMappingURL=bg-fx.component.css.map */"], changeDetection: 0 });
+    }, styles: ['\n\n.bg[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n  overflow: hidden;\n}\ncanvas[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: block;\n}\n.vignette[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(\n      1200px 900px at 20% 10%,\n      rgba(156, 163, 175, 0.18),\n      transparent 64%),\n    radial-gradient(\n      900px 720px at 85% 15%,\n      rgba(107, 114, 128, 0.14),\n      transparent 66%),\n    radial-gradient(\n      900px 900px at 55% 85%,\n      rgba(209, 213, 219, 0.16),\n      transparent 70%),\n    radial-gradient(\n      1400px 1000px at 25% 75%,\n      rgba(156, 163, 175, 0.12),\n      transparent 68%),\n    radial-gradient(\n      600px 600px at 75% 25%,\n      rgba(107, 114, 128, 0.1),\n      transparent 65%),\n    radial-gradient(\n      800px 800px at 15% 60%,\n      rgba(209, 213, 219, 0.08),\n      transparent 62%),\n    radial-gradient(\n      circle at 50% 50%,\n      transparent 30%,\n      rgba(26, 26, 26, 0.58) 92%);\n  mix-blend-mode: screen;\n  opacity: 0.85;\n}\n.immediate-circles[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n  overflow: hidden;\n}\n.immediate-circles[_ngcontent-%COMP%]::before, \n.immediate-circles[_ngcontent-%COMP%]::after, \n.circle-1[_ngcontent-%COMP%], \n.circle-2[_ngcontent-%COMP%], \n.circle-3[_ngcontent-%COMP%], \n.circle-4[_ngcontent-%COMP%], \n.circle-5[_ngcontent-%COMP%], \n.circle-6[_ngcontent-%COMP%] {\n  content: "";\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(60px);\n  opacity: 0.3;\n}\n.immediate-circles[_ngcontent-%COMP%]::before {\n  width: 350px;\n  height: 350px;\n  top: 5%;\n  left: 10%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(255, 255, 255, 0.2),\n      transparent 70%);\n  animation: _ngcontent-%COMP%_float-1 25s ease-in-out infinite;\n}\n.immediate-circles[_ngcontent-%COMP%]::after {\n  width: 280px;\n  height: 280px;\n  top: 15%;\n  right: 15%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(156, 163, 175, 0.15),\n      transparent 65%);\n  animation: _ngcontent-%COMP%_float-2 20s ease-in-out infinite;\n  animation-delay: 5s;\n}\n.circle-1[_ngcontent-%COMP%] {\n  width: 200px;\n  height: 200px;\n  top: 30%;\n  left: 25%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(107, 114, 128, 0.12),\n      transparent 60%);\n  animation: _ngcontent-%COMP%_float-3 18s ease-in-out infinite;\n  animation-delay: 2s;\n}\n.circle-2[_ngcontent-%COMP%] {\n  width: 400px;\n  height: 400px;\n  bottom: 20%;\n  right: 20%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(209, 213, 219, 0.1),\n      transparent 70%);\n  animation: _ngcontent-%COMP%_float-4 22s ease-in-out infinite;\n  animation-delay: 8s;\n}\n.circle-3[_ngcontent-%COMP%] {\n  width: 150px;\n  height: 150px;\n  top: 60%;\n  left: 60%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(156, 163, 175, 0.08),\n      transparent 55%);\n  animation: _ngcontent-%COMP%_float-5 15s ease-in-out infinite;\n  animation-delay: 3s;\n}\n.circle-4[_ngcontent-%COMP%] {\n  width: 320px;\n  height: 320px;\n  top: 70%;\n  left: 5%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(107, 114, 128, 0.09),\n      transparent 65%);\n  animation: _ngcontent-%COMP%_float-6 28s ease-in-out infinite;\n  animation-delay: 12s;\n}\n.circle-5[_ngcontent-%COMP%] {\n  width: 180px;\n  height: 180px;\n  top: 40%;\n  right: 40%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(255, 255, 255, 0.06),\n      transparent 50%);\n  animation: _ngcontent-%COMP%_float-1 20s ease-in-out infinite;\n  animation-delay: 7s;\n}\n.circle-6[_ngcontent-%COMP%] {\n  width: 250px;\n  height: 250px;\n  bottom: 10%;\n  left: 40%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(209, 213, 219, 0.07),\n      transparent 60%);\n  animation: _ngcontent-%COMP%_float-2 25s ease-in-out infinite;\n  animation-delay: 10s;\n}\n@keyframes _ngcontent-%COMP%_float-1 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(20px, -15px) scale(1.05);\n  }\n}\n@keyframes _ngcontent-%COMP%_float-2 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(-25px, 20px) scale(1.08);\n  }\n}\n@keyframes _ngcontent-%COMP%_float-3 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(15px, 25px) scale(1.03);\n  }\n}\n@keyframes _ngcontent-%COMP%_float-4 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(-18px, -22px) scale(1.06);\n  }\n}\n@keyframes _ngcontent-%COMP%_float-5 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(22px, 18px) scale(1.04);\n  }\n}\n@keyframes _ngcontent-%COMP%_float-6 {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(-20px, -25px) scale(1.07);\n  }\n}\n.scanlines[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    repeating-linear-gradient(\n      to bottom,\n      rgba(255, 255, 255, 0.02),\n      rgba(255, 255, 255, 0.02) 1px,\n      transparent 1px,\n      transparent 5px);\n  opacity: 0.25;\n  mix-blend-mode: overlay;\n}\n/*# sourceMappingURL=bg-fx.component.css.map */'], changeDetection: 0 });
   }
 };
 (() => {
@@ -47654,7 +47663,7 @@ var MagneticDirective = class _MagneticDirective {
       const targetX = dx * this.magneticStrength;
       const targetY = dy * this.magneticStrength;
       if (Math.abs(targetX - this.lastX) > 0.1 || Math.abs(targetY - this.lastY) > 0.1) {
-        gsap.to(el, {
+        gsapWithCSS.to(el, {
           x: targetX,
           y: targetY,
           duration: isMobileDevice ? 0.15 : 0.25,
@@ -47669,7 +47678,7 @@ var MagneticDirective = class _MagneticDirective {
   }
   onLeave() {
     const isMobileDevice = isMobile();
-    gsap.to(this.el.nativeElement, {
+    gsapWithCSS.to(this.el.nativeElement, {
       x: 0,
       y: 0,
       duration: isMobileDevice ? 0.2 : 0.35,
@@ -47681,7 +47690,7 @@ var MagneticDirective = class _MagneticDirective {
   ngOnDestroy() {
     if (this.rafId)
       cancelAnimationFrame(this.rafId);
-    gsap.set(this.el.nativeElement, { x: 0, y: 0 });
+    gsapWithCSS.set(this.el.nativeElement, { x: 0, y: 0 });
   }
   static {
     this.\u0275fac = function MagneticDirective_Factory(__ngFactoryType__) {
@@ -47703,90 +47712,137 @@ var MagneticDirective = class _MagneticDirective {
   }
 };
 
+// src/app/core/services/scroll.service.ts
+var ScrollService = class _ScrollService {
+  constructor() {
+    this.headerOffset = 86;
+    this.isInitialized = false;
+    this.sectionRegistry = /* @__PURE__ */ new Set();
+    this.retryAttempts = /* @__PURE__ */ new Map();
+    this.init();
+  }
+  init() {
+    ensureGsap();
+    this.isInitialized = true;
+    this.registerExistingSections();
+  }
+  registerExistingSections() {
+    const sectionIds = ["home", "services", "work", "clients", "process", "contact"];
+    sectionIds.forEach((id) => {
+      if (document.getElementById(id)) {
+        this.sectionRegistry.add(id);
+      }
+    });
+  }
+  // BULLETPROOF: Immediate scroll without waiting
+  scrollToSection(sectionId) {
+    return new Promise((resolve, reject) => {
+      try {
+        this.performScroll(sectionId);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  performScroll(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (!element) {
+      console.warn(`Section with ID "${sectionId}" not found`);
+      return;
+    }
+    const mobileNav = document.querySelector(".mobile-nav--open");
+    if (mobileNav) {
+      const closeBtn = document.querySelector(".mobile-nav__close");
+      closeBtn?.click();
+    }
+    if (!window.gsap) {
+      window.scrollTo({ top: element.offsetTop - this.headerOffset, behavior: "smooth" });
+      return;
+    }
+    if (prefersReducedMotion()) {
+      element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      return;
+    }
+    gsapWithCSS.to(window, {
+      duration: 1.2,
+      scrollTo: {
+        y: element,
+        offsetY: this.headerOffset,
+        autoKill: false
+      },
+      ease: "power3.inOut"
+    });
+  }
+  scrollToTop() {
+    return new Promise((resolve, reject) => {
+      try {
+        this.performScrollTop();
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  performScrollTop() {
+    const mobileNav = document.querySelector(".mobile-nav--open");
+    if (mobileNav) {
+      const closeBtn = document.querySelector(".mobile-nav__close");
+      closeBtn?.click();
+    }
+    if (!window.gsap) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (prefersReducedMotion()) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    gsapWithCSS.to(window, {
+      duration: 1.2,
+      scrollTo: { y: 0, autoKill: false },
+      ease: "power3.inOut"
+    });
+  }
+  // Update header offset for responsive
+  updateHeaderOffset(offset) {
+    this.headerOffset = offset;
+  }
+  static {
+    this.\u0275fac = function ScrollService_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || _ScrollService)();
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ScrollService, factory: _ScrollService.\u0275fac, providedIn: "root" });
+  }
+};
+
 // src/app/app.component.ts
-function AppComponent_nav_13_Template(rf, ctx) {
+function AppComponent_div_13_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "nav", 37)(1, "a", 38);
-    \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_1_listener($event) {
+    \u0275\u0275elementStart(0, "div", 36)(1, "a", 37);
+    \u0275\u0275listener("click", function AppComponent_div_13_Template_a_click_1_listener($event) {
       \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("services");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(2, "Servicios");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "a", 39);
-    \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_3_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("work");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(4, "Portfolio");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "a", 40);
-    \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_5_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("clients");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(6, "Clientes");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "a", 41);
-    \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_7_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("process");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(8, "Proceso");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "a", 42);
-    \u0275\u0275listener("click", function AppComponent_nav_13_Template_a_click_9_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("contact");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(10, "Contacto");
-    \u0275\u0275elementEnd()();
-  }
-}
-function AppComponent_div_14_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 43)(1, "a", 44);
-    \u0275\u0275listener("click", function AppComponent_div_14_Template_a_click_1_listener($event) {
-      \u0275\u0275restoreView(_r3);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.scrollTo("work");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(2, " Ver trabajos ");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "a", 45);
-    \u0275\u0275listener("click", function AppComponent_div_14_Template_a_click_3_listener($event) {
-      \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.openWhatsApp();
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275text(4, " Pedir propuesta ");
+    \u0275\u0275text(2, " Pedir propuesta ");
     \u0275\u0275elementEnd()();
   }
 }
-function AppComponent_button_15_Template(rf, ctx) {
+function AppComponent_button_14_Template(rf, ctx) {
   if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 46);
-    \u0275\u0275listener("click", function AppComponent_button_15_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r4);
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 38);
+    \u0275\u0275listener("click", function AppComponent_button_14_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.toggleMenu());
     });
-    \u0275\u0275element(1, "span", 47)(2, "span", 47)(3, "span", 47);
+    \u0275\u0275element(1, "span", 39)(2, "span", 39)(3, "span", 39);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -47794,21 +47850,21 @@ function AppComponent_button_15_Template(rf, ctx) {
     \u0275\u0275attribute("aria-expanded", ctx_r1.menuOpen());
   }
 }
-function AppComponent_div_16_Template(rf, ctx) {
+function AppComponent_div_15_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 48);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_div_click_0_listener() {
-      \u0275\u0275restoreView(_r5);
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 40);
+    \u0275\u0275listener("click", function AppComponent_div_15_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeMenu());
     });
-    \u0275\u0275elementStart(1, "nav", 49);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_nav_click_1_listener($event) {
-      \u0275\u0275restoreView(_r5);
+    \u0275\u0275elementStart(1, "nav", 41);
+    \u0275\u0275listener("click", function AppComponent_div_15_Template_nav_click_1_listener($event) {
+      \u0275\u0275restoreView(_r4);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(2, "div", 50)(3, "div", 51)(4, "span", 5);
+    \u0275\u0275elementStart(2, "div", 42)(3, "div", 43)(4, "span", 5);
     \u0275\u0275element(5, "img", 6);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "span", 7)(7, "span", 8);
@@ -47817,110 +47873,27 @@ function AppComponent_div_16_Template(rf, ctx) {
     \u0275\u0275elementStart(9, "span", 9);
     \u0275\u0275text(10, "Soluciones Digitales");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(11, "button", 52);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_button_click_11_listener() {
-      \u0275\u0275restoreView(_r5);
+    \u0275\u0275elementStart(11, "button", 44);
+    \u0275\u0275listener("click", function AppComponent_div_15_Template_button_click_11_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeMenu());
     });
     \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(12, "svg", 53);
-    \u0275\u0275element(13, "path", 54);
+    \u0275\u0275elementStart(12, "svg", 45);
+    \u0275\u0275element(13, "path", 46);
     \u0275\u0275elementEnd()()();
     \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(14, "div", 55)(15, "a", 56);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_15_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("services");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(16, "svg", 57);
-    \u0275\u0275element(17, "path", 58)(18, "path", 59);
-    \u0275\u0275elementEnd();
-    \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(19, "span");
-    \u0275\u0275text(20, "Servicios");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(21, "a", 60);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_21_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("work");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(22, "svg", 57);
-    \u0275\u0275element(23, "path", 61)(24, "path", 62);
-    \u0275\u0275elementEnd();
-    \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(25, "span");
-    \u0275\u0275text(26, "Portfolio");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(27, "a", 63);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_27_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("clients");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(28, "svg", 57);
-    \u0275\u0275element(29, "path", 64)(30, "circle", 65)(31, "path", 66)(32, "path", 67);
-    \u0275\u0275elementEnd();
-    \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(33, "span");
-    \u0275\u0275text(34, "Clientes");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(35, "a", 68);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_35_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("process");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(36, "svg", 57);
-    \u0275\u0275element(37, "path", 69)(38, "path", 70);
-    \u0275\u0275elementEnd();
-    \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(39, "span");
-    \u0275\u0275text(40, "Proceso");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(41, "a", 71);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_41_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("contact");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(42, "svg", 57);
-    \u0275\u0275element(43, "path", 72);
-    \u0275\u0275elementEnd();
-    \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(44, "span");
-    \u0275\u0275text(45, "Contacto");
-    \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(46, "div", 73)(47, "a", 74);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_47_listener($event) {
-      \u0275\u0275restoreView(_r5);
-      const ctx_r1 = \u0275\u0275nextContext();
-      ctx_r1.navigateAndClose("work");
-      return \u0275\u0275resetView($event.preventDefault());
-    });
-    \u0275\u0275text(48, " Ver trabajos ");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(49, "a", 75);
-    \u0275\u0275listener("click", function AppComponent_div_16_Template_a_click_49_listener($event) {
-      \u0275\u0275restoreView(_r5);
+    \u0275\u0275element(14, "div", 47);
+    \u0275\u0275elementStart(15, "div", 48)(16, "a", 49);
+    \u0275\u0275listener("click", function AppComponent_div_15_Template_a_click_16_listener($event) {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       ctx_r1.openWhatsApp();
       ctx_r1.closeMenu();
       return \u0275\u0275resetView($event.preventDefault());
     });
-    \u0275\u0275text(50, " Pedir propuesta ");
+    \u0275\u0275text(17, " Pedir propuesta ");
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -47931,7 +47904,8 @@ function AppComponent_div_16_Template(rf, ctx) {
   }
 }
 var AppComponent = class _AppComponent {
-  constructor() {
+  constructor(scrollService) {
+    this.scrollService = scrollService;
     this.title = "jome";
     this.year = (/* @__PURE__ */ new Date()).getFullYear();
     this.progress = signal(0);
@@ -47939,6 +47913,8 @@ var AppComponent = class _AppComponent {
     this.menuOpen = signal(false);
     this.progressRafPending = false;
     this.mobileInfo = getMobileInfo();
+    this.WHATSAPP_NUMBER = "59892454958";
+    this.WHATSAPP_MESSAGE = encodeURIComponent("\xA1Hola! Estoy interesado en sus servicios de desarrollo web. Me gustar\xEDa obtener m\xE1s informaci\xF3n.");
   }
   ngOnInit() {
     ensureGsap();
@@ -47975,28 +47951,23 @@ var AppComponent = class _AppComponent {
     document.documentElement.style.setProperty("--mx", mx + "%");
     document.documentElement.style.setProperty("--my", my + "%");
   }
+  // ✅ BULLETPROOF synchronous navigation - NO MORE ASYNC ISSUES
   scrollTo(id) {
-    const el = document.getElementById(id);
-    if (!el)
-      return;
-    if (!window.gsap) {
-      window.scrollTo({ top: el.offsetTop - 86, behavior: "smooth" });
-      return;
+    try {
+      this.scrollService.scrollToSection(id);
+    } catch (error) {
+      console.error("Navigation error:", error);
     }
-    if (prefersReducedMotion()) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
+  }
+  scrollToHome() {
+    try {
+      this.scrollService.scrollToSection("home");
+    } catch (error) {
+      console.error("Home navigation error:", error);
     }
-    gsapWithCSS.to(window, {
-      duration: 1.05,
-      scrollTo: { y: el, offsetY: 86 },
-      ease: "power3.out"
-    });
   }
   openWhatsApp() {
-    const message = encodeURIComponent("\xA1Hola! Estoy interesado en sus servicios de desarrollo web. Me gustar\xEDa obtener m\xE1s informaci\xF3n.");
-    const phoneNumber = "5491123456789";
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    window.open(`https://wa.me/${this.WHATSAPP_NUMBER}?text=${this.WHATSAPP_MESSAGE}`, "_blank");
   }
   // =========================
   // ✅ Hamburger Menu Logic
@@ -48026,9 +47997,15 @@ var AppComponent = class _AppComponent {
       this.menuRafId = void 0;
     }
   }
-  navigateAndClose(sectionId) {
-    this.scrollTo(sectionId);
-    this.closeMenu();
+  // ✅ BULLETPROOF mobile navigation - NO MORE ASYNC ISSUES
+  async navigateAndClose(sectionId) {
+    try {
+      this.closeMenu();
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      this.scrollService.scrollToSection(sectionId);
+    } catch (error) {
+      console.error("Mobile navigation error:", error);
+    }
   }
   // Getters para template
   get isMobileDevice() {
@@ -48058,7 +48035,7 @@ var AppComponent = class _AppComponent {
   }
   static {
     this.\u0275fac = function AppComponent_Factory(__ngFactoryType__) {
-      return new (__ngFactoryType__ || _AppComponent)();
+      return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(ScrollService));
     };
   }
   static {
@@ -48076,12 +48053,12 @@ var AppComponent = class _AppComponent {
           return ctx.onMouse($event);
         }, false, \u0275\u0275resolveWindow);
       }
-    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 46, vars: 11, consts: [["aria-hidden", "true", 1, "cursor-glow"], ["aria-hidden", "true", 1, "top-progress"], [1, "app-header"], [1, "app-header__inner"], ["href", "#", 1, "brand", 3, "click"], ["aria-hidden", "true", 1, "brand__logoWrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "brand__logo"], [1, "brand__text"], [1, "brand__name"], [1, "brand__tag"], ["class", "nav", 4, "ngIf"], ["class", "cta", 4, "ngIf"], ["class", "hamburger-btn", "aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 3, "click", 4, "ngIf"], ["class", "mobile-nav-overlay", 3, "mobile-nav-overlay--open", "click", 4, "ngIf"], [1, "app-main"], [1, "app-footer"], [1, "app-footer__inner"], [1, "foot-left"], [1, "foot-logo"], ["aria-hidden", "true", 1, "foot-logo__wrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "foot-logo__img"], [1, "foot-title"], [1, "foot-sub"], [1, "foot-copy"], [1, "foot-right"], [1, "social-links"], ["href", "https://wa.me/59892454958", "target", "_blank", "aria-label", "WhatsApp", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "aria-label", "WhatsApp"], ["d", "M12 2a10 10 0 0 0-8.66 15.02L2 22l5.13-1.35A10 10 0 1 0 12 2Z", "fill", "none", "stroke", "#1E5BFF", "stroke-width", "2", "stroke-linejoin", "round"], ["d", "M16.7 13.9c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.8 6.8 0 0 1-3.2-3.2c-.1-.2 0-.4.1-.5l.6-.7c.2-.2.2-.4.1-.6l-.7-1.6c-.1-.3-.4-.3-.6-.3h-.5c-.2 0-.5.1-.7.3-.2.2-.9.8-.9 2 0 1.2.9 2.4 1 2.6.1.2 1.7 2.7 4.2 3.7 2.4 1 2.4.7 2.9.7.4 0 1.3-.5 1.5-1 .2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z", "fill", "#1E5BFF"], ["href", "https://instagram.com/jome.uy", "target", "_blank", "aria-label", "Instagram", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none", "aria-label", "Instagram"], ["x", "4", "y", "4", "width", "16", "height", "16", "rx", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "12", "cy", "12", "r", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "17", "cy", "7", "r", "1.2", "fill", "#1E5BFF"], [2, "height", "20px"], ["href", "#", 1, "foot-link", 3, "click"], [1, "nav"], ["magnetic", "", "href", "#services", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#work", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#clients", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#process", 1, "nav__link", 3, "click"], ["magnetic", "", "href", "#contact", 1, "nav__link", 3, "click"], [1, "cta"], ["magnetic", "", "href", "#", 1, "btn", "btn--ghost", 3, "click"], ["magnetic", "", "href", "#", 1, "btn", "btn--primary", 3, "click"], ["aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 1, "hamburger-btn", 3, "click"], [1, "hamburger-line"], [1, "mobile-nav-overlay", 3, "click"], ["id", "mobile-nav", 1, "mobile-nav", 3, "click"], [1, "mobile-nav__header"], [1, "brand", "mobile-brand"], ["aria-label", "Close menu", 1, "mobile-nav__close", 3, "click"], ["width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none"], ["d", "M18 6L6 18M6 6l12 12", "stroke", "currentColor", "stroke-width", "2", "stroke-linecap", "round"], [1, "mobile-nav__links"], ["href", "#services", "id", "services", 1, "mobile-nav__link", 3, "click"], ["width", "20", "height", "20", "viewBox", "0 0 24 24", "fill", "none", 1, "mobile-nav__icon"], ["d", "M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M12 8v4m0 4h.01", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round"], ["href", "#work", "id", "work", 1, "mobile-nav__link", 3, "click"], ["d", "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M12 12l8-4m-8 4l-8-4m8 4v8m0-8L4 8m8 4l8-4", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#clients", "id", "clients", 1, "mobile-nav__link", 3, "click"], ["d", "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["cx", "9", "cy", "7", "r", "4", "stroke", "#004AAD", "stroke-width", "2"], ["d", "M23 21v-2a4 4 0 0 0-3-3.87", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M16 3.13a4 4 0 0 1 0 7.75", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#process", "id", "process", 1, "mobile-nav__link", 3, "click"], ["d", "M9 11l3 3L22 4", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["d", "M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], ["href", "#contact", "id", "contact", 1, "mobile-nav__link", 3, "click"], ["d", "M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z", "stroke", "#004AAD", "stroke-width", "2", "stroke-linecap", "round", "stroke-linejoin", "round"], [1, "mobile-nav__footer"], [1, "btn", "btn--ghost", "btn--full", 3, "click"], ["href", "#", 1, "btn", "btn--primary", "btn--full", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
+    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 45, vars: 10, consts: [["aria-hidden", "true", 1, "cursor-glow"], ["aria-hidden", "true", 1, "top-progress"], [1, "app-header"], [1, "app-header__inner"], ["href", "#", 1, "brand", 3, "click"], ["aria-hidden", "true", 1, "brand__logoWrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "brand__logo"], [1, "brand__text"], [1, "brand__name"], [1, "brand__tag"], ["class", "cta", 4, "ngIf"], ["class", "hamburger-btn", "aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 3, "click", 4, "ngIf"], ["class", "mobile-nav-overlay", 3, "mobile-nav-overlay--open", "click", 4, "ngIf"], [1, "app-main"], [1, "app-footer"], [1, "app-footer__inner"], [1, "foot-left"], [1, "foot-logo"], ["aria-hidden", "true", 1, "foot-logo__wrap"], ["src", "assets/logo.png", "alt", "JoMe Soluciones Digitales", 1, "foot-logo__img"], [1, "foot-title"], [1, "foot-sub"], [1, "foot-copy"], [1, "foot-right"], [1, "social-links"], ["href", "https://wa.me/59892454958", "target", "_blank", "aria-label", "WhatsApp", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "aria-label", "WhatsApp"], ["d", "M12 2a10 10 0 0 0-8.66 15.02L2 22l5.13-1.35A10 10 0 1 0 12 2Z", "fill", "none", "stroke", "#1E5BFF", "stroke-width", "2", "stroke-linejoin", "round"], ["d", "M16.7 13.9c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.8 6.8 0 0 1-3.2-3.2c-.1-.2 0-.4.1-.5l.6-.7c.2-.2.2-.4.1-.6l-.7-1.6c-.1-.3-.4-.3-.6-.3h-.5c-.2 0-.5.1-.7.3-.2.2-.9.8-.9 2 0 1.2.9 2.4 1 2.6.1.2 1.7 2.7 4.2 3.7 2.4 1 2.4.7 2.9.7.4 0 1.3-.5 1.5-1 .2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z", "fill", "#1E5BFF"], ["href", "https://instagram.com/jome.uy", "target", "_blank", "aria-label", "Instagram", 1, "social-link"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none", "aria-label", "Instagram"], ["x", "4", "y", "4", "width", "16", "height", "16", "rx", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "12", "cy", "12", "r", "4", "stroke", "#1E5BFF", "stroke-width", "2"], ["cx", "17", "cy", "7", "r", "1.2", "fill", "#1E5BFF"], [2, "height", "20px"], ["href", "#", 1, "foot-link", 3, "click"], [1, "cta"], ["magnetic", "", "href", "#", 1, "btn", "btn--primary", 3, "click"], ["aria-controls", "mobile-nav", "aria-label", "Toggle navigation menu", 1, "hamburger-btn", 3, "click"], [1, "hamburger-line"], [1, "mobile-nav-overlay", 3, "click"], ["id", "mobile-nav", 1, "mobile-nav", 3, "click"], [1, "mobile-nav__header"], [1, "brand", "mobile-brand"], ["aria-label", "Close menu", 1, "mobile-nav__close", 3, "click"], ["width", "24", "height", "24", "viewBox", "0 0 24 24", "fill", "none"], ["d", "M18 6L6 18M6 6l12 12", "stroke", "currentColor", "stroke-width", "2", "stroke-linecap", "round"], [1, "mobile-nav__links"], [1, "mobile-nav__footer"], ["href", "#", 1, "btn", "btn--primary", "btn--full", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
       if (rf & 1) {
         \u0275\u0275element(0, "app-bg-fx")(1, "div", 0)(2, "div", 1);
         \u0275\u0275elementStart(3, "header", 2)(4, "div", 3)(5, "a", 4);
         \u0275\u0275listener("click", function AppComponent_Template_a_click_5_listener($event) {
-          ctx.scrollTo("home");
+          ctx.scrollToHome();
           return $event.preventDefault();
         });
         \u0275\u0275elementStart(6, "span", 5);
@@ -48093,43 +48070,43 @@ var AppComponent = class _AppComponent {
         \u0275\u0275elementStart(11, "span", 9);
         \u0275\u0275text(12, "Desarrollo Web \u2022 Sistemas \u2022 Soluciones Digitales");
         \u0275\u0275elementEnd()()();
-        \u0275\u0275template(13, AppComponent_nav_13_Template, 11, 0, "nav", 10)(14, AppComponent_div_14_Template, 5, 0, "div", 11)(15, AppComponent_button_15_Template, 4, 1, "button", 12);
+        \u0275\u0275template(13, AppComponent_div_13_Template, 3, 0, "div", 10)(14, AppComponent_button_14_Template, 4, 1, "button", 11);
         \u0275\u0275elementEnd()();
-        \u0275\u0275template(16, AppComponent_div_16_Template, 51, 4, "div", 13);
-        \u0275\u0275elementStart(17, "main", 14);
-        \u0275\u0275element(18, "router-outlet");
+        \u0275\u0275template(15, AppComponent_div_15_Template, 18, 4, "div", 12);
+        \u0275\u0275elementStart(16, "main", 13);
+        \u0275\u0275element(17, "router-outlet");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(19, "footer", 15)(20, "div", 16)(21, "div", 17)(22, "div", 18)(23, "span", 19);
-        \u0275\u0275element(24, "img", 20);
+        \u0275\u0275elementStart(18, "footer", 14)(19, "div", 15)(20, "div", 16)(21, "div", 17)(22, "span", 18);
+        \u0275\u0275element(23, "img", 19);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(25, "div")(26, "div", 21);
-        \u0275\u0275text(27, "JoMe Soluciones Digitales");
+        \u0275\u0275elementStart(24, "div")(25, "div", 20);
+        \u0275\u0275text(26, "JoMe Soluciones Digitales");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(28, "div", 22);
-        \u0275\u0275text(29, "Desarrollo de p\xE1ginas web, sistemas y soluciones digitales profesionales");
+        \u0275\u0275elementStart(27, "div", 21);
+        \u0275\u0275text(28, "Desarrollo de p\xE1ginas web, sistemas y soluciones digitales profesionales");
         \u0275\u0275elementEnd()()();
-        \u0275\u0275elementStart(30, "div", 23);
-        \u0275\u0275text(31);
+        \u0275\u0275elementStart(29, "div", 22);
+        \u0275\u0275text(30);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(32, "div", 24)(33, "div", 25)(34, "a", 26);
+        \u0275\u0275elementStart(31, "div", 23)(32, "div", 24)(33, "a", 25);
         \u0275\u0275namespaceSVG();
-        \u0275\u0275elementStart(35, "svg", 27);
-        \u0275\u0275element(36, "path", 28)(37, "path", 29);
+        \u0275\u0275elementStart(34, "svg", 26);
+        \u0275\u0275element(35, "path", 27)(36, "path", 28);
         \u0275\u0275elementEnd()();
         \u0275\u0275namespaceHTML();
-        \u0275\u0275elementStart(38, "a", 30);
+        \u0275\u0275elementStart(37, "a", 29);
         \u0275\u0275namespaceSVG();
-        \u0275\u0275elementStart(39, "svg", 31);
-        \u0275\u0275element(40, "rect", 32)(41, "circle", 33)(42, "circle", 34);
+        \u0275\u0275elementStart(38, "svg", 30);
+        \u0275\u0275element(39, "rect", 31)(40, "circle", 32)(41, "circle", 33);
         \u0275\u0275elementEnd()()();
         \u0275\u0275namespaceHTML();
-        \u0275\u0275element(43, "div", 35);
-        \u0275\u0275elementStart(44, "a", 36);
-        \u0275\u0275listener("click", function AppComponent_Template_a_click_44_listener($event) {
-          ctx.scrollTo("home");
+        \u0275\u0275element(42, "div", 34);
+        \u0275\u0275elementStart(43, "a", 35);
+        \u0275\u0275listener("click", function AppComponent_Template_a_click_43_listener($event) {
+          ctx.scrollToHome();
           return $event.preventDefault();
         });
-        \u0275\u0275text(45, "Volver arriba \u2191");
+        \u0275\u0275text(44, "Volver arriba \u2191");
         \u0275\u0275elementEnd()()()();
       }
       if (rf & 2) {
@@ -48140,19 +48117,17 @@ var AppComponent = class _AppComponent {
         \u0275\u0275advance(10);
         \u0275\u0275property("ngIf", !ctx.showHamburger);
         \u0275\u0275advance();
-        \u0275\u0275property("ngIf", !ctx.showHamburger);
-        \u0275\u0275advance();
         \u0275\u0275property("ngIf", ctx.showHamburger);
         \u0275\u0275advance();
         \u0275\u0275property("ngIf", ctx.showHamburger);
         \u0275\u0275advance(15);
         \u0275\u0275textInterpolate1(" ", ctx.year, " JoMe Soluciones Digitales \u2014 Todos los derechos reservados.");
       }
-    }, dependencies: [RouterOutlet, BackgroundFxComponent, MagneticDirective, CommonModule, NgIf], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  --bg0: #05060d;\n  --bg1: #070910;\n  --bg2: #0b0e17;\n  --ink: rgba(255, 255, 255, 0.92);\n  --muted: rgba(255, 255, 255, 0.66);\n  --lime: #b6cb33;\n  --blue: #004aad;\n  --teal: #0f4866;\n  --glass: rgba(255, 255, 255, 0.06);\n  --glass2: rgba(255, 255, 255, 0.09);\n  --line: rgba(255, 255, 255, 0.12);\n  --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);\n  --shadow2: 0 12px 44px rgba(0, 0, 0, 0.5);\n  --radius: 18px;\n  --radius2: 24px;\n  --cursorGlowOpacity: 0.62;\n  color: var(--ink);\n  background:\n    radial-gradient(\n      1200px 900px at 18% 8%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%),\n    radial-gradient(\n      1000px 680px at 88% 18%,\n      rgba(182, 203, 51, 0.14),\n      transparent 55%),\n    radial-gradient(\n      1100px 900px at 65% 92%,\n      rgba(15, 72, 102, 0.22),\n      transparent 60%),\n    linear-gradient(\n      180deg,\n      var(--bg1),\n      var(--bg0));\n}\n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 3px;\n  transform-origin: left;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0.92),\n      rgba(0, 74, 173, 0.92));\n  box-shadow: 0 0 20px rgba(182, 203, 51, 0.35);\n}\n.cursor-glow[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 1;\n  background:\n    radial-gradient(\n      220px 220px at var(--mx, 50%) var(--my, 50%),\n      rgba(182, 203, 51, 0.08),\n      transparent 60%),\n    radial-gradient(\n      260px 260px at calc(var(--mx, 50%) + 80px) calc(var(--my, 50%) + 60px),\n      rgba(0, 74, 173, 0.028),\n      transparent 66%),\n    radial-gradient(\n      420px 420px at calc(var(--mx, 50%) - 120px) calc(var(--my, 50%) + 90px),\n      rgba(15, 72, 102, 0.07),\n      transparent 62%);\n  mix-blend-mode: screen;\n  opacity: var(--cursorGlowOpacity);\n}\n.app-header[_ngcontent-%COMP%] {\n  position: sticky;\n  top: 0;\n  z-index: 30;\n  padding: 14px 0;\n  backdrop-filter: blur(10px);\n}\n.app-header[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.78),\n      rgba(5, 6, 13, 0.28));\n  border-bottom: 1px solid rgba(255, 255, 255, 0.08);\n}\n.app-header--scrolled[_ngcontent-%COMP%]::before {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0.92),\n      rgba(5, 6, 13, 0.48));\n  border-bottom-color: rgba(255, 255, 255, 0.12);\n}\n.app-header__inner[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: grid;\n  grid-template-columns: 1fr auto 1fr;\n  align-items: center;\n  gap: 16px;\n}\n.brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  text-decoration: none;\n  color: var(--ink);\n}\n.brand__logoWrap[_ngcontent-%COMP%] {\n  width: 100px;\n  height: 100px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  flex: 0 0 100px;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n  transition: transform 220ms ease;\n}\n.brand[_ngcontent-%COMP%]:hover   .brand__logoWrap[_ngcontent-%COMP%] {\n  transform: translateY(-1px);\n  filter: brightness(1.06);\n}\n.brand__logo[_ngcontent-%COMP%] {\n  width: 96px;\n  height: 96px;\n  border-radius: 0;\n  object-fit: contain;\n  object-position: center;\n  display: block;\n  border: none;\n  box-shadow: none;\n  filter: none;\n  transition: transform 220ms ease;\n}\n.brand__name[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 650;\n  letter-spacing: 0.35px;\n  font-size: 14px;\n}\n.brand__tag[_ngcontent-%COMP%] {\n  display: block;\n  font-size: 12px;\n  color: var(--muted);\n  margin-top: 2px;\n}\n.nav[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 14px;\n  justify-content: center;\n  align-items: center;\n}\n.nav__link[_ngcontent-%COMP%] {\n  position: relative;\n  font-size: 13px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.78);\n  padding: 10px 12px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.02);\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  transition:\n    transform 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n}\n.nav__link[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.06);\n  border-color: rgba(182, 203, 51, 0.22);\n  transform: translateY(-1px);\n}\n.cta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: flex-end;\n  gap: 10px;\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  height: 42px;\n  padding: 0 16px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  color: rgba(255, 255, 255, 0.92);\n  text-decoration: none;\n  cursor: pointer;\n  position: relative;\n  background: rgba(255, 255, 255, 0.04);\n  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);\n  transition:\n    transform 200ms ease,\n    filter 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease;\n  will-change: transform;\n}\n.btn[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -1px;\n  border-radius: inherit;\n  background:\n    radial-gradient(\n      260px 140px at 20% 10%,\n      rgba(182, 203, 51, 0.22),\n      transparent 60%),\n    radial-gradient(\n      260px 140px at 70% 10%,\n      rgba(0, 74, 173, 0.18),\n      transparent 60%);\n  opacity: 0;\n  transition: opacity 220ms ease;\n  pointer-events: none;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  border-color: rgba(255, 255, 255, 0.18);\n}\n.btn[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: rgba(255, 255, 255, 0.03);\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(182, 203, 51, 0.88),\n      rgba(0, 74, 173, 0.74));\n  border-color: rgba(255, 255, 255, 0.22);\n}\n.app-main[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n}\n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n  padding: 42px 0 56px;\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0),\n      rgba(5, 6, 13, 0.7));\n}\n.app-footer__inner[_ngcontent-%COMP%] {\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: flex;\n  justify-content: space-between;\n  gap: 22px;\n  align-items: center;\n}\n.foot-logo[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  align-items: center;\n}\n.foot-logo__wrap[_ngcontent-%COMP%] {\n  width: 60px;\n  height: 60px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n}\n.foot-logo__img[_ngcontent-%COMP%] {\n  width: 56px;\n  height: 56px;\n  border-radius: 0;\n  object-fit: contain;\n  border: none;\n  box-shadow: none;\n  filter: none;\n}\n.foot-title[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 600;\n}\n.foot-sub[_ngcontent-%COMP%] {\n  color: var(--muted);\n  font-size: 12px;\n}\n.foot-copy[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.foot-link[_ngcontent-%COMP%] {\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.75);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.04);\n  padding: 12px 16px;\n  border-radius: 999px;\n  transition: transform 200ms ease, background 200ms ease;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 44px;\n  min-width: 44px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  cursor: pointer;\n  font-size: 14px;\n}\n@media (max-width: 768px) {\n  .foot-link[_ngcontent-%COMP%] {\n    padding: 10px 14px;\n    font-size: 13px;\n  }\n}\n.foot-link[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  background: rgba(255, 255, 255, 0.08);\n}\n.social-links[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n}\n.social-link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: rgba(59, 130, 246, 0.1);\n  border: 1px solid rgba(59, 130, 246, 0.2);\n  color: #3b82f6;\n  transition: all 0.2s ease;\n  text-decoration: none;\n}\n.social-link[_ngcontent-%COMP%]:hover {\n  background: rgba(59, 130, 246, 0.2);\n  border-color: rgba(59, 130, 246, 0.4);\n  transform: translateY(-2px);\n  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);\n}\n.social-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n@media (max-width: 980px) {\n  .app-header__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr auto;\n  }\n  .nav[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n.hamburger-btn[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 44px;\n  height: 44px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 12px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  position: relative;\n  z-index: 1001;\n}\n.hamburger-btn[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.hamburger-line[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 2px;\n  background: currentColor;\n  border-radius: 2px;\n  transition: all 0.3s ease;\n  margin: 2px 0;\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(1) {\n  transform: rotate(45deg) translate(5px, 5px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(2) {\n  opacity: 0;\n  transform: translateX(10px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(3) {\n  transform: rotate(-45deg) translate(7px, -6px);\n}\n.mobile-nav-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.5);\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.3s ease, visibility 0.3s ease;\n  z-index: 1000;\n}\n.mobile-nav-overlay--open[_ngcontent-%COMP%] {\n  opacity: 1;\n  visibility: visible;\n}\n.mobile-nav[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: min(320px, 85vw);\n  background: var(--bg1);\n  border-left: 1px solid var(--line);\n  transform: translateX(100%);\n  transition: transform 0.3s ease;\n  z-index: 1001;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.mobile-nav--open[_ngcontent-%COMP%] {\n  transform: translateX(0);\n}\n.mobile-nav__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px;\n  border-bottom: 1px solid var(--line);\n  background: rgba(255, 255, 255, 0.02);\n}\n.mobile-brand[_ngcontent-%COMP%] {\n  flex: 1;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logoWrap[_ngcontent-%COMP%] {\n  width: 50px;\n  height: 50px;\n  flex: 0 0 50px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logo[_ngcontent-%COMP%] {\n  width: 46px;\n  height: 46px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__tag[_ngcontent-%COMP%] {\n  display: none;\n}\n.mobile-nav__close[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 10px;\n  color: var(--ink);\n  cursor: pointer;\n  transition: all 0.2s ease;\n}\n.mobile-nav__close[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: rgba(182, 203, 51, 0.3);\n}\n.mobile-nav__links[_ngcontent-%COMP%] {\n  padding: 16px 0;\n}\n.mobile-nav__link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n  padding: 16px 20px;\n  color: var(--ink);\n  text-decoration: none;\n  font-size: 16px;\n  font-weight: 500;\n  transition: all 0.2s ease;\n  border: none;\n  background: none;\n  width: 100%;\n  text-align: left;\n  cursor: pointer;\n}\n.mobile-nav__link[_ngcontent-%COMP%]:hover, \n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  background: rgba(182, 203, 51, 0.1);\n  color: var(--lime);\n}\n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--lime);\n  outline-offset: -2px;\n}\n.mobile-nav__icon[_ngcontent-%COMP%] {\n  width: 24px;\n  height: 24px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  opacity: 0.8;\n  flex-shrink: 0;\n}\n.mobile-nav__footer[_ngcontent-%COMP%] {\n  padding: 16px;\n  border-top: 1px solid var(--line);\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  background: rgba(255, 255, 255, 0.02);\n}\n@media (max-width: 768px) {\n  .mobile-nav[_ngcontent-%COMP%] {\n    width: 85vw;\n  }\n  .mobile-nav__link[_ngcontent-%COMP%] {\n    font-size: 18px;\n    padding: 18px 20px;\n  }\n  .mobile-nav__icon[_ngcontent-%COMP%] {\n    font-size: 22px;\n  }\n}\n@media (max-width: 540px) {\n  .cta[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .brand__logoWrap[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    border-radius: 0;\n    flex: 0 0 80px;\n    background: transparent;\n    border: none;\n    box-shadow: none;\n  }\n  .brand__logo[_ngcontent-%COMP%] {\n    width: 76px;\n    height: 76px;\n    border-radius: 0;\n    border: none;\n    box-shadow: none;\n    filter: none;\n    object-fit: contain;\n  }\n  .app-header[_ngcontent-%COMP%] {\n    padding: 10px 0;\n  }\n  .app-header__inner[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%], \n.hero[_ngcontent-%COMP%], \n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n  filter: none !important;\n}\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n}\napp-bg-fx[_ngcontent-%COMP%], \n.cursor-glow[_ngcontent-%COMP%], \n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n}\napp-bg-fx[_ngcontent-%COMP%] {\n  opacity: 0.4 !important;\n  filter: saturate(0.9) brightness(0.9);\n}\n/*# sourceMappingURL=app.component.css.map */'], changeDetection: 0 });
+    }, dependencies: [RouterOutlet, BackgroundFxComponent, MagneticDirective, CommonModule, NgIf], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  --bg0: #ffffff;\n  --bg1: #f8fafc;\n  --bg2: #f1f5f9;\n  --bg3: #e2e8f0;\n  --ink: #1a1a1a;\n  --muted: #6b7280;\n  --subtle: #9ca3af;\n  --light: #d1d5db;\n  --white: #ffffff;\n  --grey-light: #f8fafc;\n  --grey-medium: #e2e8f0;\n  --grey-dark: #94a3b8;\n  --grey-darker: #6b7280;\n  --charcoal: #374151;\n  --glass: rgba(255, 255, 255, 0.12);\n  --glass2: rgba(255, 255, 255, 0.18);\n  --glass3: rgba(255, 255, 255, 0.25);\n  --glass4: rgba(255, 255, 255, 0.32);\n  --glass-border: rgba(255, 255, 255, 0.18);\n  --glass-glow: rgba(255, 255, 255, 0.25);\n  --glass-accent: rgba(255, 255, 255, 0.15);\n  --glass-reflection: rgba(255, 255, 255, 0.08);\n  --line: rgba(255, 255, 255, 0.12);\n  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);\n  --shadow2: 0 12px 40px rgba(0, 0, 0, 0.06);\n  --shadow-glow: 0 8px 24px rgba(255, 255, 255, 0.12);\n  --shadow-premium: 0 6px 16px rgba(255, 255, 255, 0.08);\n  --shadow-ultra: 0 4px 12px rgba(255, 255, 255, 0.05);\n  --radius: 24px;\n  --radius2: 32px;\n  --radius3: 48px;\n  --cursorGlowOpacity: 0.8;\n  color: var(--ink);\n  background:\n    radial-gradient(\n      1800px 1400px at 10% 5%,\n      rgba(255, 255, 255, 0.08),\n      transparent 40%),\n    radial-gradient(\n      1600px 1200px at 85% 8%,\n      rgba(255, 255, 255, 0.06),\n      transparent 45%),\n    radial-gradient(\n      1400px 1000px at 15% 85%,\n      rgba(255, 255, 255, 0.04),\n      transparent 50%),\n    radial-gradient(\n      1200px 800px at 75% 15%,\n      rgba(255, 255, 255, 0.03),\n      transparent 55%),\n    radial-gradient(\n      1000px 600px at 25% 65%,\n      rgba(255, 255, 255, 0.02),\n      transparent 60%),\n    linear-gradient(\n      135deg,\n      var(--bg2) 0%,\n      var(--bg1) 35%,\n      var(--bg0) 100%);\n}\n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 3px;\n  transform-origin: left;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(156, 163, 175, 0.92),\n      rgba(107, 114, 128, 0.92));\n  box-shadow: 0 0 20px rgba(156, 163, 175, 0.35);\n}\n.cursor-glow[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 1;\n  background:\n    radial-gradient(\n      300px 300px at var(--mx, 50%) var(--my, 50%),\n      rgba(255, 255, 255, 0.25),\n      transparent 60%),\n    radial-gradient(\n      350px 350px at calc(var(--mx, 50%) + 120px) calc(var(--my, 50%) + 80px),\n      rgba(248, 250, 252, 0.18),\n      transparent 55%),\n    radial-gradient(\n      420px 420px at calc(var(--mx, 50%) - 150px) calc(var(--my, 50%) + 60px),\n      rgba(226, 232, 240, 0.12),\n      transparent 70%),\n    radial-gradient(\n      280px 280px at calc(var(--mx, 50%) + 100px) calc(var(--my, 50%) + 40px),\n      rgba(156, 163, 175, 0.15),\n      transparent 65%),\n    radial-gradient(\n      320px 320px at calc(var(--mx, 50%) + 60px) calc(var(--my, 50%) - 100px),\n      rgba(107, 114, 128, 0.08),\n      transparent 72%),\n    radial-gradient(\n      500px 500px at calc(var(--mx, 50%) - 150px) calc(var(--my, 50%) + 120px),\n      rgba(55, 65, 81, 0.1),\n      transparent 68%),\n    radial-gradient(\n      250px 250px at var(--mx, 50%) var(--my, 50%),\n      rgba(255, 255, 255, 0.06),\n      transparent 75%);\n  mix-blend-mode: screen;\n  opacity: var(--cursorGlowOpacity);\n}\n.app-header[_ngcontent-%COMP%] {\n  position: sticky;\n  top: 0;\n  z-index: 30;\n  padding: 20px 0;\n  backdrop-filter: blur(40px) saturate(1.8);\n  -webkit-backdrop-filter: blur(40px) saturate(1.8);\n}\n.app-header[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.95),\n      rgba(248, 250, 252, 0.65));\n  border-bottom: 1px solid var(--glass-border);\n  box-shadow:\n    0 24px 80px rgba(0, 0, 0, 0.25),\n    inset 0 1px 0 rgba(255, 255, 255, 0.25),\n    0 0 120px rgba(255, 255, 255, 0.3);\n}\n.app-header--scrolled[_ngcontent-%COMP%]::before {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.98),\n      rgba(248, 250, 252, 0.75));\n  border-bottom-color: var(--glass-glow);\n  box-shadow:\n    0 32px 100px rgba(0, 0, 0, 0.35),\n    inset 0 1px 0 rgba(255, 255, 255, 0.3),\n    0 0 160px rgba(255, 255, 255, 0.4);\n}\n.app-header__inner[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: grid;\n  grid-template-columns: 1fr auto 1fr;\n  align-items: center;\n  gap: 16px;\n}\n.brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  text-decoration: none;\n  color: var(--ink);\n}\n.brand__logoWrap[_ngcontent-%COMP%] {\n  width: 100px;\n  height: 100px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  flex: 0 0 100px;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n  transition: transform 220ms ease;\n}\n.brand[_ngcontent-%COMP%]:hover   .brand__logoWrap[_ngcontent-%COMP%] {\n  transform: translateY(-1px);\n  filter: brightness(1.06);\n}\n.brand__logo[_ngcontent-%COMP%] {\n  width: 96px;\n  height: 96px;\n  border-radius: 0;\n  object-fit: contain;\n  object-position: center;\n  display: block;\n  border: none;\n  box-shadow: none;\n  filter: none;\n  transition: transform 220ms ease;\n}\n.brand__name[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 650;\n  letter-spacing: 0.35px;\n  font-size: 14px;\n}\n.brand__tag[_ngcontent-%COMP%] {\n  display: block;\n  font-size: 12px;\n  color: var(--muted);\n  margin-top: 2px;\n}\n.nav[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 14px;\n  justify-content: center;\n  align-items: center;\n}\n.nav__link[_ngcontent-%COMP%] {\n  position: relative;\n  font-size: 15px;\n  text-decoration: none;\n  color: var(--ink);\n  padding: 16px 20px;\n  border-radius: 999px;\n  background: var(--glass3);\n  border: 1px solid var(--glass-border);\n  backdrop-filter: blur(25px) saturate(1.8);\n  -webkit-backdrop-filter: blur(25px) saturate(1.8);\n  box-shadow:\n    0 12px 32px rgba(0, 0, 0, 0.3),\n    inset 0 1px 0 rgba(255, 255, 255, 0.25),\n    0 0 40px rgba(255, 255, 255, 0.2);\n  transition:\n    transform 350ms ease,\n    background 350ms ease,\n    border-color 350ms ease,\n    box-shadow 350ms ease;\n  font-weight: 700;\n}\n.nav__link[_ngcontent-%COMP%]:hover {\n  background: var(--glass5);\n  border-color: var(--glass-glow);\n  transform: translateY(-6px);\n  box-shadow:\n    0 20px 60px rgba(0, 0, 0, 0.45),\n    inset 0 1px 0 rgba(255, 255, 255, 0.3),\n    0 0 40px rgba(255, 255, 255, 0.2);\n  color: var(--ink);\n}\n.cta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: flex-end;\n  gap: 10px;\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 12px;\n  height: 52px;\n  padding: 0 24px;\n  border-radius: 999px;\n  border: 1px solid var(--glass-border);\n  color: var(--ink);\n  text-decoration: none;\n  cursor: pointer;\n  position: relative;\n  background: var(--glass4);\n  backdrop-filter: blur(30px) saturate(1.8);\n  -webkit-backdrop-filter: blur(30px) saturate(1.8);\n  box-shadow:\n    0 16px 48px rgba(0, 0, 0, 0.35),\n    inset 0 1px 0 rgba(255, 255, 255, 0.25),\n    0 0 40px rgba(255, 255, 255, 0.2);\n  transition:\n    transform 350ms ease,\n    filter 350ms ease,\n    background 350ms ease,\n    border-color 350ms ease,\n    box-shadow 350ms ease;\n  will-change: transform;\n  font-weight: 700;\n  font-size: 15px;\n}\n.btn[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -1px;\n  border-radius: inherit;\n  background:\n    radial-gradient(\n      500px 250px at 25% 10%,\n      rgba(255, 255, 255, 0.45),\n      transparent 50%),\n    radial-gradient(\n      500px 250px at 75% 10%,\n      rgba(248, 250, 252, 0.35),\n      transparent 50%),\n    radial-gradient(\n      400px 200px at 50% 80%,\n      rgba(226, 232, 240, 0.28),\n      transparent 60%),\n    radial-gradient(\n      300px 160px at 50% 80%,\n      rgba(156, 163, 175, 0.22),\n      transparent 70%);\n  opacity: 0;\n  transition: opacity 400ms ease;\n  pointer-events: none;\n  z-index: -1;\n  mix-blend-mode: screen;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-6px);\n  border-color: var(--glass-glow);\n  box-shadow:\n    0 24px 60px rgba(0, 0, 0, 0.45),\n    inset 0 1px 0 rgba(255, 255, 255, 0.3),\n    0 0 40px rgba(255, 255, 255, 0.2);\n  color: var(--ink);\n}\n.btn[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: var(--glass3);\n  border-color: var(--glass-border);\n  color: var(--muted);\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(255, 255, 255, 0.95),\n      rgba(248, 250, 252, 0.85));\n  border-color: rgba(255, 255, 255, 0.35);\n  box-shadow:\n    0 20px 60px rgba(255, 255, 255, 0.25),\n    inset 0 1px 0 rgba(255, 255, 255, 0.3),\n    0 0 40px rgba(255, 255, 255, 0.2);\n}\n.app-main[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n}\n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 5;\n  padding: 42px 0 56px;\n  border-top: 1px solid var(--glass-border);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(5, 6, 13, 0),\n      rgba(5, 6, 13, 0.7));\n  backdrop-filter: blur(15px) saturate(1.1);\n  -webkit-backdrop-filter: blur(15px) saturate(1.1);\n}\n.app-footer__inner[_ngcontent-%COMP%] {\n  width: min(1240px, 100% - 32px);\n  margin: 0 auto;\n  display: flex;\n  justify-content: space-between;\n  gap: 22px;\n  align-items: center;\n}\n.foot-logo[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  align-items: center;\n}\n.foot-logo__wrap[_ngcontent-%COMP%] {\n  width: 60px;\n  height: 60px;\n  border-radius: 0;\n  display: grid;\n  place-items: center;\n  background: transparent;\n  border: none;\n  box-shadow: none;\n}\n.foot-logo__img[_ngcontent-%COMP%] {\n  width: 56px;\n  height: 56px;\n  border-radius: 0;\n  object-fit: contain;\n  border: none;\n  box-shadow: none;\n  filter: none;\n}\n.foot-title[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-weight: 600;\n}\n.foot-sub[_ngcontent-%COMP%] {\n  color: var(--muted);\n  font-size: 12px;\n}\n.foot-copy[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.foot-link[_ngcontent-%COMP%] {\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.82);\n  border: 1px solid var(--glass-border);\n  background: var(--glass2);\n  padding: 12px 16px;\n  border-radius: 999px;\n  backdrop-filter: blur(10px) saturate(1.1);\n  -webkit-backdrop-filter: blur(10px) saturate(1.1);\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);\n  transition:\n    transform 200ms ease,\n    background 200ms ease,\n    border-color 200ms ease,\n    box-shadow 200ms ease;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 44px;\n  min-width: 44px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 500;\n}\n@media (max-width: 768px) {\n  .foot-link[_ngcontent-%COMP%] {\n    padding: 10px 14px;\n    font-size: 13px;\n  }\n}\n.foot-link[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  background: var(--glass3);\n  border-color: var(--glass-glow);\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);\n  color: rgba(255, 255, 255, 0.95);\n}\n.social-links[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n}\n.social-link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: var(--glass);\n  border: 1px solid var(--glass-border);\n  backdrop-filter: blur(8px) saturate(1.1);\n  -webkit-backdrop-filter: blur(8px) saturate(1.1);\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);\n  color: var(--muted);\n  transition: all 0.2s ease;\n  text-decoration: none;\n}\n.social-link[_ngcontent-%COMP%]:hover {\n  background: var(--glass2);\n  border-color: var(--glass-glow);\n  transform: translateY(-2px);\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);\n  color: rgba(255, 255, 255, 0.92);\n}\n.social-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n@media (max-width: 980px) {\n  .app-header__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr auto;\n  }\n  .nav[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n.hamburger-btn[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 44px;\n  height: 44px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  border-radius: 12px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  position: relative;\n  z-index: 1001;\n}\n.hamburger-btn[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: var(--grey-dark);\n}\n.hamburger-line[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 2px;\n  background: currentColor;\n  border-radius: 2px;\n  transition: all 0.3s ease;\n  margin: 2px 0;\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(1) {\n  transform: rotate(45deg) translate(5px, 5px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(2) {\n  opacity: 0;\n  transform: translateX(10px);\n}\n.hamburger-btn[aria-expanded=true][_ngcontent-%COMP%]   .hamburger-line[_ngcontent-%COMP%]:nth-child(3) {\n  transform: rotate(-45deg) translate(7px, -6px);\n}\n.mobile-nav-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.5);\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.3s ease, visibility 0.3s ease;\n  z-index: 1000;\n}\n.mobile-nav-overlay--open[_ngcontent-%COMP%] {\n  opacity: 1;\n  visibility: visible;\n}\n.mobile-nav[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: min(320px, 85vw);\n  background:\n    linear-gradient(\n      180deg,\n      var(--bg2),\n      rgba(255, 255, 255, 0.75));\n  border-left: 1px solid var(--glass-border);\n  backdrop-filter: blur(30px) saturate(1.8);\n  -webkit-backdrop-filter: blur(30px) saturate(1.8);\n  box-shadow:\n    -12px 0 40px rgba(0, 0, 0, 0.45),\n    inset 0 1px 0 rgba(255, 255, 255, 0.25),\n    0 0 100px rgba(255, 255, 255, 0.2);\n  transform: translateX(100%);\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);\n  z-index: 1001;\n}\n.mobile-nav--open[_ngcontent-%COMP%] {\n  transform: translateX(0);\n}\n.mobile-nav__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 24px;\n  border-bottom: 1px solid var(--glass-border);\n  background: var(--glass3);\n  backdrop-filter: blur(20px) saturate(1.3);\n  -webkit-backdrop-filter: blur(20px) saturate(1.3);\n  box-shadow:\n    0 8px 24px rgba(0, 0, 0, 0.25),\n    inset 0 1px 0 rgba(255, 255, 255, 0.15),\n    0 0 60px rgba(255, 255, 255, 0.2);\n}\n.mobile-brand[_ngcontent-%COMP%] {\n  flex: 1;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logoWrap[_ngcontent-%COMP%] {\n  width: 50px;\n  height: 50px;\n  flex: 0 0 50px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__logo[_ngcontent-%COMP%] {\n  width: 46px;\n  height: 46px;\n}\n.mobile-brand[_ngcontent-%COMP%]   .brand__tag[_ngcontent-%COMP%] {\n  display: none;\n}\n.mobile-nav__close[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 40px;\n  height: 40px;\n  background: var(--glass2);\n  border: 1px solid var(--glass-border);\n  backdrop-filter: blur(8px) saturate(1.1);\n  -webkit-backdrop-filter: blur(8px) saturate(1.1);\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);\n  border-radius: 10px;\n  color: var(--ink);\n  cursor: pointer;\n  transition: all 0.2s ease;\n}\n.mobile-nav__close[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n  border-color: var(--grey-dark);\n}\n.mobile-nav__links[_ngcontent-%COMP%] {\n  padding: 24px 0;\n}\n.mobile-nav__link[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 18px 20px;\n  border-radius: 16px;\n  color: var(--ink);\n  text-decoration: none;\n  font-size: 17px;\n  font-weight: 600;\n  background: var(--glass2);\n  border: 1px solid var(--glass-border);\n  backdrop-filter: blur(15px) saturate(1.3);\n  -webkit-backdrop-filter: blur(15px) saturate(1.3);\n  box-shadow:\n    0 6px 16px rgba(0, 0, 0, 0.2),\n    inset 0 1px 0 rgba(255, 255, 255, 0.15),\n    0 0 30px rgba(255, 255, 255, 0.2);\n  transition: all 0.3s ease;\n}\n.mobile-nav__link[_ngcontent-%COMP%]:hover, \n.mobile-nav__link[_ngcontent-%COMP%]:hover {\n  background: var(--glass4);\n  border-color: var(--glass-glow);\n  transform: translateY(-4px);\n  box-shadow:\n    0 12px 32px rgba(0, 0, 0, 0.35),\n    inset 0 1px 0 rgba(255, 255, 255, 0.3),\n    0 0 40px rgba(255, 255, 255, 0.2);\n  color: var(--ink);\n}\n.mobile-nav__link[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--grey-dark);\n  outline-offset: -2px;\n}\n.mobile-nav__icon[_ngcontent-%COMP%] {\n  width: 24px;\n  height: 24px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  opacity: 0.8;\n  flex-shrink: 0;\n}\n.mobile-nav__footer[_ngcontent-%COMP%] {\n  padding: 24px;\n  border-top: 1px solid var(--glass-border);\n  background: var(--glass3);\n  backdrop-filter: blur(20px) saturate(1.3);\n  -webkit-backdrop-filter: blur(20px) saturate(1.3);\n  box-shadow:\n    0 -4px 16px rgba(0, 0, 0, 0.25),\n    inset 0 1px 0 rgba(255, 255, 255, 0.15),\n    0 0 60px rgba(255, 255, 255, 0.2);\n}\n.mobile-nav__footer[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%] {\n  height: 52px;\n  padding: 0 24px;\n  border-radius: 12px;\n  background: var(--glass4);\n  border: 1px solid var(--glass-border);\n  backdrop-filter: blur(15px) saturate(1.3);\n  -webkit-backdrop-filter: blur(15px) saturate(1.3);\n  box-shadow:\n    0 6px 16px rgba(0, 0, 0, 0.25),\n    inset 0 1px 0 rgba(255, 255, 255, 0.15),\n    0 0 30px rgba(255, 255, 255, 0.2);\n  color: var(--ink);\n  font-weight: 700;\n  font-size: 15px;\n  transition: all 0.3s ease;\n}\n@media (max-width: 768px) {\n  .mobile-nav[_ngcontent-%COMP%] {\n    width: 85vw;\n  }\n  .mobile-nav__link[_ngcontent-%COMP%] {\n    font-size: 18px;\n    padding: 18px 20px;\n  }\n  .mobile-nav__icon[_ngcontent-%COMP%] {\n    font-size: 22px;\n  }\n}\n@media (max-width: 540px) {\n  .cta[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .brand__logoWrap[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    border-radius: 0;\n    flex: 0 0 80px;\n    background: transparent;\n    border: none;\n    box-shadow: none;\n  }\n  .brand__logo[_ngcontent-%COMP%] {\n    width: 76px;\n    height: 76px;\n    border-radius: 0;\n    border: none;\n    box-shadow: none;\n    filter: none;\n    object-fit: contain;\n  }\n  .app-header[_ngcontent-%COMP%] {\n    padding: 10px 0;\n  }\n  .app-header__inner[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%], \n.hero[_ngcontent-%COMP%], \n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n  filter: none !important;\n}\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n}\n.app-header[_ngcontent-%COMP%], \n.app-main[_ngcontent-%COMP%], \n.app-footer[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n}\napp-bg-fx[_ngcontent-%COMP%], \n.cursor-glow[_ngcontent-%COMP%], \n.top-progress[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 0;\n  pointer-events: none;\n}\napp-bg-fx[_ngcontent-%COMP%] {\n  opacity: 0.4 !important;\n  filter: saturate(0.9) brightness(0.9);\n}\n/*# sourceMappingURL=app.component.css.map */'], changeDetection: 0 });
   }
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src\\app\\app.component.ts", lineNumber: 17 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src\\app\\app.component.ts", lineNumber: 18 });
 })();
 
 // node_modules/@angular/forms/fesm2022/forms.mjs
@@ -54654,7 +54629,7 @@ var TiltDirective = class _TiltDirective {
 
 // src/app/pages/landing/landing.page.ts
 var _c02 = ["modalPanel"];
-function LandingPageComponent_article_90_li_8_Template(rf, ctx) {
+function LandingPageComponent_article_99_li_8_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "li");
     \u0275\u0275text(1);
@@ -54666,21 +54641,21 @@ function LandingPageComponent_article_90_li_8_Template(rf, ctx) {
     \u0275\u0275textInterpolate(b_r1);
   }
 }
-function LandingPageComponent_article_90_Template(rf, ctx) {
+function LandingPageComponent_article_99_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "article", 86)(1, "div", 87);
+    \u0275\u0275elementStart(0, "article", 93)(1, "div", 94);
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 88);
+    \u0275\u0275elementStart(3, "div", 95);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "div", 89);
+    \u0275\u0275elementStart(5, "div", 96);
     \u0275\u0275text(6);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "ul", 90);
-    \u0275\u0275template(8, LandingPageComponent_article_90_li_8_Template, 2, 1, "li", 91);
+    \u0275\u0275elementStart(7, "ul", 97);
+    \u0275\u0275template(8, LandingPageComponent_article_99_li_8_Template, 2, 1, "li", 98);
     \u0275\u0275elementEnd();
-    \u0275\u0275element(9, "div", 92);
+    \u0275\u0275element(9, "div", 99);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -54698,38 +54673,38 @@ function LandingPageComponent_article_90_Template(rf, ctx) {
     \u0275\u0275property("ngForOf", s_r2.bullets)("ngForTrackBy", ctx_r3.trackByBullet);
   }
 }
-function LandingPageComponent_article_100_Template(rf, ctx) {
+function LandingPageComponent_article_109_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "article", 93)(1, "div", 94)(2, "span", 74);
+    \u0275\u0275elementStart(0, "article", 100)(1, "div", 101)(2, "span", 81);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 95);
+    \u0275\u0275elementStart(4, "span", 102);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "div", 96);
+    \u0275\u0275elementStart(6, "div", 103);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 97);
+    \u0275\u0275elementStart(8, "div", 104);
     \u0275\u0275text(9);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(10, "div", 98)(11, "button", 99);
-    \u0275\u0275listener("click", function LandingPageComponent_article_100_Template_button_click_11_listener() {
+    \u0275\u0275elementStart(10, "div", 105)(11, "button", 106);
+    \u0275\u0275listener("click", function LandingPageComponent_article_109_Template_button_click_11_listener() {
       const w_r6 = \u0275\u0275restoreView(_r5).$implicit;
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.openPreview(w_r6));
     });
     \u0275\u0275text(12, " Ver preview ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "button", 100);
-    \u0275\u0275listener("click", function LandingPageComponent_article_100_Template_button_click_13_listener() {
+    \u0275\u0275elementStart(13, "button", 107);
+    \u0275\u0275listener("click", function LandingPageComponent_article_109_Template_button_click_13_listener() {
       \u0275\u0275restoreView(_r5);
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.scrollToContact());
     });
     \u0275\u0275text(14, " Quiero esto ");
     \u0275\u0275elementEnd()();
-    \u0275\u0275element(15, "div", 101);
+    \u0275\u0275element(15, "div", 108);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -54746,9 +54721,9 @@ function LandingPageComponent_article_100_Template(rf, ctx) {
     \u0275\u0275textInterpolate(w_r6.desc);
   }
 }
-function LandingPageComponent_a_111_Template(rf, ctx) {
+function LandingPageComponent_a_120_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "a", 102);
+    \u0275\u0275elementStart(0, "a", 109);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -54761,9 +54736,9 @@ function LandingPageComponent_a_111_Template(rf, ctx) {
     \u0275\u0275textInterpolate(c_r8.name);
   }
 }
-function LandingPageComponent_a_112_Template(rf, ctx) {
+function LandingPageComponent_a_121_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "a", 102);
+    \u0275\u0275elementStart(0, "a", 109);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -54776,20 +54751,20 @@ function LandingPageComponent_a_112_Template(rf, ctx) {
     \u0275\u0275textInterpolate(c_r9.name);
   }
 }
-function LandingPageComponent_div_114_Template(rf, ctx) {
+function LandingPageComponent_div_123_Template(rf, ctx) {
   if (rf & 1) {
     const _r10 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 103);
-    \u0275\u0275listener("mouseenter", function LandingPageComponent_div_114_Template_div_mouseenter_0_listener() {
+    \u0275\u0275elementStart(0, "div", 110);
+    \u0275\u0275listener("mouseenter", function LandingPageComponent_div_123_Template_div_mouseenter_0_listener() {
       const c_r11 = \u0275\u0275restoreView(_r10).$implicit;
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.highlightClient(c_r11.name));
-    })("mouseleave", function LandingPageComponent_div_114_Template_div_mouseleave_0_listener() {
+    })("mouseleave", function LandingPageComponent_div_123_Template_div_mouseleave_0_listener() {
       const c_r11 = \u0275\u0275restoreView(_r10).$implicit;
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.unhighlightClient(c_r11.name));
     });
-    \u0275\u0275element(1, "div", 104)(2, "img", 105);
+    \u0275\u0275element(1, "div", 111)(2, "img", 112);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -54800,21 +54775,21 @@ function LandingPageComponent_div_114_Template(rf, ctx) {
     \u0275\u0275property("src", c_r11.logo, \u0275\u0275sanitizeUrl)("alt", c_r11.name);
   }
 }
-function LandingPageComponent_article_161_Template(rf, ctx) {
+function LandingPageComponent_article_170_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "article", 106)(1, "div", 107);
+    \u0275\u0275elementStart(0, "article", 113)(1, "div", 114);
     \u0275\u0275text(2, "\u2605\u2605\u2605\u2605\u2605");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 108);
+    \u0275\u0275elementStart(3, "div", 115);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "div", 109)(6, "div", 110);
+    \u0275\u0275elementStart(5, "div", 116)(6, "div", 117);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 111);
+    \u0275\u0275elementStart(8, "div", 118);
     \u0275\u0275text(9);
     \u0275\u0275elementEnd()();
-    \u0275\u0275element(10, "div", 112);
+    \u0275\u0275element(10, "div", 119);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -54829,28 +54804,28 @@ function LandingPageComponent_article_161_Template(rf, ctx) {
     \u0275\u0275textInterpolate(t_r13.role);
   }
 }
-function LandingPageComponent_div_194_Template(rf, ctx) {
+function LandingPageComponent_div_203_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 113);
+    \u0275\u0275elementStart(0, "div", 120);
     \u0275\u0275text(1, " Escribi tu nombre. ");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_199_Template(rf, ctx) {
+function LandingPageComponent_div_208_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 113);
+    \u0275\u0275elementStart(0, "div", 120);
     \u0275\u0275text(1, " Email invalido. ");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_220_Template(rf, ctx) {
+function LandingPageComponent_div_229_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 114);
+    \u0275\u0275elementStart(0, "div", 121);
     \u0275\u0275text(1, "Listo! Te respondemos a la brevedad.");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_221_Conditional_5_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
@@ -54859,28 +54834,28 @@ function LandingPageComponent_div_221_Conditional_5_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" Preview del proyecto: ", ctx_r3.previewProject().title, " ");
   }
 }
-function LandingPageComponent_div_221_Conditional_6_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Portafolio (demo) ");
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Conditional_0_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 127);
+    \u0275\u0275elementStart(0, "div", 134);
     \u0275\u0275text(1, "Cargando preview...");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     const _r16 = \u0275\u0275getCurrentView();
-    \u0275\u0275template(0, LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Conditional_0_Template, 2, 0, "div", 127);
-    \u0275\u0275elementStart(1, "iframe", 128);
-    \u0275\u0275listener("error", function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Template_iframe_error_1_listener() {
+    \u0275\u0275template(0, LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Conditional_0_Template, 2, 0, "div", 134);
+    \u0275\u0275elementStart(1, "iframe", 135);
+    \u0275\u0275listener("error", function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Template_iframe_error_1_listener() {
       \u0275\u0275restoreView(_r16);
       const ctx_r3 = \u0275\u0275nextContext(4);
       return \u0275\u0275resetView(ctx_r3.onIframeError());
-    })("load", function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Template_iframe_load_1_listener() {
+    })("load", function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Template_iframe_load_1_listener() {
       \u0275\u0275restoreView(_r16);
       const ctx_r3 = \u0275\u0275nextContext(4);
       return \u0275\u0275resetView(ctx_r3.onIframeLoad());
@@ -54894,39 +54869,39 @@ function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1
     \u0275\u0275property("src", ctx_r3.safeUrl(), \u0275\u0275sanitizeResourceUrl);
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Conditional_1_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 130);
+    \u0275\u0275elementStart(0, "div", 137);
     \u0275\u0275text(1, "\u{1F512}");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "div", 131);
+    \u0275\u0275elementStart(2, "div", 138);
     \u0275\u0275text(3, "Contenido mixto bloqueado");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "div", 132);
+    \u0275\u0275elementStart(4, "div", 139);
     \u0275\u0275text(5, "El sitio usa HTTP y no se puede cargar en HTTPS por seguridad.");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Conditional_2_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 130);
+    \u0275\u0275elementStart(0, "div", 137);
     \u0275\u0275text(1, "\u26A0\uFE0F");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "div", 131);
+    \u0275\u0275elementStart(2, "div", 138);
     \u0275\u0275text(3, "No se puede cargar el preview");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "div", 132);
+    \u0275\u0275elementStart(4, "div", 139);
     \u0275\u0275text(5, "El sitio no permite iframe o hay un error de conexi\xF3n.");
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r17 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 126);
-    \u0275\u0275template(1, LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Conditional_1_Template, 6, 0)(2, LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Conditional_2_Template, 6, 0);
-    \u0275\u0275elementStart(3, "button", 129);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Template_button_click_3_listener() {
+    \u0275\u0275elementStart(0, "div", 133);
+    \u0275\u0275template(1, LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Conditional_1_Template, 6, 0)(2, LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Conditional_2_Template, 6, 0);
+    \u0275\u0275elementStart(3, "button", 136);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Template_button_click_3_listener() {
       \u0275\u0275restoreView(_r17);
       const ctx_r3 = \u0275\u0275nextContext(4);
       return \u0275\u0275resetView(ctx_r3.openInNewTab(ctx_r3.previewProject().domain));
@@ -54940,10 +54915,10 @@ function LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2
     \u0275\u0275conditional(ctx_r3.mixedContentError() ? 1 : 2);
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_0_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 124);
-    \u0275\u0275template(1, LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_1_Template, 2, 2, "iframe", 125)(2, LandingPageComponent_div_221_Conditional_10_Conditional_0_Conditional_2_Template, 5, 1, "div", 126);
+    \u0275\u0275elementStart(0, "div", 131);
+    \u0275\u0275template(1, LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_1_Template, 2, 2, "iframe", 132)(2, LandingPageComponent_div_230_Conditional_10_Conditional_0_Conditional_2_Template, 5, 1, "div", 133);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -54952,20 +54927,20 @@ function LandingPageComponent_div_221_Conditional_10_Conditional_0_Template(rf, 
     \u0275\u0275conditional(!ctx_r3.iframeError() ? 1 : 2);
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Conditional_1_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     const _r18 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 124)(1, "div", 133);
-    \u0275\u0275element(2, "iframe", 134);
+    \u0275\u0275elementStart(0, "div", 131)(1, "div", 140);
+    \u0275\u0275element(2, "iframe", 141);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 135)(4, "div", 136);
+    \u0275\u0275elementStart(3, "div", 142)(4, "div", 143);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 137);
+    \u0275\u0275elementStart(6, "div", 144);
     \u0275\u0275text(7, " Por tratarse de un sistema cl\xEDnico interno, el acceso p\xFAblico no est\xE1 habilitado. ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 138)(9, "a", 139);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Conditional_10_Conditional_1_Template_a_click_9_listener($event) {
+    \u0275\u0275elementStart(8, "div", 145)(9, "a", 146);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Conditional_10_Conditional_1_Template_a_click_9_listener($event) {
       \u0275\u0275restoreView(_r18);
       const ctx_r3 = \u0275\u0275nextContext(3);
       ctx_r3.closeShowreel();
@@ -54973,8 +54948,8 @@ function LandingPageComponent_div_221_Conditional_10_Conditional_1_Template(rf, 
     });
     \u0275\u0275text(10, " Solicitar demo ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "a", 140);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Conditional_10_Conditional_1_Template_a_click_11_listener($event) {
+    \u0275\u0275elementStart(11, "a", 147);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Conditional_10_Conditional_1_Template_a_click_11_listener($event) {
       \u0275\u0275restoreView(_r18);
       const ctx_r3 = \u0275\u0275nextContext(3);
       ctx_r3.closeShowreel();
@@ -54991,42 +54966,42 @@ function LandingPageComponent_div_221_Conditional_10_Conditional_1_Template(rf, 
     \u0275\u0275textInterpolate(ctx_r3.previewProject().title);
   }
 }
-function LandingPageComponent_div_221_Conditional_10_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, LandingPageComponent_div_221_Conditional_10_Conditional_0_Template, 3, 1, "div", 124)(1, LandingPageComponent_div_221_Conditional_10_Conditional_1_Template, 13, 2, "div", 124);
+    \u0275\u0275template(0, LandingPageComponent_div_230_Conditional_10_Conditional_0_Template, 3, 1, "div", 131)(1, LandingPageComponent_div_230_Conditional_10_Conditional_1_Template, 13, 2, "div", 131);
   }
   if (rf & 2) {
     const ctx_r3 = \u0275\u0275nextContext(2);
     \u0275\u0275conditional(ctx_r3.previewProject().previewType === "iframe" ? 0 : ctx_r3.previewProject().previewType === "video" ? 1 : -1);
   }
 }
-function LandingPageComponent_div_221_Conditional_11_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_11_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 121)(1, "div", 141);
+    \u0275\u0275elementStart(0, "div", 128)(1, "div", 148);
     \u0275\u0275text(2, "Aca van tus proyectos reales (capturas de pantalla, demos funcionales). Por ahora es demo.");
     \u0275\u0275elementEnd();
-    \u0275\u0275element(3, "div", 142);
+    \u0275\u0275element(3, "div", 149);
     \u0275\u0275elementEnd();
   }
 }
-function LandingPageComponent_div_221_Conditional_12_Conditional_1_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_12_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 143)(1, "div", 144);
+    \u0275\u0275elementStart(0, "div", 150)(1, "div", 151);
     \u0275\u0275text(2, "Tipo");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 145);
+    \u0275\u0275elementStart(3, "div", 152);
     \u0275\u0275text(4, "Web p\xFAblica");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "div", 143)(6, "div", 144);
+    \u0275\u0275elementStart(5, "div", 150)(6, "div", 151);
     \u0275\u0275text(7, "Dominio");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 145);
+    \u0275\u0275elementStart(8, "div", 152);
     \u0275\u0275text(9);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "div", 143)(11, "div", 144);
+    \u0275\u0275elementStart(10, "div", 150)(11, "div", 151);
     \u0275\u0275text(12, "Acceso");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "div", 145);
+    \u0275\u0275elementStart(13, "div", 152);
     \u0275\u0275text(14, "P\xFAblico");
     \u0275\u0275elementEnd()();
   }
@@ -55036,32 +55011,32 @@ function LandingPageComponent_div_221_Conditional_12_Conditional_1_Template(rf, 
     \u0275\u0275textInterpolate(ctx_r3.previewProject().domain);
   }
 }
-function LandingPageComponent_div_221_Conditional_12_Conditional_2_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_12_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 143)(1, "div", 144);
+    \u0275\u0275elementStart(0, "div", 150)(1, "div", 151);
     \u0275\u0275text(2, "Tipo");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 145);
+    \u0275\u0275elementStart(3, "div", 152);
     \u0275\u0275text(4, "Sistema privado");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "div", 143)(6, "div", 144);
+    \u0275\u0275elementStart(5, "div", 150)(6, "div", 151);
     \u0275\u0275text(7, "Acceso");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 145);
+    \u0275\u0275elementStart(8, "div", 152);
     \u0275\u0275text(9, "Restringido");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "div", 143)(11, "div", 144);
+    \u0275\u0275elementStart(10, "div", 150)(11, "div", 151);
     \u0275\u0275text(12, "Demo");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "div", 145);
+    \u0275\u0275elementStart(13, "div", 152);
     \u0275\u0275text(14, "Video disponible");
     \u0275\u0275elementEnd()();
   }
 }
-function LandingPageComponent_div_221_Conditional_12_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 122);
-    \u0275\u0275template(1, LandingPageComponent_div_221_Conditional_12_Conditional_1_Template, 15, 1)(2, LandingPageComponent_div_221_Conditional_12_Conditional_2_Template, 15, 0);
+    \u0275\u0275elementStart(0, "div", 129);
+    \u0275\u0275template(1, LandingPageComponent_div_230_Conditional_12_Conditional_1_Template, 15, 1)(2, LandingPageComponent_div_230_Conditional_12_Conditional_2_Template, 15, 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -55070,57 +55045,57 @@ function LandingPageComponent_div_221_Conditional_12_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r3.previewProject().previewType === "iframe" ? 1 : ctx_r3.previewProject().previewType === "video" ? 2 : -1);
   }
 }
-function LandingPageComponent_div_221_Conditional_13_Template(rf, ctx) {
+function LandingPageComponent_div_230_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 122)(1, "div", 143)(2, "div", 144);
+    \u0275\u0275elementStart(0, "div", 129)(1, "div", 150)(2, "div", 151);
     \u0275\u0275text(3, "Frontend");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "div", 145);
+    \u0275\u0275elementStart(4, "div", 152);
     \u0275\u0275text(5, "Angular + animaciones");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "div", 143)(7, "div", 144);
+    \u0275\u0275elementStart(6, "div", 150)(7, "div", 151);
     \u0275\u0275text(8, "Backend");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "div", 145);
+    \u0275\u0275elementStart(9, "div", 152);
     \u0275\u0275text(10, "Node.js + SQL");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(11, "div", 143)(12, "div", 144);
+    \u0275\u0275elementStart(11, "div", 150)(12, "div", 151);
     \u0275\u0275text(13, "Entrega");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "div", 145);
+    \u0275\u0275elementStart(14, "div", 152);
     \u0275\u0275text(15, "24h - 14h h\xE1biles");
     \u0275\u0275elementEnd()()();
   }
 }
-function LandingPageComponent_div_221_Template(rf, ctx) {
+function LandingPageComponent_div_230_Template(rf, ctx) {
   if (rf & 1) {
     const _r15 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 115);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Template_div_click_0_listener() {
+    \u0275\u0275elementStart(0, "div", 122);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Template_div_click_0_listener() {
       \u0275\u0275restoreView(_r15);
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.closeShowreel());
     });
-    \u0275\u0275elementStart(1, "div", 116, 0);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Template_div_click_1_listener($event) {
+    \u0275\u0275elementStart(1, "div", 123, 0);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Template_div_click_1_listener($event) {
       \u0275\u0275restoreView(_r15);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(3, "div", 117)(4, "div", 118);
-    \u0275\u0275template(5, LandingPageComponent_div_221_Conditional_5_Template, 1, 1)(6, LandingPageComponent_div_221_Conditional_6_Template, 1, 0);
+    \u0275\u0275elementStart(3, "div", 124)(4, "div", 125);
+    \u0275\u0275template(5, LandingPageComponent_div_230_Conditional_5_Template, 1, 1)(6, LandingPageComponent_div_230_Conditional_6_Template, 1, 0);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "button", 119);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Template_button_click_7_listener() {
+    \u0275\u0275elementStart(7, "button", 126);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Template_button_click_7_listener() {
       \u0275\u0275restoreView(_r15);
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.closeShowreel());
     });
     \u0275\u0275text(8, "\xD7");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(9, "div", 120);
-    \u0275\u0275template(10, LandingPageComponent_div_221_Conditional_10_Template, 2, 1)(11, LandingPageComponent_div_221_Conditional_11_Template, 4, 0, "div", 121)(12, LandingPageComponent_div_221_Conditional_12_Template, 3, 1, "div", 122)(13, LandingPageComponent_div_221_Conditional_13_Template, 16, 0, "div", 122);
-    \u0275\u0275elementStart(14, "a", 123);
-    \u0275\u0275listener("click", function LandingPageComponent_div_221_Template_a_click_14_listener($event) {
+    \u0275\u0275elementStart(9, "div", 127);
+    \u0275\u0275template(10, LandingPageComponent_div_230_Conditional_10_Template, 2, 1)(11, LandingPageComponent_div_230_Conditional_11_Template, 4, 0, "div", 128)(12, LandingPageComponent_div_230_Conditional_12_Template, 3, 1, "div", 129)(13, LandingPageComponent_div_230_Conditional_13_Template, 16, 0, "div", 129);
+    \u0275\u0275elementStart(14, "a", 130);
+    \u0275\u0275listener("click", function LandingPageComponent_div_230_Template_a_click_14_listener($event) {
       \u0275\u0275restoreView(_r15);
       const ctx_r3 = \u0275\u0275nextContext();
       ctx_r3.closeShowreel();
@@ -55140,10 +55115,11 @@ function LandingPageComponent_div_221_Template(rf, ctx) {
   }
 }
 var LandingPageComponent = class _LandingPageComponent {
-  constructor(fb, sanitizer, cdr) {
+  constructor(fb, sanitizer, cdr, scrollService) {
     this.fb = fb;
     this.sanitizer = sanitizer;
     this.cdr = cdr;
+    this.scrollService = scrollService;
     this.showreelOpen = signal(false);
     this.previewProject = signal(null);
     this.iframeError = signal(false);
@@ -55205,13 +55181,22 @@ var LandingPageComponent = class _LandingPageComponent {
         previewType: "video",
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
         // Video demo placeholder
+      },
+      {
+        tag: "PLATAFORMA EDUCATIVA",
+        title: "NELA",
+        desc: "Academia de ingl\xE9s con plataforma de aprendizaje completa. Dashboard, cursos y experiencia estudiantil estilo Moodle.",
+        metric: "Plataforma educativa",
+        domain: "https://newnela.com",
+        previewType: "iframe"
       }
     ];
     this.clients = [
       { name: "Don Francisco", logo: "assets/donfrancisco.svg" },
       { name: "Bentasca", logo: "assets/bentasca.svg" },
       { name: "Karen Bentancor", logo: "assets/karenbentancor.svg" },
-      { name: "Servimel", logo: "assets/servimel.svg" }
+      { name: "Servimel", logo: "assets/servimel.svg" },
+      { name: "NELA", logo: "assets/NELA.svg" }
     ];
     this.testimonials = [
       {
@@ -55240,6 +55225,8 @@ var LandingPageComponent = class _LandingPageComponent {
     this.sentOk = signal(false);
     this.mouseMoveThrottled = false;
     this.previewTimeoutId = null;
+    this.WHATSAPP_NUMBER = "59892454958";
+    this.WHATSAPP_MESSAGE = encodeURIComponent("\xA1Hola! Estoy interesado en sus servicios de desarrollo web. Me gustar\xEDa obtener m\xE1s informaci\xF3n.");
   }
   // TrackBy functions for optimized *ngFor
   trackByService(index, service) {
@@ -55272,80 +55259,105 @@ var LandingPageComponent = class _LandingPageComponent {
       const reduceEffects = shouldReduceEffects();
       console.log(`\u{1F4F1} Dispositivo: ${isMobileDevice ? "M\xF3vil" : "Desktop"}`);
       console.log(`\u{1F3A8} Efectos reducidos: ${reduceEffects ? "S\xED" : "No"}`);
-      const delay = isMobileDevice ? 2e3 : 50;
-      console.log(`\u23F0 Delay de animaci\xF3n: ${delay}ms (${isMobileDevice ? "M\xF3vil - LENTO" : "Desktop - R\xE1pido"})`);
+      const delay = isMobileDevice ? 300 : 100;
+      console.log(`\u23F0 Delay de animaci\xF3n: ${delay}ms (${isMobileDevice ? "M\xF3vil - Premium" : "Desktop - Premium"})`);
       setTimeout(() => {
-        console.log("\u{1F3AD} Iniciando animaciones no cr\xEDticas...");
-        this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
+        console.log("\u{1F3AD} Iniciando animaciones premium...");
+        this.initPremiumAnimations(isMobileDevice, reduceEffects);
         if (isMobileDevice) {
-          console.log("\u{1F4F1} Detectado m\xF3vil, iniciando animaciones de aparici\xF3n...");
-          this.initMobileAppearAnimations();
+          console.log("\u{1F4F1} Detectado m\xF3vil, iniciando animaciones dram\xE1ticas...");
+          this.initDramaticMobileAnimations();
         } else {
-          console.log("\u{1F4BB} Desktop detectado, omitiendo animaciones m\xF3viles");
+          console.log("\u{1F4BB} Desktop detectado, iniciando animaciones cinematogr\xE1ficas...");
+          this.initCinematicAnimations();
         }
       }, delay);
     });
   }
-  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - SIN ERRORES
-  initMobileAppearAnimations() {
-    console.log("\u{1F680} Iniciando animaciones m\xF3viles robustas...");
+  // ✅ ANIMACIONES PREMIUM DRAMÁTICAS
+  initPremiumAnimations(isMobileDevice, reduceEffects) {
+    const heroDuration = isMobileDevice ? 0.4 : 0.6;
+    const heroStagger = isMobileDevice ? 0.02 : 0.04;
+    this.heroTl = gsapWithCSS.timeline({ defaults: { ease: "power3.out" } }).fromTo(".hero__kicker", { y: isMobileDevice ? 6 : 12, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: heroDuration * 0.8 }).fromTo(".hero__title", { y: isMobileDevice ? 8 : 15, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: heroDuration }, "-=0.3").fromTo(".hero__titleAccent", { y: isMobileDevice ? 10 : 18, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.7 }, "-=0.2").fromTo(".hero__subtitle", { y: isMobileDevice ? 4 : 8, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: heroDuration * 0.8 }, "-=0.4").fromTo(".hero__actions .btn", { y: isMobileDevice ? 4 : 8, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.6, stagger: heroStagger }, "-=0.2").fromTo(".hero__stats .stat", { y: isMobileDevice ? 4 : 8, opacity: 0, scale: 0.85 }, { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.6, stagger: heroStagger * 0.8 }, "-=0.3").fromTo(".hero__visual", { y: isMobileDevice ? 10 : 20, opacity: 0, scale: 0.8, rotation: 2 }, { y: 0, opacity: 1, scale: 1, rotation: 0, duration: heroDuration * 1.2 }, "-=0.5");
+    if (!reduceEffects) {
+      gsapWithCSS.to(".hero__glow", {
+        opacity: 0.8,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
+      gsapWithCSS.to(".shape--a", {
+        y: -12,
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none"
+      });
+      gsapWithCSS.to(".shape--b", {
+        y: 15,
+        rotation: -360,
+        duration: 25,
+        repeat: -1,
+        ease: "none"
+      });
+    }
+  }
+  // ✅ ANIMACIONES DRAMÁTICAS MÓVIL
+  initDramaticMobileAnimations() {
     const heroElements = [
-      { selector: ".hero__kicker", delay: 0.1, duration: 0.6, from: "top" },
-      { selector: ".hero__title", delay: 0.2, duration: 0.8, from: "left" },
-      { selector: ".hero__titleAccent", delay: 0.3, duration: 0.6, from: "right" },
-      { selector: ".hero__subtitle", delay: 0.4, duration: 0.6, from: "bottom" },
-      { selector: ".hero__actions", delay: 0.5, duration: 0.6, from: "left" },
-      { selector: ".stat", delay: 0.6, duration: 0.5, from: "bottom" },
-      { selector: ".hero__visual", delay: 0.7, duration: 0.8, from: "right" },
-      { selector: ".mini", delay: 0.8, duration: 0.5, from: "left" }
+      { selector: ".hero__kicker", delay: 0.1, duration: 0.8, from: "top" },
+      { selector: ".hero__title", delay: 0.2, duration: 1, from: "left" },
+      { selector: ".hero__titleAccent", delay: 0.3, duration: 0.7, from: "right" },
+      { selector: ".hero__subtitle", delay: 0.4, duration: 0.8, from: "bottom" },
+      { selector: ".hero__actions", delay: 0.5, duration: 0.7, from: "left" },
+      { selector: ".stat", delay: 0.6, duration: 0.6, from: "bottom" },
+      { selector: ".hero__visual", delay: 0.7, duration: 1, from: "right" },
+      { selector: ".mini", delay: 0.8, duration: 0.6, from: "left" }
     ];
     heroElements.forEach(({ selector: selector3, delay, duration, from: from2 }) => {
       const els = document.querySelectorAll(selector3);
       if (els.length === 0)
         return;
-      let initialX = 0, initialY = 0;
+      let initialX = 0, initialY = 0, initialScale = 1;
       switch (from2) {
         case "left":
-          initialX = -150;
+          initialX = -200;
           break;
         case "right":
-          initialX = 150;
+          initialX = 200;
           break;
         case "top":
-          initialY = -100;
+          initialY = -120;
           break;
         case "bottom":
-          initialY = 100;
+          initialY = 120;
           break;
       }
-      gsapWithCSS.set(els, { opacity: 0, x: initialX, y: initialY, display: "none" });
+      gsapWithCSS.set(els, {
+        opacity: 0,
+        x: initialX,
+        y: initialY,
+        scale: initialScale,
+        display: "none"
+      });
+      if (from2 === "right") {
+        gsapWithCSS.set(els, { rotation: 15 });
+      } else if (from2 === "left") {
+        gsapWithCSS.set(els, { rotation: -10 });
+      }
       gsapWithCSS.set(els, { display: "block" });
       gsapWithCSS.to(els, {
         opacity: 1,
         x: 0,
         y: 0,
+        scale: 1,
+        rotation: 0,
         duration,
         delay,
         stagger: 0.1,
         ease: "power3.out"
       });
-    });
-    const allSectionElements = [
-      ".section__head",
-      ".card",
-      ".workCard",
-      ".clientTile",
-      ".logo",
-      ".step",
-      ".quote",
-      ".panel"
-    ];
-    allSectionElements.forEach((selector3) => {
-      const els = document.querySelectorAll(selector3);
-      if (els.length > 0) {
-        gsapWithCSS.set(els, { opacity: 0, display: "none" });
-        console.log(`\u{1F6AB} Ocultados ${els.length} elementos: ${selector3}`);
-      }
     });
     const observerOptions = {
       root: null,
@@ -55357,7 +55369,7 @@ var LandingPageComponent = class _LandingPageComponent {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id;
           console.log(`\u{1F3AF} Secci\xF3n visible: ${sectionId}`);
-          this.animateSection(sectionId);
+          this.animateSectionDramatic(sectionId);
           observer.unobserve(entry.target);
         }
       });
@@ -55367,41 +55379,59 @@ var LandingPageComponent = class _LandingPageComponent {
       observer.observe(section);
     });
   }
-  // ✅ ANIMAR SECCIÓN ESPECÍFICA
-  animateSection(sectionId) {
-    console.log(`\u{1F3AC} Animando secci\xF3n: ${sectionId}`);
+  // ✅ ANIMACIONES CINEMATOGRÁFICAS DESKTOP
+  initCinematicAnimations() {
+    gsapWithCSS.to(".hero__glow", { opacity: 0.9, scale: 1.1, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut" });
+    gsapWithCSS.to(".shape--a", {
+      rotation: 360,
+      x: 50,
+      duration: 20,
+      repeat: -1,
+      ease: "none"
+    });
+    gsapWithCSS.to(".shape--b", {
+      rotation: -360,
+      x: -50,
+      duration: 25,
+      repeat: -1,
+      ease: "none"
+    });
+  }
+  // ✅ ANIMAR SECCIÓN CON DRAMATISMO
+  animateSectionDramatic(sectionId) {
+    console.log(`\u{1F3AC} Animando secci\xF3n dram\xE1tica: ${sectionId}`);
     let elementsToAnimate = [];
     switch (sectionId) {
       case "services":
         elementsToAnimate = [
-          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
-          { selector: ".card", delay: 0.2, duration: 0.7, from: "left" }
+          { selector: ".section__head", delay: 0.1, duration: 0.8, from: "top" },
+          { selector: ".card", delay: 0.2, duration: 0.9, from: "left" }
         ];
         break;
       case "work":
         elementsToAnimate = [
-          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
-          { selector: ".workCard", delay: 0.2, duration: 0.7, from: "right" }
+          { selector: ".section__head", delay: 0.1, duration: 0.8, from: "top" },
+          { selector: ".workCard", delay: 0.2, duration: 0.9, from: "right" }
         ];
         break;
       case "clients":
         elementsToAnimate = [
-          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
-          { selector: ".clientTile", delay: 0.2, duration: 0.6, from: "bottom" },
-          { selector: ".logo", delay: 0.3, duration: 0.5, from: "left" }
+          { selector: ".section__head", delay: 0.1, duration: 0.8, from: "top" },
+          { selector: ".clientTile", delay: 0.2, duration: 0.7, from: "bottom" },
+          { selector: ".logo", delay: 0.3, duration: 0.6, from: "left" }
         ];
         break;
       case "process":
         elementsToAnimate = [
-          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
-          { selector: ".step", delay: 0.2, duration: 0.6, from: "top" }
+          { selector: ".section__head", delay: 0.1, duration: 0.8, from: "top" },
+          { selector: ".step", delay: 0.2, duration: 0.7, from: "top" }
         ];
         break;
       case "contact":
         elementsToAnimate = [
-          { selector: ".section__head", delay: 0.1, duration: 0.6, from: "top" },
-          { selector: ".panel", delay: 0.2, duration: 0.7, from: "bottom" },
-          { selector: ".quote", delay: 0.3, duration: 0.6, from: "right" }
+          { selector: ".section__head", delay: 0.1, duration: 0.8, from: "top" },
+          { selector: ".panel", delay: 0.2, duration: 0.9, from: "bottom" },
+          { selector: ".quote", delay: 0.3, duration: 0.7, from: "right" }
         ];
         break;
     }
@@ -55409,13 +55439,13 @@ var LandingPageComponent = class _LandingPageComponent {
       const els = document.querySelectorAll(selector3);
       if (els.length === 0)
         return;
-      let initialX = 0, initialY = 0;
+      let initialX = 0, initialY = 0, initialScale = 1, initialRotation = 0;
       switch (from2) {
         case "left":
-          initialX = -150;
+          initialX = -180;
           break;
         case "right":
-          initialX = 150;
+          initialX = 180;
           break;
         case "top":
           initialY = -100;
@@ -55428,6 +55458,8 @@ var LandingPageComponent = class _LandingPageComponent {
         opacity: 0,
         x: initialX,
         y: initialY,
+        scale: initialScale,
+        rotation: initialRotation,
         display: "none"
       });
       gsapWithCSS.set(els, { display: "block" });
@@ -55435,11 +55467,12 @@ var LandingPageComponent = class _LandingPageComponent {
         opacity: 1,
         x: 0,
         y: 0,
+        scale: 1,
+        rotation: 0,
         duration,
         delay,
-        stagger: 0.1,
-        ease: "power3.out",
-        onComplete: () => console.log(`\u2705 Animaci\xF3n completada para ${selector3} en ${sectionId}`)
+        stagger: 0.15,
+        ease: "power3.out"
       });
     });
   }
@@ -55562,15 +55595,16 @@ var LandingPageComponent = class _LandingPageComponent {
       "Don Francisco": "https://donfrancisco.uy",
       "Bentasca": "https://bentasca.com",
       "Karen Bentancor": "https://karenbentancor.com",
-      "Servimel": "http://76.13.166.48/"
+      "Servimel": "http://76.13.166.48/",
+      "NELA": "https://newnela.com"
     };
     return urls[clientName] || "#";
   }
   highlightClient(clientName) {
     const elements = document.querySelectorAll(`[data-client="${clientName}"]`);
     elements.forEach((el) => {
-      el.style.textShadow = "0 0 20px rgba(30, 91, 255, 0.8), 0 0 40px rgba(30, 91, 255, 0.4)";
-      el.style.color = "#1E5BFF";
+      el.style.textShadow = "";
+      el.style.color = "";
     });
   }
   unhighlightClient(clientName) {
@@ -55580,13 +55614,20 @@ var LandingPageComponent = class _LandingPageComponent {
       el.style.color = "";
     });
   }
-  scrollToContact() {
+  // ✅ SYNCHRONOUS scroll methods - NO MORE DELAYS
+  scrollToServices() {
+    this.scrollService.scrollToSection("services");
+  }
+  scrollToWork() {
+    this.scrollService.scrollToSection("work");
+  }
+  // ✅ SYNCHRONOUS contact method
+  async scrollToContact() {
+    this.scrollService.scrollToSection("contact");
     this.openWhatsApp();
   }
   openWhatsApp() {
-    const message = encodeURIComponent("\xA1Hola! Estoy interesado en sus servicios de desarrollo web. Me gustar\xEDa obtener m\xE1s informaci\xF3n.");
-    const phoneNumber = "5491123456789";
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    window.open(`https://wa.me/${this.WHATSAPP_NUMBER}?text=${this.WHATSAPP_MESSAGE}`, "_blank");
   }
   async submit() {
     if (this.contactForm.invalid) {
@@ -55605,7 +55646,7 @@ var LandingPageComponent = class _LandingPageComponent {
   }
   static {
     this.\u0275fac = function LandingPageComponent_Factory(__ngFactoryType__) {
-      return new (__ngFactoryType__ || _LandingPageComponent)(\u0275\u0275directiveInject(FormBuilder), \u0275\u0275directiveInject(DomSanitizer), \u0275\u0275directiveInject(ChangeDetectorRef));
+      return new (__ngFactoryType__ || _LandingPageComponent)(\u0275\u0275directiveInject(FormBuilder), \u0275\u0275directiveInject(DomSanitizer), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(ScrollService));
     };
   }
   static {
@@ -55623,279 +55664,283 @@ var LandingPageComponent = class _LandingPageComponent {
           return ctx.onMouse($event);
         }, false, \u0275\u0275resolveWindow);
       }
-    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 222, vars: 23, consts: [["modalPanel", ""], ["id", "home", 1, "hero"], ["aria-hidden", "true", 1, "hero__glow"], ["aria-hidden", "true", 1, "shape", "shape--a"], ["aria-hidden", "true", 1, "shape", "shape--b"], [1, "hero__inner"], [1, "hero__copy"], [1, "hero__kicker"], [1, "hero__title"], [1, "hero__titleAccent"], [1, "hero__subtitle"], [1, "hero__actions"], ["magnetic", "", "href", "#", 1, "btn", "btn--primary", 3, "click"], ["magnetic", "", "href", "#services", 1, "btn", "btn--ghost", 3, "click"], [1, "hero__stats"], [1, "stat"], [1, "stat__num"], [1, "stat__label"], ["tilt", "", 1, "hero__visual"], [1, "device"], [1, "device__top"], [1, "dot", "dot--r"], [1, "dot", "dot--y"], [1, "dot", "dot--g"], [1, "device__title"], [1, "device__body"], [1, "meter"], [1, "meter__bar"], [1, "timeline"], [1, "timeline__row"], [1, "chip"], [1, "track"], [1, "chip", "chip--lime"], [1, "chip", "chip--blue"], [1, "cards"], ["revealOnScroll", "", 1, "mini"], [1, "mini__tag"], [1, "mini__title"], [1, "mini__sub"], ["revealOnScroll", "", 1, "mini", 3, "revealDelay"], ["aria-hidden", "true", 1, "glowLine"], ["id", "services", "revealOnScroll", "", 1, "section", "services"], [1, "section__head"], [1, "eyebrow"], [1, "h2"], [1, "p"], [1, "grid", "grid--3"], ["class", "card", "tilt", "", "revealOnScroll", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "work", "revealOnScroll", "", 1, "section", "work"], [1, "work__grid"], ["class", "workCard", "revealOnScroll", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "clients", "revealOnScroll", "", 1, "section", "clients"], ["aria-hidden", "true", 1, "marquee"], [1, "marquee__track"], ["class", "logo", "target", "_blank", "rel", "noopener", 3, "href", 4, "ngFor", "ngForOf", "ngForTrackBy"], [1, "clientGrid"], ["class", "clientTile", "revealOnScroll", "", "tilt", "", 3, "revealDelay", "mouseenter", "mouseleave", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "process", "revealOnScroll", "", 1, "section", "process"], [1, "steps"], ["revealOnScroll", "", 1, "step"], [1, "step__num"], [1, "step__title"], [1, "step__desc"], ["revealOnScroll", "", 1, "step", 3, "revealDelay"], ["revealOnScroll", "", 1, "section", "testimonials"], ["class", "quote", "revealOnScroll", "", "tilt", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "contact", "revealOnScroll", "", 1, "section", "contact"], [1, "contact__grid"], ["tilt", "", 1, "contact__left"], [1, "panel"], [1, "panel__kicker"], [1, "panel__title"], [1, "panel__sub"], [1, "panel__pillRow"], [1, "pill"], ["aria-hidden", "true", 1, "panel__shine"], [1, "contact__form", 3, "ngSubmit", "formGroup"], [1, "field"], ["type", "text", "formControlName", "name", "placeholder", "Tu nombre"], ["class", "err", 4, "ngIf"], ["type", "email", "formControlName", "email", "placeholder", "tu@email.com"], ["formControlName", "service"], ["rows", "5", "formControlName", "message", "placeholder", "Contame que queres lograr..."], ["type", "submit", 1, "btn", "btn--primary", "btn--full", "btn--submitStable", 3, "disabled"], ["class", "contact__success", 4, "ngIf"], ["class", "modal", "aria-label", "Cerrar", 3, "click", 4, "ngIf"], ["tilt", "", "revealOnScroll", "", 1, "card", 3, "revealDelay"], [1, "card__icon"], [1, "card__title"], [1, "card__desc"], [1, "card__list"], [4, "ngFor", "ngForOf", "ngForTrackBy"], ["aria-hidden", "true", 1, "card__shine"], ["revealOnScroll", "", 1, "workCard", 3, "revealDelay"], [1, "workCard__top"], [1, "metric"], [1, "workCard__title"], [1, "workCard__desc"], [1, "workCard__actions"], [1, "btn", "btn--ghost", "btn--sm", 3, "click"], [1, "btn", "btn--primary", "btn--sm", "btn--no-hover", 3, "click"], ["aria-hidden", "true", 1, "workCard__bg"], ["target", "_blank", "rel", "noopener", 1, "logo", 3, "href"], ["revealOnScroll", "", "tilt", "", 1, "clientTile", 3, "mouseenter", "mouseleave", "revealDelay"], [1, "clientTile__ring"], [1, "clientTile__logo", 3, "src", "alt"], ["revealOnScroll", "", "tilt", "", 1, "quote", 3, "revealDelay"], [1, "quote__stars"], [1, "quote__text"], [1, "quote__by"], [1, "quote__name"], [1, "quote__role"], ["aria-hidden", "true", 1, "quote__shine"], [1, "err"], [1, "contact__success"], ["aria-label", "Cerrar", 1, "modal", 3, "click"], [1, "modal__panel", 3, "click"], [1, "modal__top"], [1, "modal__title"], ["aria-label", "Cerrar", 1, "x", 3, "click"], [1, "modal__body"], [1, "portfolio"], [1, "modal__meta"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--primary", 2, "margin-top", "20px", 3, "click"], [1, "preview-container"], ["loading", "lazy", 1, "preview__iframe", 3, "src"], [1, "preview__fallback"], [1, "preview__loading"], ["loading", "lazy", 1, "preview__iframe", 3, "error", "load", "src"], [1, "btn", "btn--primary", 3, "click"], [1, "preview__fallback-icon"], [1, "preview__fallback-title"], [1, "preview__fallback-desc"], [1, "preview__video"], ["loading", "lazy", "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", "allowfullscreen", "", 1, "preview__video-iframe", 3, "src"], [1, "preview__system-info"], [1, "preview__system-title"], [1, "preview__system-desc"], [1, "preview__system-actions"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--ghost", 3, "click"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--primary", 3, "click"], [1, "portfolio__hint"], [1, "portfolio__frame"], [1, "meta"], [1, "meta__k"], [1, "meta__v"]], template: function LandingPageComponent_Template(rf, ctx) {
+    }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 231, vars: 23, consts: [["modalPanel", ""], ["id", "home", 1, "hero"], ["aria-hidden", "true", 1, "hero__glow"], ["aria-hidden", "true", 1, "shape", "shape--a"], ["aria-hidden", "true", 1, "shape", "shape--b"], [1, "ambient-circles"], [1, "ambient-circle", "ambient-circle-1"], [1, "ambient-circle", "ambient-circle-2"], [1, "ambient-circle", "ambient-circle-3"], [1, "ambient-circle", "ambient-circle-4"], [1, "ambient-circle", "ambient-circle-5"], [1, "ambient-circle", "ambient-circle-6"], [1, "ambient-circle", "ambient-circle-7"], [1, "ambient-circle", "ambient-circle-8"], [1, "hero__inner"], [1, "hero__copy"], [1, "hero__kicker"], [1, "hero__title"], [1, "hero__titleAccent"], [1, "hero__subtitle"], [1, "hero__actions"], ["magnetic", "", "href", "#work", 1, "btn", "btn--primary", 3, "click"], ["magnetic", "", "href", "#services", 1, "btn", "btn--ghost", 3, "click"], [1, "hero__stats"], [1, "stat"], [1, "stat__num"], [1, "stat__label"], ["tilt", "", 1, "hero__visual"], [1, "device"], [1, "device__top"], [1, "dot", "dot--r"], [1, "dot", "dot--y"], [1, "dot", "dot--g"], [1, "device__title"], [1, "device__body"], [1, "meter"], [1, "meter__bar"], [1, "timeline"], [1, "timeline__row"], [1, "chip"], [1, "track"], [1, "cards"], ["revealOnScroll", "", 1, "mini"], [1, "mini__tag"], [1, "mini__title"], [1, "mini__sub"], ["revealOnScroll", "", 1, "mini", 3, "revealDelay"], ["aria-hidden", "true", 1, "glowLine"], ["id", "services", "revealOnScroll", "", 1, "section", "services"], [1, "section__head"], [1, "eyebrow"], [1, "h2"], [1, "p"], [1, "grid", "grid--3"], ["class", "card", "tilt", "", "revealOnScroll", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "work", "revealOnScroll", "", 1, "section", "work"], [1, "work__grid"], ["class", "workCard", "revealOnScroll", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "clients", "revealOnScroll", "", 1, "section", "clients"], ["aria-hidden", "true", 1, "marquee"], [1, "marquee__track"], ["class", "logo", "target", "_blank", "rel", "noopener", 3, "href", 4, "ngFor", "ngForOf", "ngForTrackBy"], [1, "clientGrid"], ["class", "clientTile", "revealOnScroll", "", "tilt", "", 3, "revealDelay", "mouseenter", "mouseleave", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "process", "revealOnScroll", "", 1, "section", "process"], [1, "steps"], ["revealOnScroll", "", 1, "step"], [1, "step__num"], [1, "step__title"], [1, "step__desc"], ["revealOnScroll", "", 1, "step", 3, "revealDelay"], ["revealOnScroll", "", 1, "section", "testimonials"], ["class", "quote", "revealOnScroll", "", "tilt", "", 3, "revealDelay", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["id", "contact", "revealOnScroll", "", 1, "section", "contact"], [1, "contact__grid"], ["tilt", "", 1, "contact__left"], [1, "panel"], [1, "panel__kicker"], [1, "panel__title"], [1, "panel__sub"], [1, "panel__pillRow"], [1, "pill"], ["aria-hidden", "true", 1, "panel__shine"], [1, "contact__form", 3, "ngSubmit", "formGroup"], [1, "field"], ["type", "text", "formControlName", "name", "placeholder", "Tu nombre"], ["class", "err", 4, "ngIf"], ["type", "email", "formControlName", "email", "placeholder", "tu@email.com"], ["formControlName", "service"], ["rows", "5", "formControlName", "message", "placeholder", "Contame que queres lograr..."], ["type", "submit", 1, "btn", "btn--primary", "btn--full", "btn--submitStable", 3, "disabled"], ["class", "contact__success", 4, "ngIf"], ["class", "modal", "aria-label", "Cerrar", 3, "click", 4, "ngIf"], ["tilt", "", "revealOnScroll", "", 1, "card", 3, "revealDelay"], [1, "card__icon"], [1, "card__title"], [1, "card__desc"], [1, "card__list"], [4, "ngFor", "ngForOf", "ngForTrackBy"], ["aria-hidden", "true", 1, "card__shine"], ["revealOnScroll", "", 1, "workCard", 3, "revealDelay"], [1, "workCard__top"], [1, "metric"], [1, "workCard__title"], [1, "workCard__desc"], [1, "workCard__actions"], [1, "btn", "btn--ghost", "btn--sm", 3, "click"], [1, "btn", "btn--primary", "btn--sm", "btn--no-hover", 3, "click"], ["aria-hidden", "true", 1, "workCard__bg"], ["target", "_blank", "rel", "noopener", 1, "logo", 3, "href"], ["revealOnScroll", "", "tilt", "", 1, "clientTile", 3, "mouseenter", "mouseleave", "revealDelay"], [1, "clientTile__ring"], [1, "clientTile__logo", 3, "src", "alt"], ["revealOnScroll", "", "tilt", "", 1, "quote", 3, "revealDelay"], [1, "quote__stars"], [1, "quote__text"], [1, "quote__by"], [1, "quote__name"], [1, "quote__role"], ["aria-hidden", "true", 1, "quote__shine"], [1, "err"], [1, "contact__success"], ["aria-label", "Cerrar", 1, "modal", 3, "click"], [1, "modal__panel", 3, "click"], [1, "modal__top"], [1, "modal__title"], ["aria-label", "Cerrar", 1, "x", 3, "click"], [1, "modal__body"], [1, "portfolio"], [1, "modal__meta"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--primary", 2, "margin-top", "20px", 3, "click"], [1, "preview-container"], ["loading", "lazy", 1, "preview__iframe", 3, "src"], [1, "preview__fallback"], [1, "preview__loading"], ["loading", "lazy", 1, "preview__iframe", 3, "error", "load", "src"], [1, "btn", "btn--primary", 3, "click"], [1, "preview__fallback-icon"], [1, "preview__fallback-title"], [1, "preview__fallback-desc"], [1, "preview__video"], ["loading", "lazy", "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", "allowfullscreen", "", 1, "preview__video-iframe", 3, "src"], [1, "preview__system-info"], [1, "preview__system-title"], [1, "preview__system-desc"], [1, "preview__system-actions"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--ghost", 3, "click"], ["magnetic", "", "href", "#contact", 1, "btn", "btn--primary", 3, "click"], [1, "portfolio__hint"], [1, "portfolio__frame"], [1, "meta"], [1, "meta__k"], [1, "meta__v"]], template: function LandingPageComponent_Template(rf, ctx) {
       if (rf & 1) {
         \u0275\u0275elementStart(0, "section", 1);
         \u0275\u0275element(1, "div", 2)(2, "div", 3)(3, "div", 4);
-        \u0275\u0275elementStart(4, "div", 5)(5, "div", 6)(6, "div", 7);
-        \u0275\u0275text(7, "JOME SOLUCIONES DIGITALES / DESARROLLO WEB");
+        \u0275\u0275elementStart(4, "div", 5);
+        \u0275\u0275element(5, "div", 6)(6, "div", 7)(7, "div", 8)(8, "div", 9)(9, "div", 10)(10, "div", 11)(11, "div", 12)(12, "div", 13);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(8, "h1", 8);
-        \u0275\u0275text(9, " Soluciones digitales profesionales ");
-        \u0275\u0275elementStart(10, "span", 9);
-        \u0275\u0275text(11, "a tu medida");
+        \u0275\u0275elementStart(13, "div", 14)(14, "div", 15)(15, "div", 16);
+        \u0275\u0275text(16, "JOME SOLUCIONES DIGITALES / DESARROLLO WEB");
+        \u0275\u0275elementEnd();
+        \u0275\u0275elementStart(17, "h1", 17);
+        \u0275\u0275text(18, " Soluciones digitales profesionales ");
+        \u0275\u0275elementStart(19, "span", 18);
+        \u0275\u0275text(20, "a tu medida");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(12, "p", 10);
-        \u0275\u0275text(13, " Desarrollo de p\xE1ginas web, sistemas y soluciones digitales. Si necesitas presencia online profesional, esto es para vos. ");
+        \u0275\u0275elementStart(21, "p", 19);
+        \u0275\u0275text(22, " Desarrollo de p\xE1ginas web, sistemas y soluciones digitales. Si necesitas presencia online profesional, esto es para vos. ");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(14, "div", 11)(15, "a", 12);
-        \u0275\u0275listener("click", function LandingPageComponent_Template_a_click_15_listener($event) {
-          ctx.openShowreel();
+        \u0275\u0275elementStart(23, "div", 20)(24, "a", 21);
+        \u0275\u0275listener("click", function LandingPageComponent_Template_a_click_24_listener($event) {
+          ctx.scrollToWork();
           return $event.preventDefault();
         });
-        \u0275\u0275text(16, " Ver portafolio ");
+        \u0275\u0275text(25, " Ver trabajos ");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(17, "a", 13);
-        \u0275\u0275listener("click", function LandingPageComponent_Template_a_click_17_listener($event) {
+        \u0275\u0275elementStart(26, "a", 22);
+        \u0275\u0275listener("click", function LandingPageComponent_Template_a_click_26_listener($event) {
+          ctx.scrollToServices();
           return $event.preventDefault();
         });
-        \u0275\u0275text(18, " Servicios ");
+        \u0275\u0275text(27, " Servicios ");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(19, "div", 14)(20, "div", 15)(21, "div", 16);
-        \u0275\u0275text(22, "6+");
+        \u0275\u0275elementStart(28, "div", 23)(29, "div", 24)(30, "div", 25);
+        \u0275\u0275text(31, "6+");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(23, "div", 17);
-        \u0275\u0275text(24, "Proyectos entregados");
+        \u0275\u0275elementStart(32, "div", 26);
+        \u0275\u0275text(33, "Proyectos entregados");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(25, "div", 15)(26, "div", 16);
-        \u0275\u0275text(27, "24-48h");
+        \u0275\u0275elementStart(34, "div", 24)(35, "div", 25);
+        \u0275\u0275text(36, "24-48h");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(28, "div", 17);
-        \u0275\u0275text(29, "Plazo de entrega");
+        \u0275\u0275elementStart(37, "div", 26);
+        \u0275\u0275text(38, "Plazo de entrega");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(30, "div", 15)(31, "div", 16);
-        \u0275\u0275text(32, "5/5");
+        \u0275\u0275elementStart(39, "div", 24)(40, "div", 25);
+        \u0275\u0275text(41, "5/5");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(33, "div", 17);
-        \u0275\u0275text(34, "Satisfacci\xF3n");
+        \u0275\u0275elementStart(42, "div", 26);
+        \u0275\u0275text(43, "Satisfacci\xF3n");
         \u0275\u0275elementEnd()()()();
-        \u0275\u0275elementStart(35, "div", 18)(36, "div", 19)(37, "div", 20);
-        \u0275\u0275element(38, "div", 21)(39, "div", 22)(40, "div", 23);
-        \u0275\u0275elementStart(41, "div", 24);
-        \u0275\u0275text(42, "JoMe Soluciones Digitales - Studio");
+        \u0275\u0275elementStart(44, "div", 27)(45, "div", 28)(46, "div", 29);
+        \u0275\u0275element(47, "div", 30)(48, "div", 31)(49, "div", 32);
+        \u0275\u0275elementStart(50, "div", 33);
+        \u0275\u0275text(51, "JoMe Soluciones Digitales - Studio");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(43, "div", 25)(44, "div", 26);
-        \u0275\u0275element(45, "div", 27);
+        \u0275\u0275elementStart(52, "div", 34)(53, "div", 35);
+        \u0275\u0275element(54, "div", 36);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(46, "div", 28)(47, "div", 29)(48, "span", 30);
-        \u0275\u0275text(49, "UX/UI");
+        \u0275\u0275elementStart(55, "div", 37)(56, "div", 38)(57, "span", 39);
+        \u0275\u0275text(58, "UX/UI");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(50, "span", 31);
-        \u0275\u0275elementStart(51, "span", 32);
-        \u0275\u0275text(52, "ANGULAR");
+        \u0275\u0275element(59, "span", 40);
+        \u0275\u0275elementStart(60, "span", 39);
+        \u0275\u0275text(61, "ANGULAR");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(53, "div", 29)(54, "span", 33);
-        \u0275\u0275text(55, "NODE");
+        \u0275\u0275elementStart(62, "div", 38)(63, "span", 39);
+        \u0275\u0275text(64, "NODE");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(56, "span", 31);
-        \u0275\u0275elementStart(57, "span", 30);
-        \u0275\u0275text(58, "SQL");
+        \u0275\u0275element(65, "span", 40);
+        \u0275\u0275elementStart(66, "span", 39);
+        \u0275\u0275text(67, "SQL");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(59, "div", 29)(60, "span", 30);
-        \u0275\u0275text(61, "API");
+        \u0275\u0275elementStart(68, "div", 38)(69, "span", 39);
+        \u0275\u0275text(70, "API");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(62, "span", 31);
-        \u0275\u0275elementStart(63, "span", 33);
-        \u0275\u0275text(64, "DEPLOY");
+        \u0275\u0275element(71, "span", 40);
+        \u0275\u0275elementStart(72, "span", 39);
+        \u0275\u0275text(73, "DEPLOY");
         \u0275\u0275elementEnd()()();
-        \u0275\u0275elementStart(65, "div", 34)(66, "div", 35)(67, "div", 36);
-        \u0275\u0275text(68, "WEB");
+        \u0275\u0275elementStart(74, "div", 41)(75, "div", 42)(76, "div", 43);
+        \u0275\u0275text(77, "WEB");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(69, "div", 37);
-        \u0275\u0275text(70, "Dise\xF1o responsive");
+        \u0275\u0275elementStart(78, "div", 44);
+        \u0275\u0275text(79, "Dise\xF1o responsive");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(71, "div", 38);
-        \u0275\u0275text(72, "Angular + animaciones");
+        \u0275\u0275elementStart(80, "div", 45);
+        \u0275\u0275text(81, "Angular + animaciones");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(73, "div", 39)(74, "div", 36);
-        \u0275\u0275text(75, "BACKEND");
+        \u0275\u0275elementStart(82, "div", 46)(83, "div", 43);
+        \u0275\u0275text(84, "BACKEND");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(76, "div", 37);
-        \u0275\u0275text(77, "Node.js + SQL");
+        \u0275\u0275elementStart(85, "div", 44);
+        \u0275\u0275text(86, "Node.js + SQL");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(78, "div", 38);
-        \u0275\u0275text(79, "API REST completa");
+        \u0275\u0275elementStart(87, "div", 45);
+        \u0275\u0275text(88, "API REST completa");
         \u0275\u0275elementEnd()()();
-        \u0275\u0275element(80, "div", 40);
+        \u0275\u0275element(89, "div", 47);
         \u0275\u0275elementEnd()()()()();
-        \u0275\u0275elementStart(81, "section", 41)(82, "header", 42)(83, "div", 43);
-        \u0275\u0275text(84, "SERVICIOS");
+        \u0275\u0275elementStart(90, "section", 48)(91, "header", 49)(92, "div", 50);
+        \u0275\u0275text(93, "SERVICIOS");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(85, "h2", 44);
-        \u0275\u0275text(86, "Desarrollo web profesional");
+        \u0275\u0275elementStart(94, "h2", 51);
+        \u0275\u0275text(95, "Desarrollo web profesional");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(87, "p", 45);
-        \u0275\u0275text(88, "Soluciones digitales a medida: p\xE1ginas web, sistemas y plataformas con tecnolog\xEDa moderna.");
+        \u0275\u0275elementStart(96, "p", 52);
+        \u0275\u0275text(97, "Soluciones digitales a medida: p\xE1ginas web, sistemas y plataformas con tecnolog\xEDa moderna.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(89, "div", 46);
-        \u0275\u0275template(90, LandingPageComponent_article_90_Template, 10, 6, "article", 47);
+        \u0275\u0275elementStart(98, "div", 53);
+        \u0275\u0275template(99, LandingPageComponent_article_99_Template, 10, 6, "article", 54);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(91, "section", 48)(92, "header", 42)(93, "div", 43);
-        \u0275\u0275text(94, "PORTFOLIO");
+        \u0275\u0275elementStart(100, "section", 55)(101, "header", 49)(102, "div", 50);
+        \u0275\u0275text(103, "PORTFOLIO");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(95, "h2", 44);
-        \u0275\u0275text(96, "Proyectos destacados");
+        \u0275\u0275elementStart(104, "h2", 51);
+        \u0275\u0275text(105, "Proyectos destacados");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(97, "p", 45);
-        \u0275\u0275text(98, "Desarrollo web real para clientes reales. Cada proyecto con sus propias necesidades y soluciones.");
+        \u0275\u0275elementStart(106, "p", 52);
+        \u0275\u0275text(107, "Desarrollo web real para clientes reales. Cada proyecto con sus propias necesidades y soluciones.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(99, "div", 49);
-        \u0275\u0275template(100, LandingPageComponent_article_100_Template, 16, 5, "article", 50);
+        \u0275\u0275elementStart(108, "div", 56);
+        \u0275\u0275template(109, LandingPageComponent_article_109_Template, 16, 5, "article", 57);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(101, "section", 51)(102, "header", 42)(103, "div", 43);
-        \u0275\u0275text(104, "CLIENTES");
+        \u0275\u0275elementStart(110, "section", 58)(111, "header", 49)(112, "div", 50);
+        \u0275\u0275text(113, "CLIENTES");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(105, "h2", 44);
-        \u0275\u0275text(106, "Clientes que conf\xEDan en nosotros");
+        \u0275\u0275elementStart(114, "h2", 51);
+        \u0275\u0275text(115, "Clientes que conf\xEDan en nosotros");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(107, "p", 45);
-        \u0275\u0275text(108, "Empresas que eligieron nuestras soluciones digitales para su presencia online.");
+        \u0275\u0275elementStart(116, "p", 52);
+        \u0275\u0275text(117, "Empresas que eligieron nuestras soluciones digitales para su presencia online.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(109, "div", 52)(110, "div", 53);
-        \u0275\u0275template(111, LandingPageComponent_a_111_Template, 2, 3, "a", 54)(112, LandingPageComponent_a_112_Template, 2, 3, "a", 54);
+        \u0275\u0275elementStart(118, "div", 59)(119, "div", 60);
+        \u0275\u0275template(120, LandingPageComponent_a_120_Template, 2, 3, "a", 61)(121, LandingPageComponent_a_121_Template, 2, 3, "a", 61);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(113, "div", 55);
-        \u0275\u0275template(114, LandingPageComponent_div_114_Template, 3, 3, "div", 56);
+        \u0275\u0275elementStart(122, "div", 62);
+        \u0275\u0275template(123, LandingPageComponent_div_123_Template, 3, 3, "div", 63);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(115, "section", 57)(116, "header", 42)(117, "div", 43);
-        \u0275\u0275text(118, "PROCESO");
+        \u0275\u0275elementStart(124, "section", 64)(125, "header", 49)(126, "div", 50);
+        \u0275\u0275text(127, "PROCESO");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(119, "h2", 44);
-        \u0275\u0275text(120, "Proceso de desarrollo");
+        \u0275\u0275elementStart(128, "h2", 51);
+        \u0275\u0275text(129, "Proceso de desarrollo");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(121, "p", 45);
-        \u0275\u0275text(122, "Metodolog\xEDa clara, entregas puntuales y comunicaci\xF3n constante durante todo el proyecto.");
+        \u0275\u0275elementStart(130, "p", 52);
+        \u0275\u0275text(131, "Metodolog\xEDa clara, entregas puntuales y comunicaci\xF3n constante durante todo el proyecto.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(123, "div", 58)(124, "div", 59)(125, "div", 60);
-        \u0275\u0275text(126, "01");
+        \u0275\u0275elementStart(132, "div", 65)(133, "div", 66)(134, "div", 67);
+        \u0275\u0275text(135, "01");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(127, "div", 61);
-        \u0275\u0275text(128, "Requerimientos + dise\xF1o");
+        \u0275\u0275elementStart(136, "div", 68);
+        \u0275\u0275text(137, "Requerimientos + dise\xF1o");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(129, "div", 62);
-        \u0275\u0275text(130, "Definimos funcionalidades, dise\xF1o UX/UI y arquitectura del sistema.");
+        \u0275\u0275elementStart(138, "div", 69);
+        \u0275\u0275text(139, "Definimos funcionalidades, dise\xF1o UX/UI y arquitectura del sistema.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(131, "div", 63)(132, "div", 60);
-        \u0275\u0275text(133, "02");
+        \u0275\u0275elementStart(140, "div", 70)(141, "div", 67);
+        \u0275\u0275text(142, "02");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(134, "div", 61);
-        \u0275\u0275text(135, "Desarrollo frontend");
+        \u0275\u0275elementStart(143, "div", 68);
+        \u0275\u0275text(144, "Desarrollo frontend");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(136, "div", 62);
-        \u0275\u0275text(137, "Construcci\xF3n de la interfaz con Angular, animaciones y responsive design.");
+        \u0275\u0275elementStart(145, "div", 69);
+        \u0275\u0275text(146, "Construcci\xF3n de la interfaz con Angular, animaciones y responsive design.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(138, "div", 63)(139, "div", 60);
-        \u0275\u0275text(140, "03");
+        \u0275\u0275elementStart(147, "div", 70)(148, "div", 67);
+        \u0275\u0275text(149, "03");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(141, "div", 61);
-        \u0275\u0275text(142, "Backend + base de datos");
+        \u0275\u0275elementStart(150, "div", 68);
+        \u0275\u0275text(151, "Backend + base de datos");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(143, "div", 62);
-        \u0275\u0275text(144, "Servidor Node.js, base de datos SQL y API REST para funcionalidad completa.");
+        \u0275\u0275elementStart(152, "div", 69);
+        \u0275\u0275text(153, "Servidor Node.js, base de datos SQL y API REST para funcionalidad completa.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(145, "div", 63)(146, "div", 60);
-        \u0275\u0275text(147, "04");
+        \u0275\u0275elementStart(154, "div", 70)(155, "div", 67);
+        \u0275\u0275text(156, "04");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(148, "div", 61);
-        \u0275\u0275text(149, "Testing + deploy");
+        \u0275\u0275elementStart(157, "div", 68);
+        \u0275\u0275text(158, "Testing + deploy");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(150, "div", 62);
-        \u0275\u0275text(151, "Pruebas, optimizaci\xF3n y puesta en producci\xF3n. Incluye primer a\xF1o de dominio.");
+        \u0275\u0275elementStart(159, "div", 69);
+        \u0275\u0275text(160, "Pruebas, optimizaci\xF3n y puesta en producci\xF3n. Incluye primer a\xF1o de dominio.");
         \u0275\u0275elementEnd()()()();
-        \u0275\u0275elementStart(152, "section", 64)(153, "header", 42)(154, "div", 43);
-        \u0275\u0275text(155, "TESTIMONIOS");
+        \u0275\u0275elementStart(161, "section", 71)(162, "header", 49)(163, "div", 50);
+        \u0275\u0275text(164, "TESTIMONIOS");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(156, "h2", 44);
-        \u0275\u0275text(157, "Resultados que funcionan");
+        \u0275\u0275elementStart(165, "h2", 51);
+        \u0275\u0275text(166, "Resultados que funcionan");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(158, "p", 45);
-        \u0275\u0275text(159, "C\xF3digo profesional, dise\xF1o moderno y soluciones que realmente resuelven problemas de negocio.");
+        \u0275\u0275elementStart(167, "p", 52);
+        \u0275\u0275text(168, "C\xF3digo profesional, dise\xF1o moderno y soluciones que realmente resuelven problemas de negocio.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(160, "div", 46);
-        \u0275\u0275template(161, LandingPageComponent_article_161_Template, 11, 4, "article", 65);
+        \u0275\u0275elementStart(169, "div", 53);
+        \u0275\u0275template(170, LandingPageComponent_article_170_Template, 11, 4, "article", 72);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(162, "section", 66)(163, "header", 42)(164, "div", 43);
-        \u0275\u0275text(165, "CONTACTO");
+        \u0275\u0275elementStart(171, "section", 73)(172, "header", 49)(173, "div", 50);
+        \u0275\u0275text(174, "CONTACTO");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(166, "h2", 44);
-        \u0275\u0275text(167, "\xBFListo para tu proyecto digital?");
+        \u0275\u0275elementStart(175, "h2", 51);
+        \u0275\u0275text(176, "\xBFListo para tu proyecto digital?");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(168, "p", 45);
-        \u0275\u0275text(169, "Contanos tu idea y te presentamos una propuesta con tiempos, tecnolog\xEDas y presupuesto.");
+        \u0275\u0275elementStart(177, "p", 52);
+        \u0275\u0275text(178, "Contanos tu idea y te presentamos una propuesta con tiempos, tecnolog\xEDas y presupuesto.");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(170, "div", 67)(171, "div", 68)(172, "div", 69)(173, "div", 70);
-        \u0275\u0275text(174, "Respuesta rapida");
+        \u0275\u0275elementStart(179, "div", 74)(180, "div", 75)(181, "div", 76)(182, "div", 77);
+        \u0275\u0275text(183, "Respuesta rapida");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(175, "div", 71);
-        \u0275\u0275text(176, "> 24h");
+        \u0275\u0275elementStart(184, "div", 78);
+        \u0275\u0275text(185, "> 24h");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(177, "div", 72);
-        \u0275\u0275text(178, "Web est\xE1tica, web completa, sistemas de gesti\xF3n y mantenimiento mensual.");
+        \u0275\u0275elementStart(186, "div", 79);
+        \u0275\u0275text(187, "Web est\xE1tica, web completa, sistemas de gesti\xF3n y mantenimiento mensual.");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(179, "div", 73)(180, "span", 74);
-        \u0275\u0275text(181, "Web est\xE1tica");
+        \u0275\u0275elementStart(188, "div", 80)(189, "span", 81);
+        \u0275\u0275text(190, "Web est\xE1tica");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(182, "span", 74);
-        \u0275\u0275text(183, "Web completa");
+        \u0275\u0275elementStart(191, "span", 81);
+        \u0275\u0275text(192, "Web completa");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(184, "span", 74);
-        \u0275\u0275text(185, "Sistemas");
+        \u0275\u0275elementStart(193, "span", 81);
+        \u0275\u0275text(194, "Sistemas");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(186, "span", 74);
-        \u0275\u0275text(187, "Mantenimiento");
+        \u0275\u0275elementStart(195, "span", 81);
+        \u0275\u0275text(196, "Mantenimiento");
         \u0275\u0275elementEnd()();
-        \u0275\u0275element(188, "div", 75);
+        \u0275\u0275element(197, "div", 82);
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(189, "form", 76);
-        \u0275\u0275listener("ngSubmit", function LandingPageComponent_Template_form_ngSubmit_189_listener() {
+        \u0275\u0275elementStart(198, "form", 83);
+        \u0275\u0275listener("ngSubmit", function LandingPageComponent_Template_form_ngSubmit_198_listener() {
           return ctx.submit();
         });
-        \u0275\u0275elementStart(190, "div", 77)(191, "label");
-        \u0275\u0275text(192, "Nombre");
+        \u0275\u0275elementStart(199, "div", 84)(200, "label");
+        \u0275\u0275text(201, "Nombre");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(193, "input", 78);
-        \u0275\u0275template(194, LandingPageComponent_div_194_Template, 2, 0, "div", 79);
+        \u0275\u0275element(202, "input", 85);
+        \u0275\u0275template(203, LandingPageComponent_div_203_Template, 2, 0, "div", 86);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(195, "div", 77)(196, "label");
-        \u0275\u0275text(197, "Email");
+        \u0275\u0275elementStart(204, "div", 84)(205, "label");
+        \u0275\u0275text(206, "Email");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(198, "input", 80);
-        \u0275\u0275template(199, LandingPageComponent_div_199_Template, 2, 0, "div", 79);
+        \u0275\u0275element(207, "input", 87);
+        \u0275\u0275template(208, LandingPageComponent_div_208_Template, 2, 0, "div", 86);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(200, "div", 77)(201, "label");
-        \u0275\u0275text(202, "Servicio");
+        \u0275\u0275elementStart(209, "div", 84)(210, "label");
+        \u0275\u0275text(211, "Servicio");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(203, "select", 81)(204, "option");
-        \u0275\u0275text(205, "Web est\xE1tica");
+        \u0275\u0275elementStart(212, "select", 88)(213, "option");
+        \u0275\u0275text(214, "Web est\xE1tica");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(206, "option");
-        \u0275\u0275text(207, "Web completa");
+        \u0275\u0275elementStart(215, "option");
+        \u0275\u0275text(216, "Web completa");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(208, "option");
-        \u0275\u0275text(209, "Sistema de gesti\xF3n");
+        \u0275\u0275elementStart(217, "option");
+        \u0275\u0275text(218, "Sistema de gesti\xF3n");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(210, "option");
-        \u0275\u0275text(211, "Mantenimiento mensual");
+        \u0275\u0275elementStart(219, "option");
+        \u0275\u0275text(220, "Mantenimiento mensual");
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(212, "option");
-        \u0275\u0275text(213, "Servicios adicionales");
+        \u0275\u0275elementStart(221, "option");
+        \u0275\u0275text(222, "Servicios adicionales");
         \u0275\u0275elementEnd()()();
-        \u0275\u0275elementStart(214, "div", 77)(215, "label");
-        \u0275\u0275text(216, "Mensaje");
+        \u0275\u0275elementStart(223, "div", 84)(224, "label");
+        \u0275\u0275text(225, "Mensaje");
         \u0275\u0275elementEnd();
-        \u0275\u0275element(217, "textarea", 82);
+        \u0275\u0275element(226, "textarea", 89);
         \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(218, "button", 83);
-        \u0275\u0275text(219);
+        \u0275\u0275elementStart(227, "button", 90);
+        \u0275\u0275text(228);
         \u0275\u0275elementEnd();
-        \u0275\u0275template(220, LandingPageComponent_div_220_Template, 2, 0, "div", 84);
+        \u0275\u0275template(229, LandingPageComponent_div_229_Template, 2, 0, "div", 91);
         \u0275\u0275elementEnd()()();
-        \u0275\u0275template(221, LandingPageComponent_div_221_Template, 16, 3, "div", 85);
+        \u0275\u0275template(230, LandingPageComponent_div_230_Template, 16, 3, "div", 92);
       }
       if (rf & 2) {
         let tmp_17_0;
         let tmp_18_0;
-        \u0275\u0275advance(73);
+        \u0275\u0275advance(82);
         \u0275\u0275property("revealDelay", 0.08);
         \u0275\u0275advance(17);
         \u0275\u0275property("ngForOf", ctx.services)("ngForTrackBy", ctx.trackByService);
@@ -55930,11 +55975,11 @@ var LandingPageComponent = class _LandingPageComponent {
         \u0275\u0275advance();
         \u0275\u0275property("ngIf", ctx.showreelOpen());
       }
-    }, dependencies: [CommonModule, NgForOf, NgIf, ReactiveFormsModule, \u0275NgNoValidate, NgSelectOption, \u0275NgSelectMultipleOption, DefaultValueAccessor, SelectControlValueAccessor, NgControlStatus, NgControlStatusGroup, FormGroupDirective, FormControlName, RevealOnScrollDirective, MagneticDirective, TiltDirective], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n  padding-top: 92px;\n}\n@media (max-width: 980px) {\n  .hero__kicker[_ngcontent-%COMP%], \n   .hero__title[_ngcontent-%COMP%], \n   .hero__titleAccent[_ngcontent-%COMP%], \n   .hero__subtitle[_ngcontent-%COMP%], \n   .hero__actions[_ngcontent-%COMP%], \n   .stat[_ngcontent-%COMP%], \n   .hero__visual[_ngcontent-%COMP%], \n   .mini[_ngcontent-%COMP%], \n   .section__head[_ngcontent-%COMP%], \n   .card[_ngcontent-%COMP%], \n   .workCard[_ngcontent-%COMP%], \n   .clientTile[_ngcontent-%COMP%], \n   .logo[_ngcontent-%COMP%], \n   .step[_ngcontent-%COMP%], \n   .panel[_ngcontent-%COMP%], \n   .quote[_ngcontent-%COMP%] {\n    opacity: 0;\n    display: none;\n  }\n}\n.eyebrow[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.16em;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.65);\n}\n.h2[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  font-size: 34px;\n  line-height: 1.08;\n}\n.p[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  color: rgba(255, 255, 255, 0.66);\n  max-width: 64ch;\n}\n.section[_ngcontent-%COMP%] {\n  width: min(1180px, 100% - 48px);\n  margin: 0 auto;\n  padding: 96px 0;\n}\n.section__head[_ngcontent-%COMP%] {\n  margin-bottom: 34px;\n}\n.grid[_ngcontent-%COMP%] {\n  display: grid;\n  gap: 16px;\n}\n.grid--3[_ngcontent-%COMP%] {\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n}\n@media (max-width: 960px) {\n  .grid--3[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 10px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  font-weight: 800;\n  letter-spacing: 0.01em;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.06);\n  color: rgba(255, 255, 255, 0.92);\n  cursor: pointer;\n  transition:\n    transform 0.15s ease,\n    box-shadow 0.15s ease,\n    background 0.15s ease;\n  position: relative;\n  overflow: hidden;\n  z-index: 10;\n}\n.btn[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      135deg,\n      rgba(182, 203, 51, 0.15),\n      transparent);\n  opacity: 0;\n  transition: opacity 0.2s ease;\n  pointer-events: none;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);\n}\n.btn[_ngcontent-%COMP%]:hover::before {\n  opacity: 1;\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(182, 203, 51, 0.92),\n      rgba(0, 74, 173, 0.88));\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 12px 60px rgba(0, 74, 173, 0.22);\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: rgba(255, 255, 255, 0.06);\n}\n.btn--sm[_ngcontent-%COMP%] {\n  padding: 10px 12px;\n  border-radius: 10px;\n  font-size: 13px;\n}\n.btn--full[_ngcontent-%COMP%] {\n  width: 100%;\n}\n@media (max-width: 768px) {\n  .hero__glow[_ngcontent-%COMP%] {\n    opacity: 0.2;\n    background:\n      radial-gradient(\n        ellipse at center,\n        rgba(0, 74, 173, 0.05),\n        transparent 60%);\n    animation: _ngcontent-%COMP%_mobileGlow 4s ease-in-out infinite;\n  }\n  .shape[_ngcontent-%COMP%] {\n    opacity: 0.08;\n    filter: none;\n  }\n  .shape--a[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    animation: _ngcontent-%COMP%_mobileFloatA 5s ease-in-out infinite;\n  }\n  .shape--b[_ngcontent-%COMP%] {\n    width: 100px;\n    height: 100px;\n    animation: _ngcontent-%COMP%_mobileFloatB 6s ease-in-out infinite;\n  }\n  .card[_ngcontent-%COMP%], \n   .workCard[_ngcontent-%COMP%], \n   .clientTile[_ngcontent-%COMP%], \n   .step[_ngcontent-%COMP%], \n   .quote[_ngcontent-%COMP%], \n   .panel[_ngcontent-%COMP%] {\n    opacity: 1;\n  }\n  .modal__panel[_ngcontent-%COMP%] {\n    backdrop-filter: none;\n    background: rgba(15, 23, 42, 0.98);\n  }\n  .device[_ngcontent-%COMP%] {\n    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  }\n  .btn[_ngcontent-%COMP%]:hover {\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\n    transform: none;\n  }\n  .btn--primary[_ngcontent-%COMP%] {\n    box-shadow: 0 2px 12px rgba(0, 74, 173, 0.1);\n  }\n  .card[_ngcontent-%COMP%]:hover, \n   .workCard[_ngcontent-%COMP%]:hover, \n   .clientTile[_ngcontent-%COMP%]:hover, \n   .quote[_ngcontent-%COMP%]:hover, \n   .panel[_ngcontent-%COMP%]:hover {\n    transform: none;\n    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);\n  }\n  .meter__bar[_ngcontent-%COMP%] {\n    animation: _ngcontent-%COMP%_meter 4s ease-in-out infinite;\n  }\n  .track[_ngcontent-%COMP%]::after {\n    animation: _ngcontent-%COMP%_sweep 3s ease-in-out infinite;\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileGlow {\n  0%, 100% {\n    opacity: 0.2;\n  }\n  50% {\n    opacity: 0.4;\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileFloatA {\n  0%, 100% {\n    transform: translateY(0px);\n  }\n  50% {\n    transform: translateY(-6px);\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileFloatB {\n  0%, 100% {\n    transform: translateY(0px);\n  }\n  50% {\n    transform: translateY(8px);\n  }\n}\n.hero[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1200px, 100% - 48px);\n  margin: 0 auto;\n  padding: 88px 0 44px;\n}\n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n}\n.hero.js-loaded[_ngcontent-%COMP%]   .hero__kicker[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__title[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__subtitle[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1;\n  transform: none;\n}\n.hero__glow[_ngcontent-%COMP%] {\n  position: absolute;\n  top: -25%;\n  left: -15%;\n  width: 130%;\n  height: 150%;\n  background:\n    radial-gradient(\n      ellipse at center,\n      rgba(0, 74, 173, 0.15),\n      transparent 60%);\n  opacity: 0.7;\n  pointer-events: none;\n}\n.shape[_ngcontent-%COMP%] {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(1px);\n  opacity: 0.3;\n  pointer-events: none;\n}\n.shape--a[_ngcontent-%COMP%] {\n  width: 220px;\n  height: 220px;\n  left: -40px;\n  top: 60px;\n  background:\n    radial-gradient(\n      circle at 30% 30%,\n      rgba(182, 203, 51, 0.55),\n      transparent 65%);\n}\n.shape--b[_ngcontent-%COMP%] {\n  width: 280px;\n  height: 280px;\n  right: -70px;\n  top: 100px;\n  background:\n    radial-gradient(\n      circle at 30% 30%,\n      rgba(0, 74, 173, 0.5),\n      transparent 65%);\n}\n.hero__inner[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n  display: grid;\n  grid-template-columns: 1.05fr 0.95fr;\n  gap: 24px;\n  align-items: center;\n}\n@media (max-width: 980px) {\n  .hero__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.hero__kicker[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-size: 12px;\n  letter-spacing: 0.18em;\n  color: rgba(255, 255, 255, 0.66);\n}\n.hero__title[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  font-size: 54px;\n  line-height: 1.02;\n  letter-spacing: -0.03em;\n}\n.hero__titleAccent[_ngcontent-%COMP%] {\n  display: inline-block;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0.95),\n      rgba(0, 74, 173, 0.95));\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n  text-shadow: 0 0 22px rgba(0, 74, 173, 0.18);\n}\n.hero__subtitle[_ngcontent-%COMP%] {\n  margin: 14px 0 0;\n  color: rgba(255, 255, 255, 0.7);\n  font-size: 16px;\n  max-width: 58ch;\n}\n.hero__actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  margin-top: 18px;\n  flex-wrap: wrap;\n}\n.hero__stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 12px;\n  margin-top: 22px;\n}\n.stat[_ngcontent-%COMP%] {\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  border-radius: 14px;\n  padding: 14px 14px;\n  position: relative;\n  overflow: hidden;\n}\n.stat[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      420px 220px at 30% 30%,\n      rgba(182, 203, 51, 0.14),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.stat[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.stat__num[_ngcontent-%COMP%] {\n  font-size: 22px;\n  font-weight: 900;\n}\n.stat__label[_ngcontent-%COMP%] {\n  margin-top: 4px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.hero__visual[_ngcontent-%COMP%] {\n  transform-style: preserve-3d;\n}\n.device[_ngcontent-%COMP%] {\n  border-radius: 20px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.06);\n  box-shadow: 0 32px 120px rgba(0, 0, 0, 0.45);\n  overflow: hidden;\n}\n.device__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 12px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.07),\n      rgba(255, 255, 255, 0.04));\n}\n.device__title[_ngcontent-%COMP%] {\n  margin-left: 10px;\n  font-weight: 800;\n  color: rgba(255, 255, 255, 0.78);\n  font-size: 13px;\n}\n.dot[_ngcontent-%COMP%] {\n  width: 10px;\n  height: 10px;\n  border-radius: 999px;\n}\n.dot--r[_ngcontent-%COMP%] {\n  background: rgba(255, 90, 90, 0.9);\n}\n.dot--y[_ngcontent-%COMP%] {\n  background: rgba(255, 208, 90, 0.9);\n}\n.dot--g[_ngcontent-%COMP%] {\n  background: rgba(120, 255, 170, 0.9);\n}\n.device__body[_ngcontent-%COMP%] {\n  padding: 16px;\n  position: relative;\n}\n.meter[_ngcontent-%COMP%] {\n  height: 10px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  overflow: hidden;\n}\n.meter__bar[_ngcontent-%COMP%] {\n  height: 100%;\n  width: 68%;\n  border-radius: 999px;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0.95),\n      rgba(0, 74, 173, 0.95));\n  box-shadow: 0 0 22px rgba(0, 74, 173, 0.22);\n  animation: _ngcontent-%COMP%_meter 2.2s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_meter {\n  0% {\n    transform: translateX(-8%);\n  }\n  50% {\n    transform: translateX(8%);\n  }\n  100% {\n    transform: translateX(-8%);\n  }\n}\n.timeline[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: grid;\n  gap: 10px;\n}\n.timeline__row[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: auto 1fr auto;\n  align-items: center;\n  gap: 10px;\n}\n.chip[_ngcontent-%COMP%] {\n  padding: 7px 10px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  font-weight: 900;\n  font-size: 12px;\n}\n.chip--lime[_ngcontent-%COMP%] {\n  border-color: rgba(182, 203, 51, 0.36);\n  box-shadow: 0 0 0 1px rgba(182, 203, 51, 0.1) inset;\n}\n.chip--blue[_ngcontent-%COMP%] {\n  border-color: rgba(0, 74, 173, 0.36);\n  box-shadow: 0 0 0 1px rgba(0, 74, 173, 0.1) inset;\n}\n.track[_ngcontent-%COMP%] {\n  height: 10px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  position: relative;\n  overflow: hidden;\n}\n.track[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      90deg,\n      transparent,\n      rgba(182, 203, 51, 0.25),\n      transparent);\n  transform: translateX(-60%);\n  animation: _ngcontent-%COMP%_sweep 1.8s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_sweep {\n  0% {\n    transform: translateX(-60%);\n  }\n  50% {\n    transform: translateX(60%);\n  }\n  100% {\n    transform: translateX(-60%);\n  }\n}\n.cards[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 10px;\n}\n.mini[_ngcontent-%COMP%] {\n  border-radius: 16px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 12px;\n  position: relative;\n  overflow: hidden;\n}\n.mini__tag[_ngcontent-%COMP%] {\n  font-weight: 900;\n  font-size: 12px;\n  letter-spacing: 0.08em;\n  opacity: 0.75;\n}\n.mini__title[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  font-weight: 900;\n}\n.mini__sub[_ngcontent-%COMP%] {\n  margin-top: 2px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.66);\n}\n.glowLine[_ngcontent-%COMP%] {\n  margin-top: 16px;\n  height: 2px;\n  border-radius: 999px;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(182, 203, 51, 0),\n      rgba(182, 203, 51, 0.85),\n      rgba(0, 74, 173, 0.85),\n      rgba(0, 74, 173, 0));\n  filter: blur(0.2px);\n  opacity: 0.75;\n}\n.card[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  transform-style: preserve-3d;\n  transition: all 0.3s ease;\n}\n.card[_ngcontent-%COMP%]:hover {\n  box-shadow: 0 26px 120px rgba(0, 0, 0, 0.4);\n  transform: translateY(-2px);\n}\n.card__icon[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.14em;\n  font-size: 12px;\n  opacity: 0.72;\n}\n.card__title[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  font-weight: 900;\n  font-size: 18px;\n}\n.card__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(255, 255, 255, 0.66);\n  line-height: 1.4;\n}\n.card__list[_ngcontent-%COMP%] {\n  margin: 12px 0 0;\n  padding-left: 18px;\n  color: rgba(255, 255, 255, 0.7);\n}\n.card__list[_ngcontent-%COMP%]   li[_ngcontent-%COMP%] {\n  margin: 6px 0;\n}\n.card__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(182, 203, 51, 0.18),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.card[_ngcontent-%COMP%]:hover   .card__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.work__grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n@media (max-width: 960px) {\n  .work__grid[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.workCard[_ngcontent-%COMP%] {\n  position: relative;\n  overflow: hidden;\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n  z-index: 2;\n  transition: all 0.3s ease;\n}\n.workCard[_ngcontent-%COMP%]:hover {\n  transform: translateY(-3px);\n  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);\n}\n.workCard__bg[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      135deg,\n      rgba(0, 74, 173, 0.1),\n      rgba(182, 203, 51, 0.08));\n  opacity: 0;\n  transition: opacity 0.25s ease;\n  pointer-events: none;\n  z-index: 1;\n}\n.workCard[_ngcontent-%COMP%]:hover   .workCard__bg[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.workCard__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.pill[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 10px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  font-weight: 900;\n  font-size: 12px;\n  letter-spacing: 0.08em;\n}\n.metric[_ngcontent-%COMP%] {\n  font-weight: 900;\n  color: rgba(182, 203, 51, 0.92);\n}\n.workCard__title[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  font-weight: 900;\n  font-size: 20px;\n}\n.workCard__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(255, 255, 255, 0.66);\n}\n.workCard__actions[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: flex;\n  gap: 10px;\n  position: relative;\n  z-index: 3;\n}\n.marquee[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 14px 0;\n  overflow: hidden;\n}\n.marquee__track[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 18px;\n  padding-left: 18px;\n  width: max-content;\n  animation: _ngcontent-%COMP%_marquee 16s linear infinite;\n}\n.logo[_ngcontent-%COMP%] {\n  padding: 10px 14px;\n  border-radius: 999px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  font-weight: 900;\n  white-space: nowrap;\n}\n@keyframes _ngcontent-%COMP%_marquee {\n  0% {\n    transform: translateX(0);\n  }\n  100% {\n    transform: translateX(-50%);\n  }\n}\n.clientGrid[_ngcontent-%COMP%] {\n  margin-top: 16px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 12px;\n}\n@media (max-width: 960px) {\n  .clientGrid[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}\n.clientTile[_ngcontent-%COMP%] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 80px;\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 12px;\n  overflow: hidden;\n}\n.clientTile__ring[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      420px 240px at 30% 30%,\n      rgba(0, 74, 173, 0.22),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.clientTile[_ngcontent-%COMP%]:hover   .clientTile__ring[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.clientTile__logo[_ngcontent-%COMP%] {\n  width: 70px;\n  height: 70px;\n  object-fit: contain;\n  filter: brightness(0) invert(1);\n  transition: filter 0.3s ease;\n  margin: 0 auto;\n  display: block;\n}\n.clientTile__logo[src*=servimel][_ngcontent-%COMP%] {\n  width: 110px;\n  height: 110px;\n}\n.clientTile[_ngcontent-%COMP%]:hover   .clientTile__logo[_ngcontent-%COMP%] {\n  filter: brightness(0) invert(0.8);\n}\n.steps[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 12px;\n}\n@media (max-width: 960px) {\n  .steps[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.step[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n}\n.step__num[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.12em;\n  color: rgba(182, 203, 51, 0.92);\n}\n.step__title[_ngcontent-%COMP%] {\n  margin-top: 8px;\n  font-weight: 900;\n}\n.step__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(255, 255, 255, 0.66);\n}\n.quote[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  transition: all 0.3s ease;\n}\n.quote[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);\n}\n.quote__stars[_ngcontent-%COMP%] {\n  letter-spacing: 0.2em;\n  opacity: 0.8;\n}\n.quote__text[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  color: rgba(255, 255, 255, 0.78);\n  line-height: 1.5;\n}\n.quote__by[_ngcontent-%COMP%] {\n  margin-top: 14px;\n}\n.quote__name[_ngcontent-%COMP%] {\n  font-weight: 900;\n}\n.quote__role[_ngcontent-%COMP%] {\n  margin-top: 2px;\n  color: rgba(255, 255, 255, 0.62);\n  font-size: 12px;\n}\n.quote__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(0, 74, 173, 0.16),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.quote[_ngcontent-%COMP%]:hover   .quote__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.contact__grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: 0.9fr 1.1fr;\n  gap: 16px;\n}\n@media (max-width: 960px) {\n  .contact__grid[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.panel[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  min-height: 220px;\n  transition: all 0.3s ease;\n}\n.panel[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);\n}\n.panel__kicker[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.14em;\n  opacity: 0.72;\n  font-size: 12px;\n}\n.panel__title[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  font-size: 34px;\n  font-weight: 900;\n}\n.panel__sub[_ngcontent-%COMP%] {\n  margin-top: 8px;\n  color: rgba(255, 255, 255, 0.66);\n}\n.panel__pillRow[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.panel__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(182, 203, 51, 0.16),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.panel[_ngcontent-%COMP%]:hover   .panel__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.contact__form[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 18px;\n}\n.field[_ngcontent-%COMP%] {\n  display: grid;\n  gap: 6px;\n  margin-bottom: 12px;\n}\n.field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] {\n  font-weight: 900;\n  font-size: 12px;\n  opacity: 0.8;\n}\n.field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%], \n.field[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%], \n.field[_ngcontent-%COMP%]   select[_ngcontent-%COMP%] {\n  border-radius: 12px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(0, 0, 0, 0.18);\n  color: rgba(255, 255, 255, 0.92);\n  padding: 12px 12px;\n  outline: none;\n}\n.field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:focus, \n.field[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%]:focus, \n.field[_ngcontent-%COMP%]   select[_ngcontent-%COMP%]:focus {\n  border-color: rgba(182, 203, 51, 0.36);\n  box-shadow: 0 0 0 3px rgba(182, 203, 51, 0.1);\n}\n.err[_ngcontent-%COMP%] {\n  font-size: 12px;\n  color: rgba(255, 120, 120, 0.92);\n}\n.contact__success[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  padding: 12px;\n  border-radius: 12px;\n  border: 1px solid rgba(182, 203, 51, 0.3);\n  background: rgba(182, 203, 51, 0.1);\n  color: rgba(255, 255, 255, 0.88);\n  font-weight: 800;\n}\n.modal[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: grid;\n  place-items: center;\n  background: rgba(0, 0, 0, 0.62);\n  padding: 24px;\n}\n.modal__panel[_ngcontent-%COMP%] {\n  width: min(90vw, 940px);\n  max-height: 90vh;\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.14);\n  background: rgba(15, 23, 42, 0.95);\n  backdrop-filter: blur(20px);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n}\n.modal__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 14px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n.modal__title[_ngcontent-%COMP%] {\n  font-weight: 900;\n}\n.x[_ngcontent-%COMP%] {\n  width: 38px;\n  height: 38px;\n  border-radius: 12px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.06);\n  color: rgba(255, 255, 255, 0.88);\n  cursor: pointer;\n}\n.modal__body[_ngcontent-%COMP%] {\n  padding: 16px;\n  overflow-y: auto;\n  flex: 1;\n  max-height: calc(90vh - 80px);\n}\n.video[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 16px;\n}\n.video__hint[_ngcontent-%COMP%] {\n  color: rgba(255, 255, 255, 0.66);\n  font-size: 12px;\n}\n.video__frame[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  border-radius: 14px;\n  height: 340px;\n  background:\n    radial-gradient(\n      520px 320px at 30% 30%,\n      rgba(182, 203, 51, 0.18),\n      transparent 62%),\n    radial-gradient(\n      520px 320px at 80% 30%,\n      rgba(0, 74, 173, 0.18),\n      transparent 62%),\n    linear-gradient(\n      180deg,\n      rgba(0, 0, 0, 0.35),\n      rgba(0, 0, 0, 0.15));\n  position: relative;\n  overflow: hidden;\n}\n.video__frame[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      90deg,\n      transparent,\n      rgba(255, 255, 255, 0.12),\n      transparent);\n  transform: translateX(-60%);\n  animation: _ngcontent-%COMP%_sweep 2.6s ease-in-out infinite;\n  opacity: 0.65;\n}\n.modal__meta[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 10px;\n}\n@media (max-width: 780px) {\n  .modal__meta[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.meta[_ngcontent-%COMP%] {\n  border-radius: 14px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  padding: 12px;\n}\n.meta__k[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.12em;\n  opacity: 0.72;\n  font-size: 12px;\n}\n.meta__v[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  font-weight: 900;\n}\n@media (max-width: 540px) {\n  .hero__title[_ngcontent-%COMP%] {\n    font-size: 40px;\n  }\n  .hero[_ngcontent-%COMP%] {\n    padding: 70px 0 24px;\n  }\n}\n.preview-container[_ngcontent-%COMP%] {\n  position: relative;\n  border-radius: 18px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n  background: rgba(255, 255, 255, 0.05);\n  overflow: hidden;\n  min-height: 400px;\n}\n.preview__loading[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: rgba(255, 255, 255, 0.8);\n  font-size: 14px;\n  z-index: 2;\n  pointer-events: none;\n}\n.preview__iframe[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 500px;\n  border: none;\n  background: white;\n  display: block;\n}\n.preview__fallback[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 48px 24px;\n  text-align: center;\n  min-height: 300px;\n}\n.preview__fallback-icon[_ngcontent-%COMP%] {\n  font-size: 48px;\n  margin-bottom: 16px;\n  opacity: 0.8;\n}\n.preview__fallback-title[_ngcontent-%COMP%] {\n  font-size: 18px;\n  font-weight: 700;\n  margin-bottom: 8px;\n  color: rgba(255, 255, 255, 0.9);\n}\n.preview__fallback-desc[_ngcontent-%COMP%] {\n  font-size: 14px;\n  color: rgba(255, 255, 255, 0.66);\n  margin-bottom: 24px;\n  max-width: 320px;\n}\n.preview__video[_ngcontent-%COMP%] {\n  position: relative;\n  border-radius: 14px;\n  overflow: hidden;\n  background: #000;\n}\n.preview__video-iframe[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 400px;\n  border: none;\n  display: block;\n}\n.preview__system-info[_ngcontent-%COMP%] {\n  margin-top: 24px;\n  padding: 20px;\n  background: rgba(255, 255, 255, 0.05);\n  border-radius: 14px;\n  border: 1px solid rgba(255, 255, 255, 0.12);\n}\n.preview__system-title[_ngcontent-%COMP%] {\n  font-size: 20px;\n  font-weight: 700;\n  margin-bottom: 8px;\n  color: rgba(255, 255, 255, 0.9);\n}\n.preview__system-desc[_ngcontent-%COMP%] {\n  font-size: 14px;\n  color: rgba(255, 255, 255, 0.66);\n  margin-bottom: 20px;\n  line-height: 1.5;\n}\n.preview__system-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  flex-wrap: wrap;\n}\n/*# sourceMappingURL=landing.page.css.map */'], changeDetection: 0 });
+    }, dependencies: [CommonModule, NgForOf, NgIf, ReactiveFormsModule, \u0275NgNoValidate, NgSelectOption, \u0275NgSelectMultipleOption, DefaultValueAccessor, SelectControlValueAccessor, NgControlStatus, NgControlStatusGroup, FormGroupDirective, FormControlName, RevealOnScrollDirective, MagneticDirective, TiltDirective], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  display: block;\n  position: relative;\n  z-index: 1;\n  padding-top: 92px;\n}\n@media (max-width: 980px) {\n  .hero__kicker[_ngcontent-%COMP%], \n   .hero__title[_ngcontent-%COMP%], \n   .hero__titleAccent[_ngcontent-%COMP%], \n   .hero__subtitle[_ngcontent-%COMP%], \n   .hero__actions[_ngcontent-%COMP%], \n   .stat[_ngcontent-%COMP%], \n   .hero__visual[_ngcontent-%COMP%], \n   .mini[_ngcontent-%COMP%], \n   .section__head[_ngcontent-%COMP%], \n   .card[_ngcontent-%COMP%], \n   .workCard[_ngcontent-%COMP%], \n   .clientTile[_ngcontent-%COMP%], \n   .logo[_ngcontent-%COMP%], \n   .step[_ngcontent-%COMP%], \n   .panel[_ngcontent-%COMP%], \n   .quote[_ngcontent-%COMP%] {\n    opacity: 0;\n    display: none;\n  }\n}\n.kicker[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.16em;\n  font-size: 12px;\n  color: rgba(107, 114, 128, 0.65);\n}\n.h2[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  font-size: 34px;\n  line-height: 1.08;\n}\n.p[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  color: rgba(107, 114, 128, 0.66);\n  max-width: 64ch;\n}\n.section[_ngcontent-%COMP%] {\n  width: min(1180px, 100% - 48px);\n  margin: 0 auto;\n  padding: 96px 0;\n}\n.section__head[_ngcontent-%COMP%] {\n  margin-bottom: 34px;\n}\n.grid[_ngcontent-%COMP%] {\n  display: grid;\n  gap: 16px;\n}\n.grid--3[_ngcontent-%COMP%] {\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n}\n@media (max-width: 960px) {\n  .grid--3[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 10px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  font-weight: 800;\n  letter-spacing: 0.01em;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.06);\n  color: rgba(26, 26, 26, 0.92);\n  cursor: pointer;\n  transition:\n    transform 0.15s ease,\n    box-shadow 0.15s ease,\n    background 0.15s ease;\n  position: relative;\n  overflow: hidden;\n  z-index: 10;\n}\n.btn[_ngcontent-%COMP%]::before {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      135deg,\n      rgba(156, 163, 175, 0.15),\n      transparent);\n  opacity: 0;\n  transition: opacity 0.2s ease;\n  pointer-events: none;\n}\n.btn[_ngcontent-%COMP%]:hover {\n  transform: translateY(-1px);\n  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);\n}\n.btn[_ngcontent-%COMP%]:hover::before {\n  opacity: 1;\n}\n.btn--primary[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      135deg,\n      rgba(156, 163, 175, 0.92),\n      rgba(107, 114, 128, 0.88));\n  border-color: rgba(248, 250, 252, 0.18);\n  box-shadow: 0 12px 60px rgba(107, 114, 128, 0.22);\n}\n.btn--ghost[_ngcontent-%COMP%] {\n  background: rgba(248, 250, 252, 0.06);\n}\n.btn--sm[_ngcontent-%COMP%] {\n  padding: 10px 12px;\n  border-radius: 10px;\n  font-size: 13px;\n}\n.btn--full[_ngcontent-%COMP%] {\n  width: 100%;\n}\n@media (max-width: 768px) {\n  .hero__glow[_ngcontent-%COMP%] {\n    opacity: 0.2;\n    background:\n      radial-gradient(\n        ellipse at center,\n        rgba(107, 114, 128, 0.05),\n        transparent 60%);\n    animation: _ngcontent-%COMP%_mobileGlow 4s ease-in-out infinite;\n  }\n  .shape[_ngcontent-%COMP%] {\n    opacity: 0.08;\n    filter: none;\n  }\n  .shape--a[_ngcontent-%COMP%] {\n    width: 80px;\n    height: 80px;\n    animation: _ngcontent-%COMP%_mobileFloatA 5s ease-in-out infinite;\n  }\n  .shape--b[_ngcontent-%COMP%] {\n    width: 100px;\n    height: 100px;\n    animation: _ngcontent-%COMP%_mobileFloatB 6s ease-in-out infinite;\n  }\n  .card[_ngcontent-%COMP%], \n   .workCard[_ngcontent-%COMP%], \n   .clientTile[_ngcontent-%COMP%], \n   .step[_ngcontent-%COMP%], \n   .quote[_ngcontent-%COMP%], \n   .panel[_ngcontent-%COMP%] {\n    opacity: 1;\n  }\n  .modal__panel[_ngcontent-%COMP%] {\n    backdrop-filter: none;\n    background: rgba(107, 114, 128, 0.12);\n  }\n  .device[_ngcontent-%COMP%] {\n    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  }\n  .btn[_ngcontent-%COMP%]:hover {\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\n    transform: none;\n  }\n  .btn--primary[_ngcontent-%COMP%] {\n    box-shadow: 0 2px 12px rgba(107, 114, 128, 0.1);\n  }\n  .card[_ngcontent-%COMP%]:hover, \n   .workCard[_ngcontent-%COMP%]:hover, \n   .clientTile[_ngcontent-%COMP%]:hover, \n   .quote[_ngcontent-%COMP%]:hover, \n   .panel[_ngcontent-%COMP%]:hover {\n    transform: none;\n    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);\n  }\n  .meter__bar[_ngcontent-%COMP%] {\n    animation: _ngcontent-%COMP%_meter 4s ease-in-out infinite;\n  }\n  .track[_ngcontent-%COMP%]::after {\n    animation: _ngcontent-%COMP%_sweep 3s ease-in-out infinite;\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileGlow {\n  0%, 100% {\n    opacity: 0.2;\n  }\n  50% {\n    opacity: 0.4;\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileFloatA {\n  0%, 100% {\n    transform: translateY(0px);\n  }\n  50% {\n    transform: translateY(-6px);\n  }\n}\n@keyframes _ngcontent-%COMP%_mobileFloatB {\n  0%, 100% {\n    transform: translateY(0px);\n  }\n  50% {\n    transform: translateY(8px);\n  }\n}\n.hero[_ngcontent-%COMP%] {\n  position: relative;\n  width: min(1200px, 100% - 48px);\n  margin: 0 auto;\n  padding: 88px 0 44px;\n}\n.hero__kicker[_ngcontent-%COMP%], \n.hero__title[_ngcontent-%COMP%], \n.hero__subtitle[_ngcontent-%COMP%], \n.hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1 !important;\n  transform: none !important;\n}\n.hero.js-loaded[_ngcontent-%COMP%]   .hero__kicker[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__title[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__subtitle[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__actions[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%], \n.hero.js-loaded[_ngcontent-%COMP%]   .hero__stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  opacity: 1;\n  transform: none;\n}\n.hero__glow[_ngcontent-%COMP%] {\n  position: absolute;\n  top: -25%;\n  left: -15%;\n  width: 130%;\n  height: 150%;\n  background:\n    radial-gradient(\n      ellipse at center,\n      rgba(107, 114, 128, 0.15),\n      transparent 60%);\n  opacity: 0.7;\n  pointer-events: none;\n}\n.shape[_ngcontent-%COMP%] {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(1px);\n  opacity: 0.3;\n  pointer-events: none;\n}\n.shape--a[_ngcontent-%COMP%] {\n  width: 220px;\n  height: 220px;\n  left: -40px;\n  top: 60px;\n  background:\n    radial-gradient(\n      circle at 30% 30%,\n      rgba(156, 163, 175, 0.55),\n      transparent 65%);\n}\n.shape--b[_ngcontent-%COMP%] {\n  width: 280px;\n  height: 280px;\n  right: -70px;\n  top: 100px;\n  background:\n    radial-gradient(\n      circle at 30% 30%,\n      rgba(107, 114, 128, 0.5),\n      transparent 65%);\n}\n.hero__inner[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 2;\n  display: grid;\n  grid-template-columns: 1.05fr 0.95fr;\n  gap: 24px;\n  align-items: center;\n}\n@media (max-width: 980px) {\n  .hero__inner[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.hero__kicker[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  font-size: 12px;\n  letter-spacing: 0.18em;\n  color: rgba(107, 114, 128, 0.66);\n}\n.hero__title[_ngcontent-%COMP%] {\n  margin: 10px 0 0;\n  font-size: 54px;\n  line-height: 1.02;\n  letter-spacing: -0.03em;\n}\n.hero__titleAccent[_ngcontent-%COMP%] {\n  display: inline-block;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(156, 163, 175, 0.95),\n      rgba(107, 114, 128, 0.95));\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n  text-shadow: 0 0 22px rgba(107, 114, 128, 0.18);\n}\n.hero__subtitle[_ngcontent-%COMP%] {\n  margin: 14px 0 0;\n  color: rgba(107, 114, 128, 0.7);\n  font-size: 16px;\n  max-width: 58ch;\n}\n.hero__actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  margin-top: 18px;\n  flex-wrap: wrap;\n}\n.hero__stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 12px;\n  margin-top: 22px;\n}\n.stat[_ngcontent-%COMP%] {\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  border-radius: 14px;\n  padding: 14px 14px;\n  position: relative;\n  overflow: hidden;\n}\n.stat[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      420px 220px at 30% 30%,\n      rgba(156, 163, 175, 0.14),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.stat[_ngcontent-%COMP%]:hover::after {\n  opacity: 1;\n}\n.stat__num[_ngcontent-%COMP%] {\n  font-size: 22px;\n  font-weight: 900;\n}\n.stat__label[_ngcontent-%COMP%] {\n  margin-top: 4px;\n  color: rgba(107, 114, 128, 0.62);\n  font-size: 12px;\n}\n.hero__visual[_ngcontent-%COMP%] {\n  transform-style: preserve-3d;\n}\n.device[_ngcontent-%COMP%] {\n  border-radius: 20px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(255, 255, 255, 0.06);\n  box-shadow: 0 32px 120px rgba(0, 0, 0, 0.45);\n  overflow: hidden;\n}\n.device__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 12px;\n  border-bottom: 1px solid rgba(107, 114, 128, 0.12);\n  background:\n    linear-gradient(\n      180deg,\n      rgba(248, 250, 252, 0.07),\n      rgba(248, 250, 252, 0.04));\n}\n.device__title[_ngcontent-%COMP%] {\n  margin-left: 10px;\n  font-weight: 800;\n  color: rgba(107, 114, 128, 0.78);\n  font-size: 13px;\n}\n.dot[_ngcontent-%COMP%] {\n  width: 10px;\n  height: 10px;\n  border-radius: 999px;\n}\n.dot--r[_ngcontent-%COMP%] {\n  background: rgba(156, 163, 175, 0.9);\n}\n.dot--y[_ngcontent-%COMP%] {\n  background: rgba(209, 213, 219, 0.9);\n}\n.dot--g[_ngcontent-%COMP%] {\n  background: rgba(156, 163, 175, 0.9);\n}\n.device__body[_ngcontent-%COMP%] {\n  padding: 16px;\n  position: relative;\n}\n.meter[_ngcontent-%COMP%] {\n  height: 10px;\n  border-radius: 999px;\n  background: rgba(248, 250, 252, 0.06);\n  border: 1px solid rgba(107, 114, 128, 0.1);\n  overflow: hidden;\n}\n.meter__bar[_ngcontent-%COMP%] {\n  height: 100%;\n  width: 68%;\n  border-radius: 999px;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(156, 163, 175, 0.95),\n      rgba(107, 114, 128, 0.95));\n  box-shadow: 0 0 22px rgba(107, 114, 128, 0.22);\n  animation: _ngcontent-%COMP%_meter 2.2s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_meter {\n  0% {\n    transform: translateX(-8%);\n  }\n  50% {\n    transform: translateX(8%);\n  }\n  100% {\n    transform: translateX(-8%);\n  }\n}\n.timeline[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: grid;\n  gap: 10px;\n}\n.timeline__row[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: auto 1fr auto;\n  align-items: center;\n  gap: 10px;\n}\n.chip[_ngcontent-%COMP%] {\n  padding: 7px 10px;\n  border-radius: 999px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  font-weight: 900;\n  font-size: 12px;\n}\n.chip--lime[_ngcontent-%COMP%] {\n  border-color: rgba(156, 163, 175, 0.36);\n  box-shadow: 0 0 0 1px rgba(156, 163, 175, 0.1) inset;\n}\n.chip--blue[_ngcontent-%COMP%] {\n  border-color: rgba(107, 114, 128, 0.36);\n  box-shadow: 0 0 0 1px rgba(107, 114, 128, 0.1) inset;\n}\n.track[_ngcontent-%COMP%] {\n  height: 10px;\n  border-radius: 999px;\n  background: rgba(248, 250, 252, 0.05);\n  border: 1px solid rgba(107, 114, 128, 0.1);\n  position: relative;\n  overflow: hidden;\n}\n.track[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      90deg,\n      transparent,\n      rgba(156, 163, 175, 0.25),\n      transparent);\n  transform: translateX(-60%);\n  animation: _ngcontent-%COMP%_sweep 1.8s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_sweep {\n  0% {\n    transform: translateX(-60%);\n  }\n  50% {\n    transform: translateX(60%);\n  }\n  100% {\n    transform: translateX(-60%);\n  }\n}\n.cards[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 10px;\n}\n.mini[_ngcontent-%COMP%] {\n  border-radius: 16px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 12px;\n  position: relative;\n  overflow: hidden;\n}\n.mini__tag[_ngcontent-%COMP%] {\n  font-weight: 900;\n  font-size: 12px;\n  letter-spacing: 0.08em;\n  opacity: 0.75;\n}\n.mini__title[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  font-weight: 900;\n}\n.mini__sub[_ngcontent-%COMP%] {\n  margin-top: 2px;\n  font-size: 12px;\n  color: rgba(107, 114, 128, 0.66);\n}\n.glowLine[_ngcontent-%COMP%] {\n  margin-top: 16px;\n  height: 2px;\n  border-radius: 999px;\n  background:\n    linear-gradient(\n      90deg,\n      rgba(156, 163, 175, 0),\n      rgba(156, 163, 175, 0.85),\n      rgba(107, 114, 128, 0.85),\n      rgba(107, 114, 128, 0));\n  filter: blur(0.2px);\n  opacity: 0.75;\n}\n.card[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  transform-style: preserve-3d;\n  transition: all 0.3s ease;\n}\n.card[_ngcontent-%COMP%]:hover {\n  box-shadow: 0 26px 120px rgba(0, 0, 0, 0.4);\n  transform: translateY(-2px);\n}\n.card__icon[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.14em;\n  font-size: 12px;\n  opacity: 0.72;\n}\n.card__title[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  font-weight: 900;\n  font-size: 18px;\n}\n.card__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(107, 114, 128, 0.66);\n  line-height: 1.4;\n}\n.card__list[_ngcontent-%COMP%] {\n  margin: 12px 0 0;\n  padding-left: 18px;\n  color: rgba(107, 114, 128, 0.7);\n}\n.card__list[_ngcontent-%COMP%]   li[_ngcontent-%COMP%] {\n  margin: 6px 0;\n}\n.card__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(156, 163, 175, 0.18),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.card[_ngcontent-%COMP%]:hover   .card__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.work__grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n@media (max-width: 960px) {\n  .work__grid[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.workCard[_ngcontent-%COMP%] {\n  position: relative;\n  overflow: hidden;\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n  z-index: 2;\n  transition: all 0.3s ease;\n}\n.workCard[_ngcontent-%COMP%]:hover {\n  transform: translateY(-3px);\n  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);\n}\n.workCard__bg[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      135deg,\n      rgba(107, 114, 128, 0.1),\n      rgba(107, 114, 128, 0.14));\n  opacity: 0;\n  transition: opacity 0.25s ease;\n  pointer-events: none;\n  z-index: 1;\n}\n.workCard[_ngcontent-%COMP%]:hover   .workCard__bg[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.workCard__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.pill[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 10px;\n  border-radius: 999px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  font-weight: 900;\n  font-size: 12px;\n  letter-spacing: 0.08em;\n}\n.metric[_ngcontent-%COMP%] {\n  font-weight: 900;\n  color: rgba(156, 163, 175, 0.92);\n}\n.workCard__title[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  font-weight: 900;\n  font-size: 20px;\n}\n.workCard__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(107, 114, 128, 0.66);\n}\n.workCard__actions[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: flex;\n  gap: 10px;\n  position: relative;\n  z-index: 3;\n}\n.marquee[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 14px 0;\n  overflow: hidden;\n}\n.marquee__track[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 18px;\n  padding-left: 18px;\n  width: max-content;\n  animation: _ngcontent-%COMP%_marquee 16s linear infinite;\n}\n.logo[_ngcontent-%COMP%] {\n  padding: 10px 14px;\n  border-radius: 999px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  font-weight: 900;\n  white-space: nowrap;\n}\n@keyframes _ngcontent-%COMP%_marquee {\n  0% {\n    transform: translateX(0);\n  }\n  100% {\n    transform: translateX(-50%);\n  }\n}\n.clientGrid[_ngcontent-%COMP%] {\n  margin-top: 16px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 12px;\n}\n@media (max-width: 960px) {\n  .clientGrid[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}\n.clientTile[_ngcontent-%COMP%] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 80px;\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 12px;\n  overflow: hidden;\n}\n.clientTile__ring[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      420px 240px at 30% 30%,\n      rgba(107, 114, 128, 0.22),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.clientTile[_ngcontent-%COMP%]:hover   .clientTile__ring[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.clientTile__logo[_ngcontent-%COMP%] {\n  width: 70px;\n  height: 70px;\n  object-fit: contain;\n  filter: brightness(0) invert(1);\n  transition: filter 0.3s ease;\n  margin: 0 auto;\n  display: block;\n}\n.clientTile__logo[src*=servimel][_ngcontent-%COMP%] {\n  width: 110px;\n  height: 110px;\n}\n.clientTile[_ngcontent-%COMP%]:hover   .clientTile__logo[_ngcontent-%COMP%] {\n  filter: brightness(0) invert(0.8);\n}\n.steps[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 12px;\n}\n@media (max-width: 960px) {\n  .steps[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.step[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n}\n.step__num[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.12em;\n  color: rgba(156, 163, 175, 0.92);\n}\n.step__title[_ngcontent-%COMP%] {\n  margin-top: 8px;\n  font-weight: 900;\n}\n.step__desc[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  color: rgba(107, 114, 128, 0.66);\n}\n.quote[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  transition: all 0.3s ease;\n}\n.quote[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);\n}\n.quote__stars[_ngcontent-%COMP%] {\n  letter-spacing: 0.2em;\n  opacity: 0.8;\n}\n.quote__text[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  color: rgba(107, 114, 128, 0.78);\n  line-height: 1.5;\n}\n.quote__by[_ngcontent-%COMP%] {\n  margin-top: 14px;\n}\n.quote__name[_ngcontent-%COMP%] {\n  font-weight: 900;\n}\n.quote__role[_ngcontent-%COMP%] {\n  margin-top: 2px;\n  color: rgba(107, 114, 128, 0.62);\n  font-size: 12px;\n}\n.quote__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(107, 114, 128, 0.95),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.quote[_ngcontent-%COMP%]:hover   .quote__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.contact__grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: 0.9fr 1.1fr;\n  gap: 16px;\n}\n@media (max-width: 960px) {\n  .contact__grid[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.panel[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n  position: relative;\n  overflow: hidden;\n  min-height: 220px;\n  transition: all 0.3s ease;\n}\n.panel[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);\n}\n.panel__kicker[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.14em;\n  opacity: 0.72;\n  font-size: 12px;\n}\n.panel__title[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  font-size: 34px;\n  font-weight: 900;\n}\n.panel__sub[_ngcontent-%COMP%] {\n  margin-top: 8px;\n  color: rgba(107, 114, 128, 0.66);\n}\n.panel__pillRow[_ngcontent-%COMP%] {\n  margin-top: 14px;\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.panel__shine[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: -2px;\n  background:\n    radial-gradient(\n      520px 240px at 30% 10%,\n      rgba(156, 163, 175, 0.16),\n      transparent 55%);\n  opacity: 0;\n  transition: opacity 0.25s ease;\n}\n.panel[_ngcontent-%COMP%]:hover   .panel__shine[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.contact__form[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 18px;\n}\n.field[_ngcontent-%COMP%] {\n  display: grid;\n  gap: 6px;\n  margin-bottom: 12px;\n}\n.field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] {\n  font-weight: 900;\n  font-size: 12px;\n  opacity: 0.8;\n}\n.field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%], \n.field[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%], \n.field[_ngcontent-%COMP%]   select[_ngcontent-%COMP%] {\n  border-radius: 12px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(0, 0, 0, 0.18);\n  color: rgba(107, 114, 128, 0.88);\n  padding: 12px 12px;\n  outline: none;\n}\n.field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:focus, \n.field[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%]:focus, \n.field[_ngcontent-%COMP%]   select[_ngcontent-%COMP%]:focus {\n  border-color: rgba(107, 114, 128, 0.36);\n  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);\n}\n.err[_ngcontent-%COMP%] {\n  font-size: 12px;\n  color: rgba(255, 120, 120, 0.92);\n}\n.contact__success[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  padding: 12px;\n  border-radius: 12px;\n  border: 1px solid rgba(107, 114, 128, 0.3);\n  background: rgba(107, 114, 128, 0.1);\n  color: rgba(107, 114, 128, 0.88);\n  font-weight: 800;\n}\n.modal[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: grid;\n  place-items: center;\n  background: rgba(0, 0, 0, 0.62);\n  padding: 24px;\n}\n.modal__panel[_ngcontent-%COMP%] {\n  width: min(90vw, 940px);\n  max-height: 90vh;\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.14);\n  background: rgba(107, 114, 128, 0.95);\n  backdrop-filter: blur(20px);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n}\n.modal__top[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 14px;\n  border-bottom: 1px solid rgba(107, 114, 128, 0.12);\n}\n.modal__title[_ngcontent-%COMP%] {\n  font-weight: 900;\n}\n.x[_ngcontent-%COMP%] {\n  width: 38px;\n  height: 38px;\n  border-radius: 12px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(255, 255, 255, 0.06);\n  color: rgba(107, 114, 128, 0.88);\n  cursor: pointer;\n}\n.modal__body[_ngcontent-%COMP%] {\n  padding: 16px;\n  overflow-y: auto;\n  flex: 1;\n  max-height: calc(90vh - 80px);\n}\n.video[_ngcontent-%COMP%] {\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 16px;\n}\n.video__hint[_ngcontent-%COMP%] {\n  color: rgba(107, 114, 128, 0.66);\n  font-size: 12px;\n}\n.video__frame[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  border-radius: 14px;\n  height: 340px;\n  background:\n    radial-gradient(\n      520px 320px at 30% 30%,\n      rgba(156, 163, 175, 0.18),\n      transparent 62%),\n    radial-gradient(\n      520px 320px at 80% 30%,\n      rgba(107, 114, 128, 0.88),\n      transparent 62%),\n    linear-gradient(\n      180deg,\n      rgba(0, 0, 0, 0.35),\n      rgba(0, 0, 0, 0.15));\n  position: relative;\n  overflow: hidden;\n}\n.video__frame[_ngcontent-%COMP%]::after {\n  content: "";\n  position: absolute;\n  inset: -2px;\n  background:\n    linear-gradient(\n      90deg,\n      transparent,\n      rgba(107, 114, 128, 0.12),\n      transparent);\n  transform: translateX(-60%);\n  animation: _ngcontent-%COMP%_sweep 2.6s ease-in-out infinite;\n  opacity: 0.65;\n}\n.modal__meta[_ngcontent-%COMP%] {\n  margin-top: 12px;\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 10px;\n}\n@media (max-width: 780px) {\n  .modal__meta[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n  }\n}\n.meta[_ngcontent-%COMP%] {\n  border-radius: 14px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  padding: 12px;\n}\n.meta__k[_ngcontent-%COMP%] {\n  font-family:\n    "Unbounded",\n    system-ui,\n    sans-serif;\n  letter-spacing: 0.12em;\n  opacity: 0.72;\n  font-size: 12px;\n}\n.meta__v[_ngcontent-%COMP%] {\n  margin-top: 6px;\n  font-weight: 900;\n}\n@media (max-width: 540px) {\n  .hero__title[_ngcontent-%COMP%] {\n    font-size: 40px;\n  }\n  .hero[_ngcontent-%COMP%] {\n    padding: 70px 0 24px;\n  }\n}\n.preview-container[_ngcontent-%COMP%] {\n  position: relative;\n  border-radius: 18px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n  background: rgba(248, 250, 252, 0.05);\n  overflow: hidden;\n  min-height: 400px;\n}\n.preview__loading[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: rgba(255, 255, 255, 0.8);\n  font-size: 14px;\n  z-index: 2;\n  pointer-events: none;\n}\n.preview__iframe[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 500px;\n  border: none;\n  background: white;\n  display: block;\n}\n.preview__fallback[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 48px 24px;\n  text-align: center;\n  min-height: 300px;\n}\n.preview__fallback-icon[_ngcontent-%COMP%] {\n  font-size: 48px;\n  margin-bottom: 16px;\n  opacity: 0.8;\n}\n.preview__fallback-title[_ngcontent-%COMP%] {\n  font-size: 18px;\n  font-weight: 700;\n  margin-bottom: 8px;\n  color: rgba(255, 255, 255, 0.9);\n}\n.preview__fallback-desc[_ngcontent-%COMP%] {\n  font-size: 14px;\n  color: rgba(107, 114, 128, 0.66);\n  margin-bottom: 24px;\n  max-width: 320px;\n}\n.preview__video[_ngcontent-%COMP%] {\n  position: relative;\n  border-radius: 14px;\n  overflow: hidden;\n  background: #000;\n}\n.preview__video-iframe[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 400px;\n  border: none;\n  display: block;\n}\n.preview__system-info[_ngcontent-%COMP%] {\n  margin-top: 24px;\n  padding: 20px;\n  background: rgba(248, 250, 252, 0.05);\n  border-radius: 14px;\n  border: 1px solid rgba(107, 114, 128, 0.12);\n}\n.preview__system-title[_ngcontent-%COMP%] {\n  font-size: 20px;\n  font-weight: 700;\n  margin-bottom: 8px;\n  color: rgba(255, 255, 255, 0.9);\n}\n.preview__system-desc[_ngcontent-%COMP%] {\n  font-size: 14px;\n  color: rgba(107, 114, 128, 0.66);\n  margin-bottom: 20px;\n  line-height: 1.5;\n}\n.preview__system-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 12px;\n  flex-wrap: wrap;\n}\n.ambient-circles[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n  overflow: hidden;\n  z-index: -1;\n}\n.ambient-circle[_ngcontent-%COMP%] {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(40px);\n  opacity: 0.2;\n  animation: _ngcontent-%COMP%_ambient-float 20s ease-in-out infinite;\n}\n.ambient-circle-1[_ngcontent-%COMP%] {\n  width: 120px;\n  height: 120px;\n  top: 10%;\n  left: 8%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(255, 255, 255, 0.15),\n      transparent 60%);\n  animation-delay: 0s;\n}\n.ambient-circle-2[_ngcontent-%COMP%] {\n  width: 180px;\n  height: 180px;\n  top: 25%;\n  right: 12%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(156, 163, 175, 0.12),\n      transparent 65%);\n  animation-delay: 3s;\n}\n.ambient-circle-3[_ngcontent-%COMP%] {\n  width: 90px;\n  height: 90px;\n  top: 45%;\n  left: 20%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(107, 114, 128, 0.1),\n      transparent 55%);\n  animation-delay: 6s;\n}\n.ambient-circle-4[_ngcontent-%COMP%] {\n  width: 150px;\n  height: 150px;\n  top: 65%;\n  right: 25%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(209, 213, 219, 0.08),\n      transparent 60%);\n  animation-delay: 9s;\n}\n.ambient-circle-5[_ngcontent-%COMP%] {\n  width: 200px;\n  height: 200px;\n  top: 80%;\n  left: 15%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(156, 163, 175, 0.09),\n      transparent 65%);\n  animation-delay: 12s;\n}\n.ambient-circle-6[_ngcontent-%COMP%] {\n  width: 100px;\n  height: 100px;\n  top: 35%;\n  left: 70%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(255, 255, 255, 0.06),\n      transparent 50%);\n  animation-delay: 4s;\n}\n.ambient-circle-7[_ngcontent-%COMP%] {\n  width: 140px;\n  height: 140px;\n  top: 55%;\n  right: 8%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(107, 114, 128, 0.07),\n      transparent 55%);\n  animation-delay: 8s;\n}\n.ambient-circle-8[_ngcontent-%COMP%] {\n  width: 110px;\n  height: 110px;\n  top: 75%;\n  left: 60%;\n  background:\n    radial-gradient(\n      circle,\n      rgba(209, 213, 219, 0.05),\n      transparent 50%);\n  animation-delay: 11s;\n}\n@keyframes _ngcontent-%COMP%_ambient-float {\n  0%, 100% {\n    transform: translate(0, 0) scale(1);\n  }\n  50% {\n    transform: translate(15px, -10px) scale(1.02);\n  }\n}\n/*# sourceMappingURL=landing.page.css.map */'], changeDetection: 0 });
   }
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LandingPageComponent, { className: "LandingPageComponent", filePath: "src\\app\\pages\\landing\\landing.page.ts", lineNumber: 37 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LandingPageComponent, { className: "LandingPageComponent", filePath: "src\\app\\pages\\landing\\landing.page.ts", lineNumber: 38 });
 })();
 
 // src/app/app.routes.ts

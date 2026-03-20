@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
   <defs>
     <filter id="mono">
-      <feFlood flood-color="#d9d9d9" result="f"/>
+      <feFlood flood-color="#000000" result="f"/>
       <feComposite in="f" in2="SourceAlpha" operator="in" result="mono"/>
     </filter>
   </defs>

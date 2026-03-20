@@ -5,6 +5,7 @@ import { ensureGsap, gsap, prefersReducedMotion } from './core/utils/gsap';
 import { isMobile, shouldReduceEffects, getMobileInfo } from './core/utils/mobile';
 import { BackgroundFxComponent } from './core/fx/bg-fx.component';
 import { MagneticDirective } from './core/directives/magnetic.directive';
+import { ScrollService } from './core/services/scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
 
   // Mobile detection cache
   private mobileInfo = getMobileInfo();
+
+  constructor(private scrollService: ScrollService) {}
 
   ngOnInit(): void {
     ensureGsap();
@@ -84,33 +87,33 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--my', my + '%');
   }
 
+  // ✅ BULLETPROOF synchronous navigation - NO MORE ASYNC ISSUES
   scrollTo(id: string): void {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    if (!window.gsap) {
-      window.scrollTo({ top: el.offsetTop - 86, behavior: 'smooth' });
-      return;
+    // Immediate execution without async/await complications
+    try {
+      this.scrollService.scrollToSection(id);
+    } catch (error) {
+      console.error('Navigation error:', error);
     }
-
-    if (prefersReducedMotion()) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
-
-    gsap.to(window, {
-      duration: 1.05,
-      scrollTo: { y: el, offsetY: 86 },
-      ease: 'power3.out'
-    });
   }
 
+  scrollToHome(): void {
+    // Direct home scroll without async complications
+    try {
+      this.scrollService.scrollToSection('home');
+    } catch (error) {
+      console.error('Home navigation error:', error);
+    }
+  }
+
+  // Centralized WhatsApp configuration
+  private readonly WHATSAPP_NUMBER = '59892454958';
+  private readonly WHATSAPP_MESSAGE = encodeURIComponent(
+    '¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.'
+  );
+
   openWhatsApp(): void {
-    const message = encodeURIComponent(
-      '¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.'
-    );
-    const phoneNumber = '5491123456789'; // Reemplazar con número real
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${this.WHATSAPP_NUMBER}?text=${this.WHATSAPP_MESSAGE}`, '_blank');
   }
 
   // =========================
@@ -151,9 +154,17 @@ export class AppComponent implements OnInit {
     }
   }
 
-  navigateAndClose(sectionId: string): void {
-    this.scrollTo(sectionId);
-    this.closeMenu();
+  // ✅ BULLETPROOF mobile navigation - NO MORE ASYNC ISSUES
+  async navigateAndClose(sectionId: string): Promise<void> {
+    // Close menu first, then navigate
+    try {
+      this.closeMenu();
+      // Small delay to ensure menu close animation
+      await new Promise(resolve => setTimeout(resolve, 150));
+      this.scrollService.scrollToSection(sectionId);
+    } catch (error) {
+      console.error('Mobile navigation error:', error);
+    }
   }
 
   // Getters para template

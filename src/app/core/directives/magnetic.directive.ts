@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, OnDestroy, Input } from '@angular/core';
-import { prefersReducedMotion } from '../utils/gsap';
+import { prefersReducedMotion, gsap } from '../utils/gsap';
 import { isMobile } from '../utils/mobile';
 
 @Directive({ selector: '[magnetic]', standalone: true })

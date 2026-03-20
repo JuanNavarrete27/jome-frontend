@@ -24,26 +24,26 @@ body {
   background:
     radial-gradient(
       1200px 800px at 15% 12%,
-      rgba(0, 74, 173, 0.28),
+      rgba(156, 163, 175, 0.28),
       transparent 60%),
     radial-gradient(
       900px 600px at 80% 18%,
-      rgba(182, 203, 51, 0.18),
+      rgba(226, 232, 240, 0.18),
       transparent 64%),
     radial-gradient(
       900px 900px at 55% 82%,
-      rgba(15, 72, 102, 0.22),
+      rgba(107, 114, 128, 0.22),
       transparent 65%),
     linear-gradient(
       180deg,
-      #05060d 0%,
-      #070910 35%,
-      #05060d 100%);
-  color: rgba(255, 255, 255, 0.92);
+      #f8fafc 0%,
+      #ffffff 35%,
+      #f1f5f9 100%);
+  color: rgba(26, 26, 26, 0.92);
   overflow-x: hidden;
 }
 ::selection {
-  background: rgba(182, 203, 51, 0.28);
+  background: rgba(156, 163, 175, 0.28);
 }
 a {
   color: inherit;

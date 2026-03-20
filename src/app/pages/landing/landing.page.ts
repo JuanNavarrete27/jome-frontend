@@ -8,6 +8,7 @@ import { shouldReduceEffects, isMobile } from '../../core/utils/mobile';
 import { RevealOnScrollDirective } from '../../core/directives/reveal-on-scroll.directive';
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
 import { TiltDirective } from '../../core/directives/tilt.directive';
+import { ScrollService } from '../../core/services/scroll.service';
 
 type Service = {
   icon: string;
@@ -99,6 +100,14 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       metric: 'Sistema de gestión',
       previewType: 'video',
       videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Video demo placeholder
+    },
+    { 
+      tag: 'PLATAFORMA EDUCATIVA', 
+      title: 'NELA', 
+      desc: 'Academia de inglés con plataforma de aprendizaje completa. Dashboard, cursos y experiencia estudiantil estilo Moodle.', 
+      metric: 'Plataforma educativa',
+      domain: 'https://newnela.com',
+      previewType: 'iframe'
     }
   ];
 
@@ -106,7 +115,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'Don Francisco', logo: 'assets/donfrancisco.svg' },
     { name: 'Bentasca', logo: 'assets/bentasca.svg' },
     { name: 'Karen Bentancor', logo: 'assets/karenbentancor.svg' },
-    { name: 'Servimel', logo: 'assets/servimel.svg' }
+    { name: 'Servimel', logo: 'assets/servimel.svg' },
+    { name: 'NELA', logo: 'assets/NELA.svg' }
   ];
 
   testimonials = [
@@ -142,7 +152,12 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private heroTl?: gsap.core.Timeline;
   private previewTimeoutId: any = null;
 
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private fb: FormBuilder, 
+    private sanitizer: DomSanitizer, 
+    private cdr: ChangeDetectorRef,
+    private scrollService: ScrollService
+  ) {}
 
   // TrackBy functions for optimized *ngFor
   trackByService(index: number, service: Service): string {
@@ -188,88 +203,161 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(`📱 Dispositivo: ${isMobileDevice ? 'Móvil' : 'Desktop'}`);
       console.log(`🎨 Efectos reducidos: ${reduceEffects ? 'Sí' : 'No'}`);
       
-      // FASE 2: Animaciones suaves post-render (después del primer paint)
-      // Ultra rápido en desktop, MUY LENTO en móvil para debugging
-      const delay = isMobileDevice ? 2000 : 50; // ✅ 2 segundos en móvil, 50ms en desktop
+  // FASE 2: Dramáticas premium - mucho más impacto
+      // Optimized: Fast en ambos dispositivos pero con más impacto
+      const delay = isMobileDevice ? 300 : 100; // ✅ 300ms en móvil, 100ms en desktop
       
-      console.log(`⏰ Delay de animación: ${delay}ms (${isMobileDevice ? 'Móvil - LENTO' : 'Desktop - Rápido'})`);
+      console.log(`⏰ Delay de animación: ${delay}ms (${isMobileDevice ? 'Móvil - Premium' : 'Desktop - Premium'})`);
       
       setTimeout(() => {
-        console.log('🎭 Iniciando animaciones no críticas...');
-        this.initNonCriticalAnimations(isMobileDevice, reduceEffects);
+        console.log('🎭 Iniciando animaciones premium...');
+        this.initPremiumAnimations(isMobileDevice, reduceEffects);
         
-        // ✅ INICIAR ANIMACIONES DE APARICIÓN EN MÓVIL
+        // ✅ INICIAR ANIMACIONES DRAMÁTICAS EN MÓVIL
         if (isMobileDevice) {
-          console.log('📱 Detectado móvil, iniciando animaciones de aparición...');
-          this.initMobileAppearAnimations();
+          console.log('📱 Detectado móvil, iniciando animaciones dramáticas...');
+          this.initDramaticMobileAnimations();
         } else {
-          console.log('💻 Desktop detectado, omitiendo animaciones móviles');
+          console.log('💻 Desktop detectado, iniciando animaciones cinematográficas...');
+          this.initCinematicAnimations();
         }
       }, delay);
     });
   }
 
-  // ✅ ANIMACIONES DE APARICIÓN ESPECÍFICAS PARA MÓVIL - SIN ERRORES
-  private initMobileAppearAnimations(): void {
-    console.log('🚀 Iniciando animaciones móviles robustas...');
+  // ✅ ANIMACIONES PREMIUM DRAMÁTICAS
+  private initPremiumAnimations(isMobileDevice: boolean, reduceEffects: boolean): void {
+    // HERO: timeline cinematográfica
+    const heroDuration = isMobileDevice ? 0.4 : 0.6;
+    const heroStagger = isMobileDevice ? 0.02 : 0.04;
     
-    // HERO - Animar inmediatamente
+    this.heroTl = gsap
+      .timeline({ defaults: { ease: 'power3.out' } })
+      .fromTo(
+        '.hero__kicker',
+        { y: isMobileDevice ? 6 : 12, opacity: 0, filter: 'blur(8px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: heroDuration * 0.8 }
+      )
+      .fromTo(
+        '.hero__title',
+        { y: isMobileDevice ? 8 : 15, opacity: 0, filter: 'blur(10px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: heroDuration },
+        '-=0.3'
+      )
+      .fromTo(
+        '.hero__titleAccent',
+        { y: isMobileDevice ? 10 : 18, opacity: 0, scale: 0.8 },
+        { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.7 },
+        '-=0.2'
+      )
+      .fromTo(
+        '.hero__subtitle',
+        { y: isMobileDevice ? 4 : 8, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: heroDuration * 0.8 },
+        '-=0.4'
+      )
+      .fromTo(
+        '.hero__actions .btn',
+        { y: isMobileDevice ? 4 : 8, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.6, stagger: heroStagger },
+        '-=0.2'
+      )
+      .fromTo(
+        '.hero__stats .stat',
+        { y: isMobileDevice ? 4 : 8, opacity: 0, scale: 0.85 },
+        { y: 0, opacity: 1, scale: 1, duration: heroDuration * 0.6, stagger: heroStagger * 0.8 },
+        '-=0.3'
+      )
+      .fromTo(
+        '.hero__visual',
+        { y: isMobileDevice ? 10 : 20, opacity: 0, scale: 0.8, rotation: 2 },
+        { y: 0, opacity: 1, scale: 1, rotation: 0, duration: heroDuration * 1.2 },
+        '-=0.5'
+      );
+
+    // Efectos atmosféricos mejorados
+    if (!reduceEffects) {
+      gsap.to('.hero__glow', {
+        opacity: 0.8,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+      });
+
+      gsap.to('.shape--a', { 
+        y: -12, 
+        rotation: 360, 
+        duration: 20, 
+        repeat: -1, 
+        ease: 'none' 
+      });
+      
+      gsap.to('.shape--b', { 
+        y: 15, 
+        rotation: -360, 
+        duration: 25, 
+        repeat: -1, 
+        ease: 'none' 
+      });
+    }
+  }
+
+  // ✅ ANIMACIONES DRAMÁTICAS MÓVIL
+  private initDramaticMobileAnimations(): void {
     const heroElements = [
-      { selector: '.hero__kicker', delay: 0.1, duration: 0.6, from: 'top' },
-      { selector: '.hero__title', delay: 0.2, duration: 0.8, from: 'left' },
-      { selector: '.hero__titleAccent', delay: 0.3, duration: 0.6, from: 'right' },
-      { selector: '.hero__subtitle', delay: 0.4, duration: 0.6, from: 'bottom' },
-      { selector: '.hero__actions', delay: 0.5, duration: 0.6, from: 'left' },
-      { selector: '.stat', delay: 0.6, duration: 0.5, from: 'bottom' },
-      { selector: '.hero__visual', delay: 0.7, duration: 0.8, from: 'right' },
-      { selector: '.mini', delay: 0.8, duration: 0.5, from: 'left' }
+      { selector: '.hero__kicker', delay: 0.1, duration: 0.8, from: 'top' },
+      { selector: '.hero__title', delay: 0.2, duration: 1.0, from: 'left' },
+      { selector: '.hero__titleAccent', delay: 0.3, duration: 0.7, from: 'right' },
+      { selector: '.hero__subtitle', delay: 0.4, duration: 0.8, from: 'bottom' },
+      { selector: '.hero__actions', delay: 0.5, duration: 0.7, from: 'left' },
+      { selector: '.stat', delay: 0.6, duration: 0.6, from: 'bottom' },
+      { selector: '.hero__visual', delay: 0.7, duration: 1.0, from: 'right' },
+      { selector: '.mini', delay: 0.8, duration: 0.6, from: 'left' }
     ];
 
-    // Animar hero inmediatamente
+    // Animar hero con más impacto
     heroElements.forEach(({ selector, delay, duration, from }) => {
       const els = document.querySelectorAll(selector);
       if (els.length === 0) return;
       
-      let initialX = 0, initialY = 0;
+      let initialX = 0, initialY = 0, initialScale = 1;
       switch(from) {
-        case 'left': initialX = -150; break;
-        case 'right': initialX = 150; break;
-        case 'top': initialY = -100; break;
-        case 'bottom': initialY = 100; break;
+        case 'left': initialX = -200; break;
+        case 'right': initialX = 200; break;
+        case 'top': initialY = -120; break;
+        case 'bottom': initialY = 120; break;
       }
       
-      gsap.set(els, { opacity: 0, x: initialX, y: initialY, display: 'none' });
+      gsap.set(els, { 
+        opacity: 0, 
+        x: initialX, 
+        y: initialY, 
+        scale: initialScale,
+        display: 'none'
+      });
+      
+      if (from === 'right') {
+        gsap.set(els, { rotation: 15 });
+      } else if (from === 'left') {
+        gsap.set(els, { rotation: -10 });
+      }
       gsap.set(els, { display: 'block' });
       
       gsap.to(els, {
-        opacity: 1, x: 0, y: 0,
-        duration, delay,
+        opacity: 1, 
+        x: 0, 
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration, 
+        delay,
         stagger: 0.1,
         ease: 'power3.out'
       });
     });
     
-    // OCULTAR TODOS LOS ELEMENTOS DE SECCIONES INICIALMENTE
-    const allSectionElements = [
-      '.section__head',
-      '.card',
-      '.workCard', 
-      '.clientTile',
-      '.logo',
-      '.step',
-      '.quote',
-      '.panel'
-    ];
-
-    allSectionElements.forEach(selector => {
-      const els = document.querySelectorAll(selector);
-      if (els.length > 0) {
-        gsap.set(els, { opacity: 0, display: 'none' });
-        console.log(`🚫 Ocultados ${els.length} elementos: ${selector}`);
-      }
-    });
-
-    // USAR INTERSECTION OBSERVER EN LUGAR DE SCROLLTRIGGER (MÁS ROBUSTO)
+    // Observer mejorado para secciones
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -282,74 +370,95 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
           const sectionId = entry.target.id;
           console.log(`🎯 Sección visible: ${sectionId}`);
           
-          // Animar elementos según la sección
-          this.animateSection(sectionId);
-          observer.unobserve(entry.target); // Solo animar una vez
+          // Animar con más drama
+          this.animateSectionDramatic(sectionId);
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Observar todas las secciones
     const sections = document.querySelectorAll('#services, #work, #clients, #process, #contact');
     sections.forEach(section => {
       observer.observe(section);
     });
   }
 
-  // ✅ ANIMAR SECCIÓN ESPECÍFICA
-  private animateSection(sectionId: string): void {
-    console.log(`🎬 Animando sección: ${sectionId}`);
+  // ✅ ANIMACIONES CINEMATOGRÁFICAS DESKTOP
+  private initCinematicAnimations(): void {
+    // Enhanced effects for desktop
+    gsap.to('.hero__glow', { opacity: 0.9, scale: 1.1, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    
+    gsap.to('.shape--a', { 
+      rotation: 360, 
+      x: 50, 
+      duration: 20, 
+      repeat: -1, 
+      ease: 'none' 
+    });
+    
+    gsap.to('.shape--b', { 
+      rotation: -360, 
+      x: -50, 
+      duration: 25, 
+      repeat: -1, 
+      ease: 'none' 
+    });
+  }
+
+  // ✅ ANIMAR SECCIÓN CON DRAMATISMO
+  private animateSectionDramatic(sectionId: string): void {
+    console.log(`🎬 Animando sección dramática: ${sectionId}`);
     
     let elementsToAnimate: Array<{selector: string, delay: number, duration: number, from: string}> = [];
     
     switch(sectionId) {
       case 'services':
         elementsToAnimate = [
-          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
-          { selector: '.card', delay: 0.2, duration: 0.7, from: 'left' }
+          { selector: '.section__head', delay: 0.1, duration: 0.8, from: 'top' },
+          { selector: '.card', delay: 0.2, duration: 0.9, from: 'left' }
         ];
         break;
       
       case 'work':
         elementsToAnimate = [
-          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
-          { selector: '.workCard', delay: 0.2, duration: 0.7, from: 'right' }
+          { selector: '.section__head', delay: 0.1, duration: 0.8, from: 'top' },
+          { selector: '.workCard', delay: 0.2, duration: 0.9, from: 'right' }
         ];
         break;
       
       case 'clients':
         elementsToAnimate = [
-          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
-          { selector: '.clientTile', delay: 0.2, duration: 0.6, from: 'bottom' },
-          { selector: '.logo', delay: 0.3, duration: 0.5, from: 'left' }
+          { selector: '.section__head', delay: 0.1, duration: 0.8, from: 'top' },
+          { selector: '.clientTile', delay: 0.2, duration: 0.7, from: 'bottom' },
+          { selector: '.logo', delay: 0.3, duration: 0.6, from: 'left' }
         ];
         break;
       
       case 'process':
         elementsToAnimate = [
-          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
-          { selector: '.step', delay: 0.2, duration: 0.6, from: 'top' }
+          { selector: '.section__head', delay: 0.1, duration: 0.8, from: 'top' },
+          { selector: '.step', delay: 0.2, duration: 0.7, from: 'top' }
         ];
         break;
       
       case 'contact':
         elementsToAnimate = [
-          { selector: '.section__head', delay: 0.1, duration: 0.6, from: 'top' },
-          { selector: '.panel', delay: 0.2, duration: 0.7, from: 'bottom' },
-          { selector: '.quote', delay: 0.3, duration: 0.6, from: 'right' }
+          { selector: '.section__head', delay: 0.1, duration: 0.8, from: 'top' },
+          { selector: '.panel', delay: 0.2, duration: 0.9, from: 'bottom' },
+          { selector: '.quote', delay: 0.3, duration: 0.7, from: 'right' }
         ];
         break;
     }
 
-    // Animar elementos de la sección
+    // Animar con más impacto visual
     elementsToAnimate.forEach(({ selector, delay, duration, from }) => {
       const els = document.querySelectorAll(selector);
       if (els.length === 0) return;
       
-      let initialX = 0, initialY = 0;
+      let initialX = 0, initialY = 0, initialScale = 1, initialRotation = 0;
       switch(from) {
-        case 'left': initialX = -150; break;
-        case 'right': initialX = 150; break;
+        case 'left': initialX = -180; break;
+        case 'right': initialX = 180; break;
         case 'top': initialY = -100; break;
         case 'bottom': initialY = 100; break;
       }
@@ -358,7 +467,9 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
         opacity: 0, 
         x: initialX, 
         y: initialY, 
-        display: 'none' 
+        scale: initialScale,
+        rotation: initialRotation,
+        display: 'none'
       });
       gsap.set(els, { display: 'block' });
       
@@ -366,11 +477,12 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
         opacity: 1, 
         x: 0, 
         y: 0,
+        scale: 1,
+        rotation: 0,
         duration, 
         delay,
-        stagger: 0.1,
-        ease: 'power3.out',
-        onComplete: () => console.log(`✅ Animación completada para ${selector} en ${sectionId}`)
+        stagger: 0.15,
+        ease: 'power3.out'
       });
     });
   }
@@ -561,7 +673,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'Don Francisco': 'https://donfrancisco.uy',
       'Bentasca': 'https://bentasca.com',
       'Karen Bentancor': 'https://karenbentancor.com',
-      'Servimel': 'http://76.13.166.48/'
+      'Servimel': 'http://76.13.166.48/',
+      'NELA': 'https://newnela.com'
     };
     return urls[clientName] || '#';
   }
@@ -570,8 +683,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // Resaltar todos los nombres del cliente en el marquee
     const elements = document.querySelectorAll(`[data-client="${clientName}"]`);
     elements.forEach(el => {
-      (el as HTMLElement).style.textShadow = '0 0 20px rgba(30, 91, 255, 0.8), 0 0 40px rgba(30, 91, 255, 0.4)';
-      (el as HTMLElement).style.color = '#1E5BFF';
+      (el as HTMLElement).style.textShadow = '';
+      (el as HTMLElement).style.color = '';
     });
   }
 
@@ -584,14 +697,28 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  scrollToContact(): void {
+  // ✅ SYNCHRONOUS scroll methods - NO MORE DELAYS
+  scrollToServices(): void {
+    this.scrollService.scrollToSection('services');
+  }
+
+  scrollToWork(): void {
+    this.scrollService.scrollToSection('work');
+  }
+
+  // ✅ SYNCHRONOUS contact method
+  async scrollToContact(): Promise<void> {
+    this.scrollService.scrollToSection('contact');
+    // Then open WhatsApp
     this.openWhatsApp();
   }
 
+  // Centralized WhatsApp configuration
+  private readonly WHATSAPP_NUMBER = '59892454958';
+  private readonly WHATSAPP_MESSAGE = encodeURIComponent('¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.');
+
   openWhatsApp(): void {
-    const message = encodeURIComponent('¡Hola! Estoy interesado en sus servicios de desarrollo web. Me gustaría obtener más información.');
-    const phoneNumber = '5491123456789'; // Reemplazar con número real
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${this.WHATSAPP_NUMBER}?text=${this.WHATSAPP_MESSAGE}`, '_blank');
   }
 
   async submit(): Promise<void> {

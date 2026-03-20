@@ -51,7 +51,7 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
     const saveData = (navigator as any)?.connection?.saveData === true;
 
     // Cap FPS por device y efectos reducidos
-    this.targetFps = (this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects) ? 20 : 30; // ✅ Subir FPS en móvil
+    this.targetFps = (this.isCoarsePointer || saveData || mobileInfo.shouldReduceEffects) ? 20 : 30;
 
     // ✅ Permitir canvas en móvil siempre (no bloquear completamente)
     // Solo bloquear si es saveData + efectos reducidos extremos
@@ -63,6 +63,8 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
     this.resize();
     this.seed();
     this.running = true;
+    
+    // ✅ START IMMEDIATELY - No delay
     this.tick(performance.now());
   }
 
@@ -111,34 +113,33 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:mousemove', ['$event'])
   onMouse(ev: MouseEvent): void {
-    // ✅ en móvil o efectos reducidos no seguimos mouse
+    // en móvil o efectos reducidos no seguimos mouse
     if (this.isCoarsePointer || shouldReduceEffects()) return;
-    this.mx = ev.clientX / Math.max(1, this.w);
-    this.my = ev.clientY / Math.max(1, this.h);
+    this.mx = ev.clientX 
   }
 
   private seed(): void {
-    // ✅ Ajustar orbs para móvil - más que antes pero aún optimizado
-    const baseCount = Math.floor(this.w / 160); // Un poco más de densidad
+    // Ultra high density for dramatic effect
+    const baseCount = Math.floor(this.w / 60); 
     const shouldReduce = shouldReduceEffects();
     const count = this.isCoarsePointer 
-      ? Math.min(8, Math.max(4, baseCount)) // ✅ Más orbs en móvil (4-8)
+      ? Math.min(20, Math.max(12, baseCount)) 
       : shouldReduce
-        ? Math.min(10, Math.max(5, baseCount)) // Pocos en efectos reducidos
-        : Math.min(12, Math.max(6, baseCount)); // Normal en desktop
+        ? Math.min(24, Math.max(16, baseCount)) 
+        : Math.min(32, Math.max(20, baseCount)); 
 
     this.orbs = Array.from({ length: count }).map(() => {
-      const baseRadius = this.isCoarsePointer ? 60 : 70; // ✅ Radio un poco más grande en móvil
-      const radiusVariation = this.isCoarsePointer ? 120 : 150;
+      const baseRadius = this.isCoarsePointer ? 80 : 100;
+      const radiusVariation = this.isCoarsePointer ? 150 : 200;
       const r = baseRadius + Math.random() * radiusVariation;
       
       return {
         x: Math.random() * this.w,
         y: Math.random() * this.h,
         r,
-        vx: (-0.35 + Math.random() * 0.7) * 0.3, // Más lento
-        vy: (-0.35 + Math.random() * 0.7) * 0.3,
-        a: (this.isCoarsePointer ? 0.04 : 0.08) + Math.random() * (this.isCoarsePointer ? 0.06 : 0.12)
+        vx: (-0.6 + Math.random() * 1.2) * 0.6, 
+        vy: (-0.6 + Math.random() * 1.2) * 0.6,
+        a: (this.isCoarsePointer ? 0.12 : 0.18) + Math.random() * (this.isCoarsePointer ? 0.15 : 0.25) 
       };
     });
   }
@@ -150,7 +151,7 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
 
     if (!this.ctx) return;
 
-    // ✅ cap FPS REAL (no “return early” sin pintar)
+    // cap FPS REAL (no “return early” sin pintar)
     const minFrameMs = 1000 / this.targetFps;
     if (this.lastDraw && now - this.lastDraw < minFrameMs) return;
     const delta = this.lastDraw ? (now - this.lastDraw) : minFrameMs;
@@ -166,24 +167,26 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
     // clear
     ctx.clearRect(0, 0, this.w, this.h);
 
-    // ✅ base vignette: mantener 1 gradiente (ok)
+    // PREMIUM MONOCHROME vignette with rich colors
     const grd = ctx.createRadialGradient(
-      this.w * (0.4 + (this.mx - 0.5) * 0.06),
-      this.h * (0.45 + (this.my - 0.5) * 0.06),
-      10,
+      this.w * (0.25 + (this.mx - 0.5) * 0.15),
+      this.h * (0.3 + (this.my - 0.5) * 0.12),
+      25,
       this.w * 0.5,
       this.h * 0.5,
       Math.max(this.w, this.h)
     );
-    grd.addColorStop(0, 'rgba(0,74,173,0.18)');
-    grd.addColorStop(0.35, 'rgba(15,72,102,0.08)');
-    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    grd.addColorStop(0, 'rgba(255, 255, 255, 0.45)'); 
+    grd.addColorStop(0.2, 'rgba(248, 250, 252, 0.35)'); 
+    grd.addColorStop(0.4, 'rgba(226, 232, 240, 0.28)'); 
+    grd.addColorStop(0.6, 'rgba(156, 163, 175, 0.22)'); 
+    grd.addColorStop(1, 'rgba(55, 65, 81, 0.1)'); 
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, this.w, this.h);
 
     ctx.globalCompositeOperation = 'lighter';
 
-    // ✅ en móvil o efectos reducidos: menos "mouse gravity", menos cálculos
+    // en móvil o efectos reducidos: menos "mouse gravity", menos cálculos
     const gravityOn = !this.isCoarsePointer && !shouldReduceEffects();
 
     for (const o of this.orbs) {
@@ -208,17 +211,22 @@ export class BackgroundFxComponent implements AfterViewInit, OnDestroy {
       const pulse = 0.76 + Math.sin(this.t + o.x * 0.002) * 0.24;
       const rr = o.r * pulse;
 
-      // ✅ optimización extrema: en móvil y efectos reducidos, gradiente ultra simple
+      // PREMIUM MONOCHROME gradients with 6 colors
       const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, rr);
       if (this.isCoarsePointer || shouldReduceEffects()) {
-        // Móvil: solo 2 stops, opacidad mínima
-        g.addColorStop(0, `rgba(182,203,51,${o.a * 0.5})`);
-        g.addColorStop(1, 'rgba(0,0,0,0)');
+        // Móvil: 4 stops, ultra visibles
+        g.addColorStop(0, `rgba(255, 255, 255, ${o.a * 0.9})`); 
+        g.addColorStop(0.4, `rgba(248, 250, 252, ${o.a * 0.7})`); 
+        g.addColorStop(0.6, `rgba(226, 232, 240, ${o.a * 0.4})`); 
+        g.addColorStop(0.8, `rgba(156, 163, 175, ${o.a * 0.2})`); 
+        g.addColorStop(1, `rgba(107, 114, 128, ${o.a * 0.08})`); 
       } else {
-        // Desktop: gradiente completo
-        g.addColorStop(0, `rgba(182,203,51,${o.a})`);
-        g.addColorStop(0.55, `rgba(0,74,173,${o.a * 0.55})`);
-        g.addColorStop(1, 'rgba(0,0,0,0)');
+        // Desktop: 6 stops, ultra premium gradients
+        g.addColorStop(0, `rgba(255, 255, 255, ${o.a * 0.06})`); 
+        g.addColorStop(0.5, `rgba(248, 250, 252, ${o.a * 0.28})`); 
+        g.addColorStop(0.6, `rgba(226, 232, 240, ${o.a * 0.28})`); 
+        g.addColorStop(0.8, `rgba(156, 163, 175, ${o.a * 0.22})`); 
+        g.addColorStop(1, `rgba(55, 65, 81, ${o.a * 0.1})`); 
       }
 
       ctx.fillStyle = g;
