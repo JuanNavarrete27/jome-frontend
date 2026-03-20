@@ -44,6 +44,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   cursorY = signal(0.5);
   safeUrl = signal<SafeResourceUrl | null>(null);
   mixedContentError = signal(false);
+  safeVideoUrl = signal<SafeResourceUrl | null>(null);
 
   @ViewChild('modalPanel', { static: false }) modalPanel?: ElementRef<HTMLDivElement>;
 
@@ -593,6 +594,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previewLoading.set(false);
     this.mixedContentError.set(false);
     this.safeUrl.set(null);
+    this.safeVideoUrl.set(null);
     this.showreelOpen.set(true);
     document.body.style.overflow = 'hidden';
 
@@ -620,6 +622,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // Sanitizar la URL del iframe (NG0904 FIX)
       const sanitized = this.sanitizer.bypassSecurityTrustResourceUrl(project.domain);
       this.safeUrl.set(sanitized);
+    } else if (project.videoUrl) {
+      // Sanitizar la URL del video (NG0904 FIX)
+      const sanitizedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(project.videoUrl);
+      this.safeVideoUrl.set(sanitizedVideo);
     }
     
     // Abrir modal
@@ -645,6 +651,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previewLoading.set(false);
     this.mixedContentError.set(false);
     this.safeUrl.set(null);
+    this.safeVideoUrl.set(null);
     this.showreelOpen.set(false);
     document.body.style.overflow = '';
 
