@@ -21,16 +21,8 @@
       </span>
     </a>
 
-    <!-- Desktop CTA -->
-    <div class="cta" *ngIf="!showHamburger">
-      <a magnetic class="btn btn--primary" href="#" (click)="openWhatsApp(); $event.preventDefault()">
-        Pedir propuesta
-      </a>
-    </div>
-
     <!-- Hamburger Menu Button -->
     <button 
-      *ngIf="showHamburger" 
       class="hamburger-btn" 
       (click)="toggleMenu()"
       [attr.aria-expanded]="menuOpen()"
@@ -45,7 +37,6 @@
 
 <!-- Mobile Navigation Drawer -->
 <div 
-  *ngIf="showHamburger" 
   class="mobile-nav-overlay" 
   [class.mobile-nav-overlay--open]="menuOpen()"
   (click)="closeMenu()">

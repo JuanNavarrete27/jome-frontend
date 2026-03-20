@@ -489,7 +489,6 @@
   position: relative;
 }
 
-
 .hero__kicker {
   font-family: 'Unbounded', system-ui, sans-serif;
   font-size: 12px;
@@ -1549,7 +1548,7 @@
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 1100;
   display: grid;
   place-items: center;
   background: rgba(0, 0, 0, 0.62);
@@ -1994,4 +1993,588 @@
   background-clip: text !important;
   color: transparent !important;
   text-shadow: none !important;
+}
+
+/* =========================================
+   BACKGROUND GEOMETRIC PREMIUM BLOBS / SHAPES
+   NO TOCA HEADER
+   PEGAR AL FINAL DEL SCSS
+   ========================================= */
+
+:host {
+  --bg-shape-blue-1: rgba(37, 99, 235, 0.10);
+  --bg-shape-blue-2: rgba(59, 130, 246, 0.08);
+  --bg-shape-blue-3: rgba(96, 165, 250, 0.07);
+  --bg-shape-indigo: rgba(79, 70, 229, 0.07);
+  --bg-shape-violet: rgba(124, 58, 237, 0.06);
+  --bg-shape-line: rgba(59, 130, 246, 0.14);
+}
+
+/* fondo general más vivo, limpio arriba */
+:host::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(700px 420px at 14% 18%, rgba(59, 130, 246, 0.08), transparent 62%),
+    radial-gradient(620px 360px at 86% 24%, rgba(79, 70, 229, 0.06), transparent 60%),
+    radial-gradient(760px 460px at 20% 84%, rgba(124, 58, 237, 0.05), transparent 64%),
+    radial-gradient(680px 400px at 82% 78%, rgba(96, 165, 250, 0.06), transparent 62%);
+}
+
+/* capa geométrica separada del header */
+:host::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 110px;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* diamonds / rombos */
+    linear-gradient(135deg, transparent 48%, rgba(59, 130, 246, 0.08) 49%, rgba(59, 130, 246, 0.08) 51%, transparent 52%) 8% 10% / 180px 180px no-repeat,
+    linear-gradient(135deg, transparent 48%, rgba(79, 70, 229, 0.07) 49%, rgba(79, 70, 229, 0.07) 51%, transparent 52%) 84% 18% / 220px 220px no-repeat,
+    linear-gradient(135deg, transparent 48%, rgba(124, 58, 237, 0.06) 49%, rgba(124, 58, 237, 0.06) 51%, transparent 52%) 18% 72% / 200px 200px no-repeat,
+
+    /* líneas diagonales suaves */
+    linear-gradient(115deg, transparent 49.3%, rgba(59, 130, 246, 0.10) 49.7%, rgba(59, 130, 246, 0.10) 50.3%, transparent 50.7%) 72% 38% / 320px 320px no-repeat,
+    linear-gradient(115deg, transparent 49.3%, rgba(96, 165, 250, 0.08) 49.7%, rgba(96, 165, 250, 0.08) 50.3%, transparent 50.7%) 12% 52% / 260px 260px no-repeat,
+
+    /* hex / polygon feel */
+    radial-gradient(circle at center, transparent 56%, rgba(59, 130, 246, 0.10) 57%, rgba(59, 130, 246, 0.10) 58%, transparent 60%) 90% 62% / 180px 180px no-repeat,
+    radial-gradient(circle at center, transparent 56%, rgba(79, 70, 229, 0.08) 57%, rgba(79, 70, 229, 0.08) 58%, transparent 60%) 24% 34% / 150px 150px no-repeat,
+
+    /* manchas soft combinadas */
+    radial-gradient(360px 220px at 22% 24%, rgba(59, 130, 246, 0.08), transparent 68%),
+    radial-gradient(420px 240px at 78% 36%, rgba(79, 70, 229, 0.06), transparent 70%),
+    radial-gradient(320px 190px at 32% 88%, rgba(124, 58, 237, 0.05), transparent 68%),
+    radial-gradient(340px 220px at 88% 86%, rgba(96, 165, 250, 0.06), transparent 68%);
+  opacity: 1;
+}
+
+/* shapes existentes: más geométricas, no solo blur */
+.shape {
+  filter: none !important;
+  opacity: 0.22;
+  mix-blend-mode: normal;
+}
+
+.shape--a {
+  width: 240px;
+  height: 240px;
+  left: -30px;
+  top: 80px;
+  border-radius: 28% 72% 62% 38% / 30% 34% 66% 70%;
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(96, 165, 250, 0.07) 55%, rgba(124, 58, 237, 0.06));
+  box-shadow:
+    inset 0 0 0 1px rgba(59, 130, 246, 0.10),
+    0 0 40px rgba(59, 130, 246, 0.06);
+  transform: rotate(18deg);
+}
+
+.shape--b {
+  width: 300px;
+  height: 300px;
+  right: -50px;
+  top: 130px;
+  border-radius: 64% 36% 30% 70% / 60% 42% 58% 40%;
+  background:
+    linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(59, 130, 246, 0.10) 52%, rgba(96, 165, 250, 0.07));
+  box-shadow:
+    inset 0 0 0 1px rgba(96, 165, 250, 0.08),
+    0 0 44px rgba(79, 70, 229, 0.05);
+  transform: rotate(-22deg);
+}
+
+/* círculo del hero más rico, sin ensuciar el top */
+.hero__background-circle {
+  background:
+    radial-gradient(circle at 38% 40%, rgba(96, 165, 250, 0.14), rgba(59, 130, 246, 0.10) 34%, rgba(79, 70, 229, 0.06) 52%, transparent 72%) !important;
+  filter: blur(0.5px);
+  opacity: 0.72;
+}
+
+/* glow del hero con más color pero limpio */
+.hero__glow {
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(59, 130, 246, 0.12),
+      rgba(79, 70, 229, 0.07),
+      rgba(124, 58, 237, 0.04),
+      transparent 64%
+    ) !important;
+  opacity: 0.86;
+}
+
+/* ambient circles más interesantes */
+.ambient-circle {
+  filter: blur(34px);
+  opacity: 0.24;
+}
+
+.ambient-circle-1 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.14), transparent 62%) !important;
+}
+
+.ambient-circle-2 {
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.10), rgba(59, 130, 246, 0.05), transparent 64%) !important;
+}
+
+.ambient-circle-3 {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent 58%) !important;
+}
+
+.ambient-circle-4 {
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.10), transparent 60%) !important;
+}
+
+.ambient-circle-5 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08), rgba(79, 70, 229, 0.04), transparent 66%) !important;
+}
+
+.ambient-circle-6 {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06), rgba(96, 165, 250, 0.04), transparent 52%) !important;
+}
+
+.ambient-circle-7 {
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.08), transparent 56%) !important;
+}
+
+.ambient-circle-8 {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.06), rgba(96, 165, 250, 0.03), transparent 52%) !important;
+}
+
+/* manchas geométricas por sección */
+.section {
+  isolation: isolate;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: -60px -20px;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(135deg, transparent 49%, rgba(59, 130, 246, 0.05) 50%, transparent 51%) 8% 22% / 140px 140px no-repeat,
+    linear-gradient(135deg, transparent 49%, rgba(79, 70, 229, 0.04) 50%, transparent 51%) 92% 68% / 180px 180px no-repeat,
+    radial-gradient(280px 140px at 18% 30%, rgba(59, 130, 246, 0.05), transparent 70%),
+    radial-gradient(260px 140px at 82% 72%, rgba(124, 58, 237, 0.04), transparent 70%);
+  opacity: 0.95;
+}
+
+/* mobile: menos carga, mismo look */
+@media (max-width: 768px) {
+  :host::before {
+    background:
+      radial-gradient(520px 300px at 14% 16%, rgba(59, 130, 246, 0.08), transparent 62%),
+      radial-gradient(500px 280px at 86% 22%, rgba(79, 70, 229, 0.06), transparent 60%),
+      radial-gradient(560px 320px at 22% 82%, rgba(124, 58, 237, 0.04), transparent 64%);
+  }
+
+  :host::after {
+    top: 96px;
+    background:
+      linear-gradient(135deg, transparent 48%, rgba(59, 130, 246, 0.07) 49%, rgba(59, 130, 246, 0.07) 51%, transparent 52%) 10% 16% / 120px 120px no-repeat,
+      linear-gradient(115deg, transparent 49.3%, rgba(96, 165, 250, 0.06) 49.7%, rgba(96, 165, 250, 0.06) 50.3%, transparent 50.7%) 78% 40% / 220px 220px no-repeat,
+      radial-gradient(260px 150px at 20% 26%, rgba(59, 130, 246, 0.06), transparent 68%),
+      radial-gradient(240px 150px at 84% 76%, rgba(79, 70, 229, 0.05), transparent 68%);
+  }
+
+  .shape--a {
+    width: 120px;
+    height: 120px;
+    opacity: 0.18;
+  }
+
+  .shape--b {
+    width: 150px;
+    height: 150px;
+    opacity: 0.16;
+  }
+
+  .ambient-circle {
+    filter: blur(24px);
+    opacity: 0.18;
+  }
+
+  .section::before {
+    opacity: 0.7;
+  }
+}
+
+/* =========================================
+   EXTRA PRESENCE + MOVEMENT FOR BACKGROUND
+   SOLO SUMA INTENSIDAD Y MOVILIDAD
+   PEGAR AL FINAL
+   ========================================= */
+
+/* un poco más de presencia general sin ensuciar */
+:host::before {
+  opacity: 1;
+  background:
+    radial-gradient(820px 500px at 12% 18%, rgba(59, 130, 246, 0.10), transparent 60%),
+    radial-gradient(720px 420px at 86% 22%, rgba(79, 70, 229, 0.08), transparent 58%),
+    radial-gradient(860px 520px at 18% 84%, rgba(124, 58, 237, 0.07), transparent 62%),
+    radial-gradient(760px 460px at 82% 78%, rgba(96, 165, 250, 0.08), transparent 60%);
+  animation: bgFloatLayer 20s ease-in-out infinite;
+}
+
+:host::after {
+  opacity: 1;
+  background:
+    linear-gradient(135deg, transparent 48%, rgba(59, 130, 246, 0.10) 49%, rgba(59, 130, 246, 0.10) 51%, transparent 52%) 8% 10% / 180px 180px no-repeat,
+    linear-gradient(135deg, transparent 48%, rgba(79, 70, 229, 0.09) 49%, rgba(79, 70, 229, 0.09) 51%, transparent 52%) 84% 18% / 220px 220px no-repeat,
+    linear-gradient(135deg, transparent 48%, rgba(124, 58, 237, 0.08) 49%, rgba(124, 58, 237, 0.08) 51%, transparent 52%) 18% 72% / 200px 200px no-repeat,
+    linear-gradient(115deg, transparent 49.3%, rgba(59, 130, 246, 0.12) 49.7%, rgba(59, 130, 246, 0.12) 50.3%, transparent 50.7%) 72% 38% / 320px 320px no-repeat,
+    linear-gradient(115deg, transparent 49.3%, rgba(96, 165, 250, 0.10) 49.7%, rgba(96, 165, 250, 0.10) 50.3%, transparent 50.7%) 12% 52% / 260px 260px no-repeat,
+    radial-gradient(circle at center, transparent 56%, rgba(59, 130, 246, 0.12) 57%, rgba(59, 130, 246, 0.12) 58%, transparent 60%) 90% 62% / 180px 180px no-repeat,
+    radial-gradient(circle at center, transparent 56%, rgba(79, 70, 229, 0.10) 57%, rgba(79, 70, 229, 0.10) 58%, transparent 60%) 24% 34% / 150px 150px no-repeat,
+    radial-gradient(420px 260px at 22% 24%, rgba(59, 130, 246, 0.09), transparent 68%),
+    radial-gradient(460px 280px at 78% 36%, rgba(79, 70, 229, 0.07), transparent 70%),
+    radial-gradient(360px 220px at 32% 88%, rgba(124, 58, 237, 0.06), transparent 68%),
+    radial-gradient(380px 240px at 88% 86%, rgba(96, 165, 250, 0.07), transparent 68%);
+  animation: bgGeoDrift 28s ease-in-out infinite;
+}
+
+/* shapes con más presencia y movimiento */
+.shape {
+  opacity: 0.28 !important;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.shape--a {
+  opacity: 0.30 !important;
+  animation: shapeFloatA 12s ease-in-out infinite;
+}
+
+.shape--b {
+  opacity: 0.26 !important;
+  animation: shapeFloatB 15s ease-in-out infinite;
+}
+
+/* glow del hero un poco más vivo */
+.hero__glow {
+  opacity: 0.94 !important;
+  animation: heroGlowPulse 9s ease-in-out infinite;
+}
+
+.hero__background-circle {
+  opacity: 0.82 !important;
+  animation: heroCircleDrift 16s ease-in-out infinite;
+}
+
+/* ambient circles más visibles y más móviles */
+.ambient-circle {
+  opacity: 0.30;
+  filter: blur(38px);
+  animation: ambient-float-strong 18s ease-in-out infinite;
+}
+
+.ambient-circle-1 { animation-delay: 0s; }
+.ambient-circle-2 { animation-delay: 2s; }
+.ambient-circle-3 { animation-delay: 4s; }
+.ambient-circle-4 { animation-delay: 6s; }
+.ambient-circle-5 { animation-delay: 8s; }
+.ambient-circle-6 { animation-delay: 3s; }
+.ambient-circle-7 { animation-delay: 5s; }
+.ambient-circle-8 { animation-delay: 7s; }
+
+/* presencia suave por sección */
+.section::before {
+  opacity: 1;
+  background:
+    linear-gradient(135deg, transparent 49%, rgba(59, 130, 246, 0.06) 50%, transparent 51%) 8% 22% / 140px 140px no-repeat,
+    linear-gradient(135deg, transparent 49%, rgba(79, 70, 229, 0.05) 50%, transparent 51%) 92% 68% / 180px 180px no-repeat,
+    radial-gradient(320px 170px at 18% 30%, rgba(59, 130, 246, 0.06), transparent 70%),
+    radial-gradient(300px 160px at 82% 72%, rgba(124, 58, 237, 0.05), transparent 70%);
+  animation: sectionAuraMove 18s ease-in-out infinite;
+}
+
+/* =========================
+   ANIMATIONS
+   ========================= */
+@keyframes bgFloatLayer {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(8px, -6px, 0) scale(1.015);
+  }
+  50% {
+    transform: translate3d(-6px, 10px, 0) scale(1.025);
+  }
+  75% {
+    transform: translate3d(10px, 4px, 0) scale(1.012);
+  }
+}
+
+@keyframes bgGeoDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(10px, -8px, 0);
+  }
+  66% {
+    transform: translate3d(-8px, 10px, 0);
+  }
+}
+
+@keyframes shapeFloatA {
+  0%, 100% {
+    transform: rotate(18deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(24deg) translate3d(10px, -14px, 0);
+  }
+}
+
+@keyframes shapeFloatB {
+  0%, 100% {
+    transform: rotate(-22deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-28deg) translate3d(-12px, 12px, 0);
+  }
+}
+
+@keyframes heroGlowPulse {
+  0%, 100% {
+    opacity: 0.84;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes heroCircleDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.04);
+  }
+}
+
+@keyframes ambient-float-strong {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(10px, -8px, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(-8px, 12px, 0) scale(1.06);
+  }
+  75% {
+    transform: translate3d(12px, 4px, 0) scale(1.03);
+  }
+}
+
+@keyframes sectionAuraMove {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(6px, -8px, 0);
+  }
+}
+
+/* mobile: mismo look pero más controlado */
+@media (max-width: 768px) {
+  :host::before {
+    animation-duration: 24s;
+  }
+
+  :host::after {
+    animation-duration: 32s;
+  }
+
+  .shape--a,
+  .shape--b,
+  .hero__background-circle,
+  .hero__glow {
+    animation-duration: 14s;
+  }
+
+  .ambient-circle {
+    opacity: 0.22;
+    filter: blur(28px);
+    animation-duration: 22s;
+  }
+
+  .section::before {
+    animation-duration: 22s;
+  }
+}
+
+/* =========================================
+   EXTRA MOVEMENT BOOST
+   SOLO MÁS MOVILIDAD
+   ========================================= */
+
+:host::before {
+  animation: bgFloatLayer 12s ease-in-out infinite !important;
+}
+
+:host::after {
+  animation: bgGeoDrift 16s ease-in-out infinite !important;
+}
+
+.shape--a {
+  animation: shapeFloatA 7s ease-in-out infinite !important;
+}
+
+.shape--b {
+  animation: shapeFloatB 9s ease-in-out infinite !important;
+}
+
+.hero__glow {
+  animation: heroGlowPulse 5.5s ease-in-out infinite !important;
+}
+
+.hero__background-circle {
+  animation: heroCircleDrift 9s ease-in-out infinite !important;
+}
+
+.ambient-circle {
+  animation: ambient-float-strong 10s ease-in-out infinite !important;
+}
+
+.section::before {
+  animation: sectionAuraMove 11s ease-in-out infinite !important;
+}
+
+/* un poco más de desplazamiento en las animaciones */
+@keyframes bgFloatLayer {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(14px, -10px, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(-10px, 16px, 0) scale(1.035);
+  }
+  75% {
+    transform: translate3d(16px, 6px, 0) scale(1.018);
+  }
+}
+
+@keyframes bgGeoDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(16px, -12px, 0);
+  }
+  66% {
+    transform: translate3d(-12px, 14px, 0);
+  }
+}
+
+@keyframes shapeFloatA {
+  0%, 100% {
+    transform: rotate(18deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(26deg) translate3d(16px, -18px, 0);
+  }
+}
+
+@keyframes shapeFloatB {
+  0%, 100% {
+    transform: rotate(-22deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-30deg) translate3d(-18px, 16px, 0);
+  }
+}
+
+@keyframes heroGlowPulse {
+  0%, 100% {
+    opacity: 0.84;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes heroCircleDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.06);
+  }
+}
+
+@keyframes ambient-float-strong {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(14px, -10px, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(-10px, 16px, 0) scale(1.08);
+  }
+  75% {
+    transform: translate3d(18px, 6px, 0) scale(1.04);
+  }
+}
+
+@keyframes sectionAuraMove {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(10px, -12px, 0);
+  }
+}
+
+/* móvil: más movimiento pero controlado */
+@media (max-width: 768px) {
+  :host::before {
+    animation-duration: 16s !important;
+  }
+
+  :host::after {
+    animation-duration: 20s !important;
+  }
+
+  .shape--a {
+    animation-duration: 9s !important;
+  }
+
+  .shape--b {
+    animation-duration: 11s !important;
+  }
+
+  .hero__glow {
+    animation-duration: 7s !important;
+  }
+
+  .hero__background-circle {
+    animation-duration: 10s !important;
+  }
+
+  .ambient-circle {
+    animation-duration: 12s !important;
+  }
+
+  .section::before {
+    animation-duration: 14s !important;
+  }
 }
