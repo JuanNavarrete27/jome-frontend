@@ -6,6 +6,7 @@ import { isMobile, shouldReduceEffects, getMobileInfo } from './core/utils/mobil
 import { BackgroundFxComponent } from './core/fx/bg-fx.component';
 import { MagneticDirective } from './core/directives/magnetic.directive';
 import { ScrollService } from './core/services/scroll.service';
+import { PreviewModalService } from './core/services/preview-modal.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,10 @@ export class AppComponent implements OnInit {
   // Mobile detection cache
   private mobileInfo = getMobileInfo();
 
-  constructor(private scrollService: ScrollService) {}
+  constructor(
+    private scrollService: ScrollService,
+    public previewModalService: PreviewModalService
+  ) {}
 
   ngOnInit(): void {
     ensureGsap();
@@ -104,6 +108,10 @@ export class AppComponent implements OnInit {
     } catch (error) {
       console.error('Home navigation error:', error);
     }
+  }
+
+  scrollToContact(): void {
+    this.scrollService.scrollToSection('contact');
   }
 
   // Centralized WhatsApp configuration

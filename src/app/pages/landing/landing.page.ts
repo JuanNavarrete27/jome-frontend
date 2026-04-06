@@ -9,6 +9,7 @@ import { RevealOnScrollDirective } from '../../core/directives/reveal-on-scroll.
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
 import { TiltDirective } from '../../core/directives/tilt.directive';
 import { ScrollService } from '../../core/services/scroll.service';
+import { PreviewModalService } from '../../core/services/preview-modal.service';
 
 type Service = {
   icon: string;
@@ -37,16 +38,12 @@ type Work = {
 })
 export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showreelOpen = signal(false);
-  previewProject = signal<Work | null>(null);
-  iframeError = signal(false);
-  previewLoading = signal(false);
+  
+  // Modal state now managed by PreviewModalService
+  // Signals removed: previewProject, iframeError, previewLoading, mixedContentError, safeUrl, safeVideoUrl
+
   cursorX = signal(0.5);
   cursorY = signal(0.5);
-  safeUrl = signal<SafeResourceUrl | null>(null);
-  mixedContentError = signal(false);
-  safeVideoUrl = signal<SafeResourceUrl | null>(null);
-
-  @ViewChild('modalPanel', { static: false }) modalPanel?: ElementRef<HTMLDivElement>;
 
   services: Service[] = [
     {
@@ -151,13 +148,12 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   mouseMoveThrottled = false;
 
   private heroTl?: gsap.core.Timeline;
-  private previewTimeoutId: any = null;
 
   constructor(
     private fb: FormBuilder, 
-    private sanitizer: DomSanitizer, 
     private cdr: ChangeDetectorRef,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    public previewModalService: PreviewModalService
   ) {}
 
   // TrackBy functions for optimized *ngFor
@@ -555,7 +551,6 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.heroTl?.kill();
-    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
   }
 
   @HostListener('window:mousemove', ['$event'])
@@ -573,102 +568,29 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private animateModalIn(): void {
-    // Forzar detección de cambios para asegurar que el modal esté en el DOM
-    this.cdr.detectChanges();
-
-    // Ejecutar GSAP después de que Angular renderice el modal
-    queueMicrotask(() => {
-      if (!prefersReducedMotion() && this.modalPanel?.nativeElement) {
-        gsap.fromTo(
-          this.modalPanel.nativeElement,
-          { y: 22, opacity: 0, filter: 'blur(10px)' },
-          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
-        );
-      }
-    });
+    // Animation now handled by global overlay in app.component
+    // Kept for compatibility if needed
   }
 
   openShowreel(): void {
-    this.previewProject.set(null);
-    this.iframeError.set(false);
-    this.previewLoading.set(false);
-    this.mixedContentError.set(false);
-    this.safeUrl.set(null);
-    this.safeVideoUrl.set(null);
-    this.showreelOpen.set(true);
-    document.body.style.overflow = 'hidden';
-
-    this.animateModalIn();
+    this.previewModalService.openPortfolio();
   }
 
   openPreview(project: Work): void {
     console.log('openPreview called with:', project);
-    
-    // Resetear estados
-    this.previewProject.set(project);
-    this.iframeError.set(false);
-    this.mixedContentError.set(false);
-    this.safeUrl.set(null);
-    this.previewLoading.set(project.previewType === 'iframe');
-
-    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
-    
-    // Manejar mixed content para HTTP
-    if (project.domain?.startsWith('http://') && window.location.protocol === 'https:') {
-      this.mixedContentError.set(true);
-      this.previewLoading.set(false);
-      this.iframeError.set(true);
-    } else if (project.domain) {
-      // Sanitizar la URL del iframe (NG0904 FIX)
-      const sanitized = this.sanitizer.bypassSecurityTrustResourceUrl(project.domain);
-      this.safeUrl.set(sanitized);
-    } else if (project.videoUrl) {
-      // Sanitizar la URL del video (NG0904 FIX)
-      const sanitizedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(project.videoUrl);
-      this.safeVideoUrl.set(sanitizedVideo);
-    }
-    
-    // Abrir modal
-    this.showreelOpen.set(true);
-    document.body.style.overflow = 'hidden';
-    
-    this.animateModalIn();
-    
-    // Timeout para detectar si el iframe no carga (solo para iframes)
-    if (project.previewType === 'iframe' && !this.mixedContentError()) {
-      this.previewTimeoutId = setTimeout(() => {
-        if (this.previewProject()?.title === project.title) {
-          this.previewLoading.set(false);
-          this.iframeError.set(true);
-        }
-      }, 12000);
-    }
+    this.previewModalService.open(project);
   }
 
   closeShowreel(): void {
-    this.previewProject.set(null);
-    this.iframeError.set(false);
-    this.previewLoading.set(false);
-    this.mixedContentError.set(false);
-    this.safeUrl.set(null);
-    this.safeVideoUrl.set(null);
-    this.showreelOpen.set(false);
-    document.body.style.overflow = '';
-
-    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
+    this.previewModalService.close();
   }
 
   onIframeLoad(): void {
-    // El iframe se cargó correctamente
-    this.previewLoading.set(false);
-    this.iframeError.set(false);
-    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
+    this.previewModalService.onIframeLoad();
   }
 
   onIframeError(): void {
-    this.previewLoading.set(false);
-    this.iframeError.set(true);
-    if (this.previewTimeoutId) clearTimeout(this.previewTimeoutId);
+    // Handled by service timeout
   }
 
   openInNewTab(url: string): void {

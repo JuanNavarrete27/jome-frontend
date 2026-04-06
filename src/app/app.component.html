@@ -7,6 +7,144 @@
 <!-- scroll progress -->
 <div class="top-progress" [style.transform]="'scaleX(' + progress() + ')'" [style.opacity]="progress() > 0.01 ? 1 : 0" aria-hidden="true"></div>
 
+<!-- =========================
+     GLOBAL OVERLAY LAYER
+     Rendered at root to escape stacking context traps
+     ========================= -->
+@if (previewModalService.isOpen()) {
+  <div class="global-overlay" (click)="previewModalService.close()" aria-label="Cerrar">
+    <div class="global-overlay__panel" #globalModalPanel (click)="$event.stopPropagation()">
+      <div class="modal__top">
+        <div class="modal__title">
+          @if (previewModalService.project()) {
+            Preview del proyecto: {{ previewModalService.project()!.title }}
+          } @else {
+            Portafolio (demo)
+          }
+        </div>
+        <button class="x" (click)="previewModalService.close()" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="modal__body">
+        @if (previewModalService.project()) {
+          @if (previewModalService.project()!.previewType === 'iframe') {
+            <div class="preview-container">
+              @if (!previewModalService.iframeError()) {
+                @if (previewModalService.previewLoading()) {
+                  <div class="preview__loading">Cargando preview...</div>
+                }
+                <iframe 
+                  [src]="previewModalService.safeUrl()" 
+                  class="preview__iframe"
+                  loading="lazy"
+                  (load)="previewModalService.onIframeLoad()">
+                </iframe>
+              } @else {
+                <div class="preview__fallback">
+                  @if (previewModalService.mixedContentError()) {
+                    <div class="preview__fallback-icon">🔒</div>
+                    <div class="preview__fallback-title">Contenido mixto bloqueado</div>
+                    <div class="preview__fallback-desc">El sitio usa HTTP y no se puede cargar en HTTPS por seguridad.</div>
+                  } @else {
+                    <div class="preview__fallback-icon">⚠️</div>
+                    <div class="preview__fallback-title">No se puede cargar el preview</div>
+                    <div class="preview__fallback-desc">El sitio no permite iframe o hay un error de conexión.</div>
+                  }
+                  <button class="btn btn--primary" (click)="previewModalService.openInNewTab()">
+                    Abrir en nueva pestaña
+                  </button>
+                </div>
+              }
+            </div>
+          } @else if (previewModalService.project()!.previewType === 'video') {
+            <div class="preview-container">
+              <div class="preview__video">
+                <iframe 
+                  [src]="previewModalService.safeVideoUrl()" 
+                  class="preview__video-iframe"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="preview__system-info">
+                <div class="preview__system-title">{{ previewModalService.project()!.title }}</div>
+                <div class="preview__system-desc">
+                  Por tratarse de un sistema clínico interno, el acceso público no está habilitado.
+                </div>
+                <div class="preview__system-actions">
+                  <a class="btn btn--ghost" href="#contact" (click)="previewModalService.close(); scrollToContact(); $event.preventDefault()">
+                    Solicitar demo
+                  </a>
+                  <a class="btn btn--primary" href="#contact" (click)="previewModalService.close(); scrollToContact(); $event.preventDefault()">
+                    Contactar
+                  </a>
+                </div>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="portfolio">
+            <div class="portfolio__hint">Aca van tus proyectos reales (capturas de pantalla, demos funcionales). Por ahora es demo.</div>
+            <div class="portfolio__frame"></div>
+          </div>
+        }
+
+        @if (previewModalService.project()) {
+          <div class="modal__meta">
+            @if (previewModalService.project()!.previewType === 'iframe') {
+              <div class="meta">
+                <div class="meta__k">Tipo</div>
+                <div class="meta__v">Web pública</div>
+              </div>
+              <div class="meta">
+                <div class="meta__k">Dominio</div>
+                <div class="meta__v">{{ previewModalService.project()!.domain }}</div>
+              </div>
+              <div class="meta">
+                <div class="meta__k">Acceso</div>
+                <div class="meta__v">Público</div>
+              </div>
+            } @else if (previewModalService.project()!.previewType === 'video') {
+              <div class="meta">
+                <div class="meta__k">Tipo</div>
+                <div class="meta__v">Sistema privado</div>
+              </div>
+              <div class="meta">
+                <div class="meta__k">Acceso</div>
+                <div class="meta__v">Restringido</div>
+              </div>
+              <div class="meta">
+                <div class="meta__k">Demo</div>
+                <div class="meta__v">Video disponible</div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="modal__meta">
+            <div class="meta">
+              <div class="meta__k">Frontend</div>
+              <div class="meta__v">Angular + animaciones</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Backend</div>
+              <div class="meta__v">Node.js + SQL</div>
+            </div>
+            <div class="meta">
+              <div class="meta__k">Entrega</div>
+              <div class="meta__v">24h - 14h hábiles</div>
+            </div>
+          </div>
+        }
+
+        <a class="btn btn--primary" href="#contact" (click)="previewModalService.close(); scrollToContact(); $event.preventDefault()" style="margin-top: 20px;">
+          Quiero una propuesta
+        </a>
+      </div>
+    </div>
+  </div>
+}
+
 <header class="app-header" [class.app-header--scrolled]="scrolled()">
   <div class="app-header__inner">
     <a class="brand" href="#" (click)="scrollToHome(); $event.preventDefault()">
